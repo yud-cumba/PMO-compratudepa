@@ -11,6 +11,8 @@
     "@google/earthengine": "^0.1.235",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
+    "vue-html2pdf": "^1.7.3",
+    "vue-mathjax": "0.0.11",
     "vue-router": "^3.4.3",
     "vuetify": "^2.3.10"
   },
