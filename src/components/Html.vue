@@ -13,22 +13,14 @@
         pdf-format="a4"
         pdf-orientation="portrait"
         pdf-content-width="800px"
- 
+
         @progress="onProgress($event)"
         @hasStartedGeneration="hasStartedGeneration()"
         @hasGenerated="hasGenerated($event)"
         ref="html2Pdf"
     >
         <section slot="pdf-content">
-            <section class="pdf-item">
-                <h4>
-                    Hola
-                </h4>
-        
-                <span>
-                    Value
-                </span>
-            </section>
+            <PdfContent></PdfContent>
         </section>
     </VueHtml2pdf>
     <button @click="generateReport">
@@ -38,27 +30,26 @@
 </template>
 
 <script>
-import VueHtml2pdf from 'vue-html2pdf'
- 
+import VueHtml2pdf from 'vue-html2pdf';
+import PdfContent from './PdfContent.vue';
+
 export default {
-    methods: {
-        /*
+  methods: {
+    /*
             Generate Report using refs and calling the
             refs function generatePdf()
         */
-        generateReport () {
-            this.$refs.html2Pdf.generatePdf()
-        }
+    generateReport() {
+      this.$refs.html2Pdf.generatePdf();
     },
- 
-    components: {
-        VueHtml2pdf
-    }
-}
+  },
+
+  components: {
+    VueHtml2pdf,
+    PdfContent,
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-h4{
-    color:red
-}
 </style>

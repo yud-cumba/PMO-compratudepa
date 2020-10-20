@@ -6,19 +6,20 @@
 </template>
 
 <script>
-import { VueMathjax } from 'vue-mathjax'
+import { VueMathjax } from 'vue-mathjax';
+
 export default {
   components: {
-    'vue-mathjax': VueMathjax
+    'vue-mathjax': VueMathjax,
   },
   name: 'HelloWorld',
-  data () {
+  data() {
     return {
       formula: '$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$',
-      msg: 'Welcome to Your Vue.js App'
-    }
-  }
-}
+      msg: 'Welcome to Your Vue.js App',
+    };
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -3,25 +3,30 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --port 5000",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@google/earthengine": "^0.1.235",
+    "axios": "^0.20.0",
     "core-js": "^3.6.5",
+    "firebase": "^7.22.1",
     "vue": "^2.6.11",
     "vue-html2pdf": "^1.7.3",
     "vue-mathjax": "0.0.11",
     "vue-router": "^3.4.3",
+    "vue2-google-maps": "^0.10.7",
     "vuetify": "^2.3.10"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-eslint": "^4.5.8",
     "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-airbnb": "^5.0.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
@@ -36,7 +41,8 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "eslint:recommended"
+      "eslint:recommended",
+      "@vue/airbnb"
     ],
     "parserOptions": {
       "parser": "babel-eslint"
