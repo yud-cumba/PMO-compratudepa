@@ -1,7 +1,6 @@
 <template>
-  <div>
-    {{currentProject}}
-    <v-card class="py-3 d-flex flex-column align-center">
+  <div class="d-flex view">
+    <v-card class="py-3 d-flex flex-column align-center card">
       <v-form
       class=" form mx-5 my-5"
       ref="form"
@@ -57,7 +56,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form{
-  width: 50vw;
+.view{
+  width:100vw;
+}
+.card{
+  width: 30vw;
 }
 </style>

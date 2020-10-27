@@ -1,11 +1,7 @@
 <template>
-<div>
-  <v-btn class="mr-4 blue" @click="showAll">
-    Ver todo
-  </v-btn>
   <gmap-map
     :center="center"
-    :zoom="15"
+    :zoom="12"
     style="width: 100%; height: 500px"
   >
     <gmap-marker
@@ -18,7 +14,6 @@
       @click="toggleInfo(m.id)"
     ></gmap-marker>
   </gmap-map>
-  </div>
 </template>
 <script>
 import inmobiliarias from '../data/inmobiliarias.json';
