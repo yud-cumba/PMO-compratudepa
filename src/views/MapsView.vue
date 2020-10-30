@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="d-flex view">
     <v-card class="py-3 d-flex flex-column align-center card">
       <v-form
@@ -29,6 +30,7 @@
     :longitude= -77.05453930635801
     />
   </div>
+</div>
 </template>
 
 <script>
