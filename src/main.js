@@ -9,6 +9,7 @@ import Home from './views/Home.vue';
 import MapsView from './views/MapsView.vue';
 import Chatbot from './components/Chatbot.vue';
 import Inform from './views/Inform.vue';
+import ProjectDetail from './views/ProjectDetail.vue';
 // import VueMathjax from 'vue-mathjax';
 
 require('firebase/storage');
@@ -28,6 +29,7 @@ const router = new VueRouter({
     { path: '/maps', component: MapsView },
     { path: '/inform', component: Inform },
     { path: '/chatbot', component: Chatbot },
+    { path: '/detail/:id', component: ProjectDetail },
   ],
 });
 

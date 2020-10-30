@@ -11,6 +11,7 @@
       :title="m.title"
       :clickable="true"
       :draggable="true"
+      :icon="{ url: require('../assets/building.svg')}"
       @click="toggleInfo(m.id)"
     ></gmap-marker>
   </gmap-map>

@@ -2,6 +2,7 @@
     <v-app>
       <NavBar :quantityInmobByDistrict="quantityInmobByDistrict" :items="items"/>
       <router-view></router-view>
+      <Footer/>
     </v-app>
 </template>
 
@@ -10,10 +11,12 @@ import groupBy from 'group-by';
 import inm from './data/inmobiliarias.json';
 // components
 import NavBar from './components/NavBar.vue';
+import Footer from './components/Footer.vue';
 
 export default {
   components: {
     NavBar,
+    Footer,
   },
   data() {
     const inmobiliarias = inm.features.map((inmob) => inmob.properties);

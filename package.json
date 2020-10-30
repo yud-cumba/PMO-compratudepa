@@ -8,7 +8,6 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@google/earthengine": "^0.1.235",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "firebase": "^7.22.1",

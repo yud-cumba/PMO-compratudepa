@@ -1,9 +1,9 @@
 <template>
   <v-card class="elevation-0">
     <v-card-title class="text-center">
-      <h1>
-        Compra tu depa
-      </h1>
+      <v-img src="../assets/logoPMO.png" aspect-ratio="1"
+                       class="mr-3" max-height="60" max-width="270">
+      </v-img>
     </v-card-title>
     <v-card-text class="d-flex justify-end px-4">
         <router-link to="/">
@@ -33,8 +33,10 @@
                 <v-row v-for="m in 4" :key="m" no-gutters>
                     <v-col v-for="n in 6" :key="n">
                         <v-card class="pa-2 card card-tab elevation-0" tile>
+                        <router-link to="/detail/1">
                         {{quantityInmobByDistrict[m+(n-1)*4-1].district}}
                         ({{quantityInmobByDistrict[m+(n-1)*4-1].quantity}})
+                        </router-link>
                         </v-card>
                     </v-col>
                 </v-row>

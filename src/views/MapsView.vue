@@ -22,6 +22,7 @@
         >
           Buscar
         </v-btn>
+        {{currentProject}}
       </v-form>
     </v-card>
     <GoogleMap :latitude= -12.089637033755114
