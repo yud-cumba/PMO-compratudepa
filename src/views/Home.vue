@@ -35,13 +35,15 @@
     </v-toolbar>
   </v-card>
   <Benefits/>
-  <ProjectCards title="Proyectos más vendidos"/>
+  <h3 class="px-6 mb-5">Proyectos más vendidos</h3>
+  <ProjectCards :projects="inmobiliarias.slice(0, 6)"/>
 </div>
 </template>
 
 <script>
 import Benefits from '../components/BenefitsCards.vue';
 import ProjectCards from '../components/ProjectCards.vue';
+import inm from '../data/inmobiliarias.json';
 
 export default {
   name: 'Home',
@@ -50,7 +52,18 @@ export default {
     ProjectCards,
   },
   data() {
+    const inmobiliarias = inm.features.map((doc) => ({ id: doc.id, ...doc.properties }))
+      .sort((a, b) => {
+        if (a.Unidades_ofertadas_mes < b.Unidades_ofertadas_mes) {
+          return 1;
+        }
+        if (a.Unidades_ofertadas_mes > b.Unidades_ofertadas_mes) {
+          return -1;
+        }
+        return 0;
+      });
     return {
+      inmobiliarias,
       search: '',
     };
   },
