@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="d-flex view">
+  <div class="view">
     <v-card class="py-3 d-flex flex-column align-center card">
       <v-form
       class=" form mx-5 my-5"
