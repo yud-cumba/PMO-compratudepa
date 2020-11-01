@@ -33,7 +33,7 @@
                 <v-row v-for="m in 4" :key="m" no-gutters>
                     <v-col v-for="n in 6" :key="n">
                         <v-card class="pa-2 card card-tab elevation-0" tile>
-                        <router-link to="/detail/1">
+                        <router-link :to="`/maps/${quantityInmobByDistrict[m+(n-1)*4-1].district}`">
                         {{quantityInmobByDistrict[m+(n-1)*4-1].district}}
                         ({{quantityInmobByDistrict[m+(n-1)*4-1].quantity}})
                         </router-link>

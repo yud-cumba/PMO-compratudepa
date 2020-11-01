@@ -11,7 +11,7 @@ Vue.use(VueRouter);
 
 const routes = [
   { path: '/', component: Home },
-  { path: '/maps', component: MapsView },
+  { path: '/maps/:distric', component: MapsView },
   { path: '/inform', component: Inform },
   { path: '/chatbot', component: Chatbot },
   { path: '/detail/:id', component: ProjectDetail },
