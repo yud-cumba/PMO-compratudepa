@@ -1,6 +1,6 @@
 <template>
-    <div class="d-flex d-flex flex-wrap  sellest">
-        <div class="flip-card mx-auto my-2 " v-for="item in projects" :key="item.id">
+    <div class="d-flex d-flex flex-wrap sellest">
+        <div class="flip-card mx-auto my-4 " v-for="item in projects" :key="item.id">
         <div class="flip-card-inner rounded-lg">
             <v-card class="flip-card-front rounded-lg">
                 <h3 class="title d-flex justify-center align-center">
@@ -26,30 +26,32 @@
                 <h3 class="title d-flex justify-center align-center green">
                         {{item.Proyecto}}
                 </h3>
-                <v-card-text class="d-flex flex-column justify-start align-start">
-                    Información:
-                    <div class="info d-flex justify-start">
+                <v-card-text class="d-flex flex-column">
+                    <div class="d-flex">Información:
+                        <v-spacer></v-spacer>
+                        <button class="btn green pa-1 my-1">
+                        Ver más
+                        </button>
+                    </div>
+                    <div class="information d-flex justify-start">
                         <v-icon class="mr-1">mdi-map-marker</v-icon>
                         {{item.Dirección}}
                     </div >
-                    <div class="info  d-flex justify-start">
+                    <div class="information  d-flex justify-start">
                         <v-icon class="mr-1">mdi-bed-empty</v-icon>
                     {{`${item.Cuartos_max} habitaciones`}}</div>
-                    <div class="info d-flex justify-start">
+                    <div class="information d-flex justify-start">
                         <v-icon class="mr-1">mdi-arrow-collapse</v-icon>
                         {{item.Áreas}}
                     </div >
-                    <div class="info d-flex justify-start">
+                    <div class="information d-flex justify-start">
                         <v-icon class="mr-1">mdi-account-hard-hat</v-icon>
                         {{`Fase :${item.Fase}`}}
                     </div >
-                    <div class="info d-flex justify-start">
+                    <div class="information d-flex justify-start">
                         <v-icon class="mr-1">mdi-domain</v-icon>
                         {{`Inmobiliaria ${item.Inmobiliaria}`}}
                     </div >
-                    <button class="btn green pa-3">
-                        Ver más
-                    </button>
                 </v-card-text>
             </v-card>
         </div>
@@ -64,18 +66,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.info{
+.information{
     width: 100%;
     font-size: 11px;
-    background-color: white ;
 }
 .title{
     padding: 3px;
-    width: 270px;
+    width: 100%;
     height: 70px;
 }
 .img{
-    width: 270px;
+    width: 100%;
     height: 120px;
 }
 .text-caption{
@@ -96,8 +97,8 @@ export default {
 }
 .flip-card {
   background-color: transparent;
-  width: 270px;
-  height: 280px;
+  width: 260px;
+  height: 290px;
   perspective: 1000px;
 }
 
