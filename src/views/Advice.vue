@@ -37,7 +37,7 @@
       :rules="[v => !!v || 'Debes aceptar los términos y condiciones']"
       required
     ></v-checkbox>
-    He leído y acepto los términos y condiciones
+    He leído y acepto los <PrivacyPolicy/>
     </p>
     <v-btn
       class="mr-4 green"
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import PrivacyPolicy from '../components/PrivacyPolicy.vue';
+
 export default {
   data: () => ({
     valid: true,
@@ -80,6 +82,9 @@ export default {
     clear() {
       this.$refs.form.reset();
     },
+  },
+  components: {
+    PrivacyPolicy,
   },
 };
 </script>
