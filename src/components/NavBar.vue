@@ -46,7 +46,7 @@
         <template v-slot:activator="{ on, attrs }">
             <div
             class="text-lg-h6 px-6 mx-6"
-            @click="active=true"
+            @click="inmobiliariasClick"
             v-click-outside="onClickOutside"
             v-bind="attrs"
             v-on="on"
@@ -55,7 +55,7 @@
             </div>
         </template>
             <v-card class="text-caption">
-                HOLA
+                nada
             </v-card>
         </v-menu>
         <v-menu offset-y>
@@ -90,6 +90,14 @@ export default {
   methods: {
     onClickOutside() {
       this.active = false;
+    },
+    inmobiliariasClick() {
+      alert('click2');
+      this.$gtag.event('Inmobiliarias-click', {
+        event_category: 'Views',
+        event_label: 'NavBar Inmobiliarias clicked',
+        value: 1,
+      });
     },
   },
 };

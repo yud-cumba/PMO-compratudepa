@@ -3,14 +3,21 @@ import VueRouter from 'vue-router';
 import axios from 'axios';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import firebase from 'firebase/app';
+import VueGtag from 'vue-gtag';
+import router from './route';
 import App from './App.vue';
 import vuetify from './plugins/vuetify';
-import router from './route';
 import { firebaseConfig, apiKeyGoogleMap } from './keys/GoogleKeys';
 
 require('firebase/storage');
+
+Vue.use(VueGtag, {
+  config: { id: 'G-7XCKGK5MQZ' },
+});
+
 // Vue.use(VueMathjax);
 Vue.use(VueRouter);
+
 Vue.config.productionTip = false;
 Vue.use(VueGoogleMaps, {
   load: {
@@ -20,7 +27,6 @@ Vue.use(VueGoogleMaps, {
 });
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-// firebase.analytics();
 
 Vue.prototype.$firebase = firebase;
 

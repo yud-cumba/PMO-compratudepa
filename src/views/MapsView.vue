@@ -57,8 +57,8 @@
           <v-card-text>
               <v-slider
                 v-model="cost"
-                max="1000000"
-                min="1000"
+                :max="maxCost"
+                :min="minCost"
                 thumb-label="always"
               ></v-slider>
             </v-card-text>
@@ -110,7 +110,11 @@ export default {
       id: inmob.id,
       ...inmob.properties,
     }));
+    const cost = totalProjects.map((e) => e.Precio_por_m2_oferta);
+
     return {
+      minCost: cost.reduce((a, b) => Math.min(a, b)),
+      maxCost: cost.reduce((a, b) => Math.max(a, b)),
       cost: '',
       search: this.$route.params.distric,
       kinderGarden: false,
