@@ -6,22 +6,20 @@
       </v-img>
     </v-card-title>
     <v-card-text class="d-flex justify-end px-4">
-        <router-link to="/">
             <div
                 class="text-lg-h6 px-6 mx-6"
-                @click="active=true"
+                @click="homeClick"
                 v-click-outside="onClickOutside"
                 v-bind="attrs"
                 v-on="on"
                 >
                 INICIO
             </div>
-        </router-link>
         <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
             <div
             class="text-lg-h6 px-6 mx-6"
-            @click="active=true"
+            @click="projectsClick"
             v-click-outside="onClickOutside"
             v-bind="attrs"
             v-on="on"
@@ -32,11 +30,11 @@
             <v-card class="text-caption">
                 <v-row v-for="m in 4" :key="m" no-gutters>
                     <v-col v-for="n in 6" :key="n">
-                        <v-card class="pa-2 card card-tab elevation-0" tile>
-                        <router-link :to="`/maps/${quantityInmobByDistrict[m+(n-1)*4-1].district}`">
+                        <v-card class="pa-2 card card-tab elevation-0"
+                        @click="clickByDistrict(quantityInmobByDistrict[m+(n-1)*4-1].district)"
+                        tile>
                         {{quantityInmobByDistrict[m+(n-1)*4-1].district}}
                         ({{quantityInmobByDistrict[m+(n-1)*4-1].quantity}})
-                        </router-link>
                         </v-card>
                     </v-col>
                 </v-row>
@@ -91,11 +89,28 @@ export default {
     onClickOutside() {
       this.active = false;
     },
-    inmobiliariasClick() {
-      alert('click2');
-      this.$gtag.event('Inmobiliarias-click', {
-        event_category: 'Views',
-        event_label: 'NavBar Inmobiliarias clicked',
+    homeClick() {
+      this.active = true;
+      this.$gtag.event('Inicio', {
+        event_category: 'NavBar',
+        event_label: 'NavBar Inicio clicked',
+        value: 1,
+      });
+      this.$router.push({ path: '/' });
+    },
+    clickByDistrict(district) {
+      this.$gtag.event(`Proyectos-${district}`, {
+        event_category: 'NavBar',
+        event_label: `NavBar Proyectos ${district} clicked`,
+        value: 1,
+      });
+      this.$router.push({ path: `/maps/${district}` });
+    },
+    projectsClick() {
+      this.active = true;
+      this.$gtag.event('Proyectos', {
+        event_category: 'NavBar',
+        event_label: 'NavBar Proyectos clicked',
         value: 1,
       });
     },

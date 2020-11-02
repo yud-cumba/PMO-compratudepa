@@ -138,22 +138,17 @@ export default {
       // eslint-disable-next-line max-len
       this.projects = this.kinderGarden ? this.projects.filter((e) => e.kinder_names.length > 0) : this.projects;
     },
-    // filterByCost(type) {
-    //   if (type === 'dolares') {
-
-    //   } else if (type === 'dolares') {
-
-    //   }
-    // },
   },
   watch: {
     search() {
       this.filterByInputUbication();
     },
     policeStation() {
+      this.filterByInputUbication();
       this.filterByRadioPlaces();
     },
     kinderGarden() {
+      this.filterByInputUbication();
       this.filterByRadioPlaces();
     },
   },
