@@ -111,6 +111,7 @@ export default {
       ...inmob.properties,
     }));
     return {
+      cost: '',
       search: this.$route.params.distric,
       kinderGarden: false,
       policeStation: false,
@@ -133,6 +134,13 @@ export default {
       // eslint-disable-next-line max-len
       this.projects = this.kinderGarden ? this.projects.filter((e) => e.kinder_names.length > 0) : this.projects;
     },
+    // filterByCost(type) {
+    //   if (type === 'dolares') {
+
+    //   } else if (type === 'dolares') {
+
+    //   }
+    // },
   },
   watch: {
     search() {
@@ -146,6 +154,7 @@ export default {
     },
   },
   created() {
+    this.filterByInputUbication();
     eventBus.$on('infoProject', (payload) => {
       this.projects = payload;
     });

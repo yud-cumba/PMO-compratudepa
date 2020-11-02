@@ -31,7 +31,7 @@
         outlined
       ></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn class="ma-5 green">
+      <v-btn @click="searchInMap" class="ma-5 green">
         Buscar
       </v-btn>
     </v-card>
@@ -68,6 +68,11 @@ export default {
       inmobiliarias,
       search: '',
     };
+  },
+  methods: {
+    searchInMap() {
+      this.$router.push({ path: `/maps/${this.search}` });
+    },
   },
 };
 </script>
