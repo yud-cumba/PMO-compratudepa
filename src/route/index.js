@@ -6,6 +6,7 @@ import MapsView from '../views/MapsView.vue';
 import Chatbot from '../components/Chatbot.vue';
 import Inform from '../views/Inform.vue';
 import ProjectDetail from '../views/ProjectDetail.vue';
+import Advice from '../views/Advice.vue';
 
 Vue.use(VueRouter);
 
@@ -14,6 +15,7 @@ const routes = [
   { path: '/maps/:distric', component: MapsView },
   { path: '/inform', component: Inform },
   { path: '/chatbot', component: Chatbot },
+  { path: '/advices', component: Advice },
   { path: '/detail/:id', component: ProjectDetail },
 ];
 

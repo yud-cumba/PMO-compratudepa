@@ -44,17 +44,14 @@
         <template v-slot:activator="{ on, attrs }">
             <div
             class="text-lg-h6 px-6 mx-6"
-            @click="inmobiliariasClick"
+            @click="adviceClick"
             v-click-outside="onClickOutside"
             v-bind="attrs"
             v-on="on"
             >
-            INMOBILIARIAS
+            TE ASESORAMOS
             </div>
         </template>
-            <v-card class="text-caption">
-                nada
-            </v-card>
         </v-menu>
         <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
@@ -90,7 +87,6 @@ export default {
       this.active = false;
     },
     homeClick() {
-      this.active = true;
       this.$gtag.event('Inicio', {
         event_category: 'NavBar',
         event_label: 'NavBar Inicio clicked',
@@ -113,6 +109,14 @@ export default {
         event_label: 'NavBar Proyectos clicked',
         value: 1,
       });
+    },
+    adviceClick() {
+      this.$gtag.event('Asesoramiento', {
+        event_category: 'NavBar',
+        event_label: 'NavBar Asesoramiento clicked',
+        value: 1,
+      });
+      this.$router.push({ path: '/advices' });
     },
   },
 };

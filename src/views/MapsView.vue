@@ -138,6 +138,9 @@ export default {
       // eslint-disable-next-line max-len
       this.projects = this.kinderGarden ? this.projects.filter((e) => e.kinder_names.length > 0) : this.projects;
     },
+    // filterByCost() {
+    //   this.projects = this.projects.filter((e) => e.Precio_por_m2_oferta < this.cost);
+    // },
   },
   watch: {
     search() {
