@@ -12,42 +12,28 @@
       :clickable="true"
       :draggable="true"
       :icon="{ url: require('../assets/building.svg')}"
-      @click="toggleInfo(m.id)"
+      @click="toggleInfo(m.position)"
     ></gmap-marker>
   </gmap-map>
 </template>
 <script>
-import inmobiliarias from '../data/inmobiliarias.json';
 import { eventBus } from '../main';
 
 export default {
   data() {
-    const totalMakers = inmobiliarias.features.map((inmob) => ({
-      position: {
-        lat: inmob.geometry.coordinates[1],
-        lng: inmob.geometry.coordinates[0],
-      },
-      title: inmob.properties.Proyecto,
-      id: inmob.id,
-      eventBus,
-    }));
     return {
-      inmobiliarias: inmobiliarias.features,
       center: { lat: this.latitude, lng: this.longitude },
-      totalMakers,
-      markers: totalMakers,
-      currentInmob: {},
+      currentInmob: [],
     };
   },
 
-  props: ['latitude', 'longitude'],
+  props: ['latitude', 'longitude', 'markers', 'totalMarkers'],
   methods: {
-    toggleInfo(id) {
+    toggleInfo(position) {
+      // eslint-disable-next-line max-len
+      this.currentInmob = this.totalMarkers.filter((e) => e.position.lat === position.lat && e.position.lag === position.lag);
       // eslint-disable-next-line prefer-destructuring
-      this.currentInmob = this.inmobiliarias.filter((e) => e.id === id)[0];
-    },
-    showAll() {
-      this.markers = this.totalMakers;
+      // this.currentInmob = this.inmobiliarias.filter((e) => e.id === id)[0];
     },
   },
   watch: {
@@ -55,11 +41,11 @@ export default {
       eventBus.$emit('infoProject', this.currentInmob);
     },
   },
-  created() {
-    eventBus.$on('inputProject', (payload) => {
-      // eslint-disable-next-line prefer-destructuring
-      this.markers = this.totalMakers.filter((e) => e.title === payload.project);
-    });
-  },
+  // created() {
+  //   eventBus.$on('inputProject', (payload) => {
+  //     // eslint-disable-next-line prefer-destructuring
+  //     this.markers = this.totalMakers.filter((e) => e.title === payload.project);
+  //   });
+  // },
 };
 </script>

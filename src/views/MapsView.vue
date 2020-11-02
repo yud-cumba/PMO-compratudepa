@@ -78,33 +78,10 @@
           ></v-checkbox>
         </v-card>
       </div>
-      <!-- <v-form
-      class=" form mx-5 my-5"
-      ref="form"
-      lazy-validation
-      >
-        <v-text-field
-          v-model="project"
-          label="Proyecto"
-          required
-        ></v-text-field>
-        <v-text-field
-          v-model="distance"
-          label="Proyecto"
-          required
-        ></v-text-field>
-        <v-btn
-          class="mr-4 blue"
-          @click="eventBus.$emit('inputProject', { project, distance})"
-        >
-          Buscar
-        </v-btn>
-        {{currentProject}}
-      </v-form> -->
     </v-card>
     <div class="ma-5">
     <GoogleMap :latitude= -12.089637033755114
-    :longitude= -77.05453930635801
+    :longitude= -77.05453930635801 :markers="projects" :totalMarkers="totalProjects"
     />
     </div>
     <ProjectCards :projects="projects"/>
@@ -112,6 +89,7 @@
 </template>
 
 <script>
+import inmobiliarias from '../data/inmobiliarias.json';
 import GoogleMap from '../components/GoogleMap.vue';
 import ProjectCards from '../components/ProjectCards.vue';
 // eslint-disable-next-line import/no-cycle
@@ -123,23 +101,54 @@ export default {
     ProjectCards,
   },
   data() {
+    const totalProjects = inmobiliarias.features.map((inmob) => ({
+      position: {
+        lat: inmob.geometry.coordinates[1],
+        lng: inmob.geometry.coordinates[0],
+      },
+      title: inmob.properties.Proyecto,
+      id: inmob.id,
+      ...inmob.properties,
+    }));
     return {
+      search: this.$route.params.distric,
       kinderGarden: false,
       policeStation: false,
-      projects: [],
-      project: '',
-      eventBus,
+      totalProjects,
+      projects: totalProjects,
     };
+  },
+  methods: {
+    filterByInputUbication() {
+      this.projects = this.totalProjects.filter((project) => {
+        const direccion = project.Dirección.toLowerCase();
+        const distrito = project.Distrito.toLowerCase();
+        const search = this.search.toLowerCase();
+        return direccion.includes(search) || distrito.includes(search);
+      });
+    },
+    filterByRadioPlaces() {
+      // eslint-disable-next-line max-len
+      this.projects = this.policeStation ? this.projects.filter((e) => e.comisarias_coord.length > 0) : this.projects;
+      // eslint-disable-next-line max-len
+      this.projects = this.kinderGarden ? this.projects.filter((e) => e.kinder_names.length > 0) : this.projects;
+    },
+  },
+  watch: {
+    search() {
+      this.filterByInputUbication();
+    },
+    policeStation() {
+      this.filterByRadioPlaces();
+    },
+    kinderGarden() {
+      this.filterByRadioPlaces();
+    },
   },
   created() {
     eventBus.$on('infoProject', (payload) => {
-      this.projects = [payload.properties];
+      this.projects = payload;
     });
-  },
-  methods: {
-    filterByDistric(distric) {
-      console.log(distric);
-    },
   },
 };
 </script>
