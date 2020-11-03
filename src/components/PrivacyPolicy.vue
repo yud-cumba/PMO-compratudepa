@@ -1,13 +1,11 @@
 <template>
-  <div class="text-center">
+  <div>
     <v-dialog
       v-model="dialog"
       width="500"
     >
       <template v-slot:activator="{ on, attrs }">
-        <p
-          color="red lighten-2"
-          dark
+        <p class="pt-1 blue--text text-decoration-underline"
           v-bind="attrs"
           v-on="on"
         >
@@ -31,9 +29,9 @@
           <v-btn
             color="primary"
             text
-            @click="dialog = false"
+            @click="closeModal"
           >
-            I accept
+            Acepto
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -43,10 +41,17 @@
 
 <script>
 export default {
+  props: ['acceptConditions'],
   data() {
     return {
       dialog: false,
     };
+  },
+  methods: {
+    closeModal() {
+      this.dialog = false;
+      this.acceptConditions(true);
+    },
   },
 };
 </script>

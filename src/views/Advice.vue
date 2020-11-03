@@ -35,14 +35,23 @@
     <v-checkbox
        class="px-1 my-0"
       v-model="checkbox"
-      :rules="[v => !!v || 'Debes aceptar los términos y condiciones']"
+      label="      He leído y acepto los"
+      :rules="[v => !!v || 'Debes aceptar los terminos y condiciones ']"
       required
     ></v-checkbox>
-    He leído y acepto los <PrivacyPolicy/>
+     <PrivacyPolicy :acceptConditions="acceptConditions"/>
     </p>
     <v-btn
+      v-if="checkbox && name && phone && email"
       class="mr-4 green"
       @click="submit"
+    >
+      Enviar
+    </v-btn>
+     <v-btn
+      v-else
+      disabled
+      class="mr-4 green"
     >
       Enviar
     </v-btn>
@@ -78,6 +87,9 @@ export default {
   }),
 
   methods: {
+    acceptConditions(bol) {
+      this.checkbox = bol;
+    },
     submit() {
       userAdd({
         name: this.name,
