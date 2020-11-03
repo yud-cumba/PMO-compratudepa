@@ -62,14 +62,6 @@
 <script>
 export default {
   props: ['projects'],
-//   data: () => ({
-//     cards: [],
-//   }),
-//   watch: {
-//     projects() {
-//       this.cards = this.projects;
-//     },
-//   },
 };
 </script>
 

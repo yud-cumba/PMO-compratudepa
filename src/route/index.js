@@ -7,6 +7,7 @@ import Chatbot from '../components/Chatbot.vue';
 import Inform from '../views/Inform.vue';
 import ProjectDetail from '../views/ProjectDetail.vue';
 import Advice from '../views/Advice.vue';
+import Credits from '../views/Credits.vue';
 
 Vue.use(VueRouter);
 
@@ -17,6 +18,7 @@ const routes = [
   { path: '/chatbot', component: Chatbot },
   { path: '/advices', component: Advice },
   { path: '/detail/:id', component: ProjectDetail },
+  { path: '/credits', component: Credits },
 ];
 
 const router = new VueRouter({

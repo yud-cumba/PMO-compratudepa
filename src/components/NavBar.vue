@@ -1,5 +1,5 @@
 <template>
-  <v-card class="elevation-0">
+  <v-card class="elevation-1">
     <v-card-title class="text-center">
       <v-img src="../assets/logoPMO.png" aspect-ratio="1"
                        class="mr-3" max-height="60" max-width="270">
@@ -57,7 +57,7 @@
         <template v-slot:activator="{ on, attrs }">
             <div
             class="text-lg-h6 px-6 mx-6"
-            @click="active=true"
+            @click="creditsClick"
             v-click-outside="onClickOutside"
             v-bind="attrs"
             v-on="on"
@@ -65,9 +65,6 @@
             CRÉDITOS
             </div>
         </template>
-            <v-card class="text-caption">
-                HOLA
-            </v-card>
         </v-menu>
     </v-card-text>
   </v-card>
@@ -117,6 +114,14 @@ export default {
         value: 1,
       });
       this.$router.push({ path: '/advices' });
+    },
+    creditsClick() {
+      this.$gtag.event('Creditos', {
+        event_category: 'NavBar',
+        event_label: 'NavBar Creditos clicked',
+        value: 1,
+      });
+      this.$router.push({ path: '/credits' });
     },
   },
 };
