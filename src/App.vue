@@ -2,6 +2,7 @@
     <v-app>
       <NavBar :quantityInmobByDistrict="quantityInmobByDistrict" :items="items"/>
       <router-view></router-view>
+      <v-divider></v-divider>
       <Footer/>
     </v-app>
 </template>

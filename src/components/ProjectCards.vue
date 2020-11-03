@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex d-flex flex-wrap sellest">
+    <div class="d-flex pb-10 flex-wrap sellest">
         <div class="flip-card mx-auto my-4 " v-for="item in projects" :key="item.id">
         <div class="flip-card-inner rounded-lg">
             <v-card class="flip-card-front rounded-lg">
