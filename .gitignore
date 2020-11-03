@@ -1,1 +1,9 @@
 node_modules
+dist
+firebase.json
+.firebaserc
+.gitignore
+.firebase
+package-lock.json
+keys
+GoogleKeys.js

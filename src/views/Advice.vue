@@ -28,7 +28,8 @@
       required
     ></v-text-field>
     <h4>Descripción</h4>
-    <v-textarea outlined  dense>
+    <v-textarea outlined  dense
+     v-model="description">
     </v-textarea>
     <p class="d-flex">
     <v-checkbox
@@ -53,6 +54,7 @@
 
 <script>
 import PrivacyPolicy from '../components/PrivacyPolicy.vue';
+import { userAdd } from '../firebase/database';
 
 export default {
   data: () => ({
@@ -66,18 +68,23 @@ export default {
       (v) => !!v || 'E-mail es requerido',
       (v) => /.+@.+\..+/.test(v) || 'E-mail debe ser válido',
     ],
-    select: null,
     phone: '',
     phoneRules: [
       (v) => !!v || 'Celular es requerido',
       (v) => (v && v.length < 10 && Number(v[0]) === 9) || 'Celular debe ser válido',
     ],
+    description: '',
     checkbox: false,
   }),
 
   methods: {
     submit() {
-
+      userAdd({
+        name: this.name,
+        email: this.email,
+        phone: this.phone,
+        description: this.description,
+      }, this.phone);
     },
     clear() {
       this.$refs.form.reset();

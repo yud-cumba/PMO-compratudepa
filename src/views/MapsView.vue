@@ -1,6 +1,6 @@
 <template>
   <div class="view">
-    <v-card class="mx-5 pa-5">
+    <v-card class="ma-5 pa-5">
       <div class="d-flex">
         <v-text-field
           class="mt-5 mx-2"

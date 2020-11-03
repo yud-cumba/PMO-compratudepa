@@ -24,7 +24,7 @@
         class="mt-5 mx-2"
         v-model="search"
         append-icon="mdi-magnify"
-        label="Search"
+        label="Buscar por ubicacion"
         single-line
         hide-details
         dense
