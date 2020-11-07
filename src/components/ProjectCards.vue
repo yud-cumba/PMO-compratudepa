@@ -17,9 +17,6 @@
                             <img src="../assets/bed-empty.png" class="mr-1 icon"/>
                         {{`${item.Cuartos_max} habitaciones`}}</div>
                     </div>
-                    <button class="btn green pa-1">
-                        Ver más
-                    </button>
                 </div>
             </v-card>
             <v-card class="flip-card-back rounded-lg">

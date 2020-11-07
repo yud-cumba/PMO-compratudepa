@@ -3,7 +3,7 @@
     <v-card class="ma-5 pa-5">
       <div class="d-flex">
         <v-text-field
-          class="mt-5 mx-2"
+          class="my-5 mx-2"
           v-model="search"
           append-icon="mdi-magnify"
           label="Search"
@@ -13,7 +13,10 @@
           outlined
         ></v-text-field>
         <v-spacer></v-spacer>
-        <v-select
+        <v-btn class="my-5 mx-5" @click="filter" color="green">
+          Aplicar Filtro
+        </v-btn>
+        <!-- <v-select
             class="mt-5 ml-5 mr-2"
             :items="items"
             label="Outlined style"
@@ -36,7 +39,7 @@
             label="Outlined style"
             dense
             outlined
-        ></v-select>
+        ></v-select> -->
       </div>
       <div class="d-flex">
         <v-card class="mx-3 filter_price">
@@ -138,20 +141,9 @@ export default {
       // eslint-disable-next-line max-len
       this.projects = this.kinderGarden ? this.projects.filter((e) => e.kinder_names.length > 0) : this.projects;
     },
-    // filterByCost() {
-    //   this.projects = this.projects.filter((e) => e.Precio_por_m2_oferta < this.cost);
-    // },
-  },
-  watch: {
-    search() {
-      this.filterByInputUbication();
-    },
-    policeStation() {
+    filter() {
       this.filterByInputUbication();
       this.filterByRadioPlaces();
-    },
-    kinderGarden() {
-      this.filterByInputUbication();
       this.filterByRadioPlaces();
     },
   },
