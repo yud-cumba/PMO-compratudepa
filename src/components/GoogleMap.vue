@@ -1,7 +1,7 @@
 <template>
   <gmap-map
     :center="center"
-    :zoom="12"
+    :zoom="z"
     style="width: 100%; height: 500px"
   >
     <gmap-marker
@@ -24,21 +24,28 @@ export default {
     return {
       center: { lat: this.latitude, lng: this.longitude },
       currentInmob: [],
+      z: this.zoom,
     };
   },
 
-  props: ['latitude', 'longitude', 'markers', 'totalMarkers'],
+  props: ['latitude', 'longitude', 'markers', 'totalMarkers', 'zoom'],
   methods: {
     toggleInfo(position) {
       // eslint-disable-next-line max-len
-      this.currentInmob = this.totalMarkers.filter((e) => e.position.lat === position.lat && e.position.lag === position.lag);
-      // eslint-disable-next-line prefer-destructuring
-      // this.currentInmob = this.inmobiliarias.filter((e) => e.id === id)[0];
+      this.currentInmob = this.totalMarkers.filter((e) => e.position.lat === position.lat && e.position.lng === position.lng);
+      this.center = {
+        lat: this.currentInmob[0].position.lat,
+        lng: this.currentInmob[0].position.lng,
+      };
+      this.z = 20;
     },
   },
   watch: {
     currentInmob() {
       eventBus.$emit('infoProject', this.currentInmob);
+    },
+    latitude() {
+      this.center = { lat: this.latitude, lng: this.longitude };
     },
   },
   // created() {

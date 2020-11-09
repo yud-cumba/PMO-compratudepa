@@ -60,8 +60,8 @@
       </div>
     </v-card>
     <div class="ma-5">
-    <GoogleMap :latitude= -12.089637033755114
-    :longitude= -77.05453930635801 :markers="projects" :totalMarkers="totalProjects"
+    <GoogleMap :latitude= "latitude" :zoom="zoom"
+    :longitude= "longitude" :markers="projects" :totalMarkers="totalProjects"
     />
     </div>
     <ProjectCards :projects="projects"/>
@@ -93,6 +93,9 @@ export default {
     const cost = totalProjects.map((e) => e.Precio_por_m2_oferta);
 
     return {
+      zoom: 12,
+      latitude: -12.089637033755114,
+      longitude: -77.05453930635801,
       prices: {
         // eslint-disable-next-line max-len
         min: this.$route.query.prices.min !== '' ? this.$route.query.prices.min : cost.reduce((a, b) => Math.min(a, b)),
@@ -121,6 +124,9 @@ export default {
         const search = this.search.toLowerCase();
         return direccion.includes(search) || distrito.includes(search);
       });
+      this.longitude = this.projects[0].position.lng;
+      this.latitude = this.projects[0].position.lat;
+      this.zoom = 13;
     },
     filterByRadioPlaces() {
       // eslint-disable-next-line max-len
