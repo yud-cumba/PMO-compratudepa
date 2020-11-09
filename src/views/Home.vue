@@ -2,38 +2,55 @@
 <div>
   <v-parallax src="../assets/main.png"
   class="initial-search d-flex justify-center align-center">
-    <v-card color="rgb(255, 255, 255, 0.5)" class="toolbar d-flex">
-      <v-select
-          class="mt-5 ml-5 mr-2"
-          :items="items"
-          label="Outlined style"
-          dense
-          outlined
-          color="white"
-      ></v-select>
-      <v-spacer></v-spacer>
-      <v-select
+    <v-card color="rgb(255, 255, 255, 0.5)" width="600">
+      <v-row  class="mx-2">
+        <v-text-field
           class="mt-5 mx-2"
-          :items="items"
-          label="Outlined style"
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Buscar por ubicacion"
+          single-line
+          hide-details
           dense
           outlined
-      ></v-select>
-      <v-spacer></v-spacer>
-      <v-text-field
-        class="mt-5 mx-2"
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Buscar por ubicacion"
-        single-line
-        hide-details
-        dense
-        outlined
-      ></v-text-field>
-      <v-spacer></v-spacer>
-      <v-btn @click="searchInMap" class="ma-5 green">
-        Buscar
-      </v-btn>
+          color="green"
+        ></v-text-field>
+        <v-spacer></v-spacer>
+        <v-btn @click="searchInMap" class="ma-5 green">
+          Buscar
+        </v-btn>
+      </v-row>
+      <v-row  class="mx-2 d-flex">
+        <v-select
+          v-model="typePrice"
+          class="mt-5 mx-2 select-price"
+          :items="['Dólares', 'Soles']"
+          label="Tipo de moneda"
+          dense
+          outlined
+          color="green"
+        ></v-select>
+        <v-spacer></v-spacer>
+        <v-text-field
+          class="mt-5 mx-2 select-price"
+          v-model="prices.min"
+          label="Precio desde"
+          hide-details
+          dense
+          outlined
+          color="green"
+        ></v-text-field>
+        <v-spacer></v-spacer>
+        <v-text-field
+          class="mt-5 mx-2 select-price"
+          v-model="prices.max"
+          label="Precio hasta"
+          hide-details
+          dense
+          outlined
+          color="green"
+        ></v-text-field>
+      </v-row>
     </v-card>
   </v-parallax>
   <Benefits/>
@@ -65,13 +82,18 @@ export default {
         return 0;
       });
     return {
+      typePrice: '',
       inmobiliarias,
       search: '',
+      prices: {
+        max: '',
+        min: '',
+      },
     };
   },
   methods: {
     searchInMap() {
-      this.$router.push({ path: `/maps/${this.search}` });
+      this.$router.push({ path: '/maps', query: { district: this.search, prices: this.prices, typePrice: this.typePrice } });
     },
   },
 };
@@ -83,8 +105,7 @@ export default {
  height: 75vh;
 //  background-image: url('../assets/main.png');
 }
-.toolbar{
-   width: 70vw;
-   background: blanchedalmond;
- }
+.select-price{
+ width: 150px;
+}
 </style>

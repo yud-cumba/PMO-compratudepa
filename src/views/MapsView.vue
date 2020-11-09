@@ -16,56 +16,33 @@
         <v-btn class="my-5 mx-5" @click="filter" color="green">
           Aplicar Filtro
         </v-btn>
-        <!-- <v-select
-            class="mt-5 ml-5 mr-2"
-            :items="items"
-            label="Outlined style"
-            dense
-            outlined
-            color="white"
-        ></v-select>
-        <v-spacer></v-spacer>
-        <v-select
-            class="mt-5 mx-2"
-            :items="items"
-            label="Outlined style"
-            dense
-            outlined
-        ></v-select>
-        <v-spacer></v-spacer>
-        <v-select
-            class="mt-5 mx-2"
-            :items="items"
-            label="Outlined style"
-            dense
-            outlined
-        ></v-select> -->
       </div>
       <div class="d-flex">
         <v-card class="mx-3 filter_price">
-          <v-radio-group
-            v-model="row"
-            row
-          >
-            <v-radio
-              label="Option 1"
-              value="radio-1"
-            ></v-radio>
-            <v-radio
-              label="Option 2"
-              value="radio-2"
-            ></v-radio>
-          </v-radio-group>
-          <v-card>
-          <v-card-text>
-              <v-slider
-                v-model="cost"
-                :max="maxCost"
-                :min="minCost"
-                thumb-label="always"
-              ></v-slider>
-            </v-card-text>
-          </v-card>
+          <v-select
+          v-model="priceSelected"
+          :items="['Soles', 'Dólares']"
+          label="Tipo de moneda"
+          outlined
+        ></v-select>
+        <div class="d-flex">
+          <v-text-field
+            class="mb-5 mx-2"
+            v-model="prices.min"
+            label="Precio desde"
+            hide-details
+            dense
+            outlined
+          ></v-text-field>
+          <v-text-field
+            class="mb-5 mx-2"
+            v-model="prices.max"
+            label="Precio hasta"
+            hide-details
+            dense
+            outlined
+          ></v-text-field>
+        </div>
         </v-card>
         <v-spacer></v-spacer>
         <v-card class="mx-3 filter_places">
@@ -116,10 +93,14 @@ export default {
     const cost = totalProjects.map((e) => e.Precio_por_m2_oferta);
 
     return {
-      minCost: cost.reduce((a, b) => Math.min(a, b)),
-      maxCost: cost.reduce((a, b) => Math.max(a, b)),
-      cost: '',
-      search: this.$route.params.distric,
+      prices: {
+        // eslint-disable-next-line max-len
+        min: this.$route.query.prices.min !== '' ? this.$route.query.prices.min : cost.reduce((a, b) => Math.min(a, b)),
+        // eslint-disable-next-line max-len
+        max: this.$route.query.prices.max !== '' ? this.$route.query.prices.max : cost.reduce((a, b) => Math.max(a, b)),
+      },
+      priceSelected: this.$route.query.typePrice !== '' ? this.$route.query.typePrice : 'Soles',
+      search: this.$route.query.district,
       kinderGarden: false,
       policeStation: false,
       totalProjects,
@@ -127,6 +108,12 @@ export default {
     };
   },
   methods: {
+    filterByPrice() {
+      const type = (this.priceSelected === 'Soles') ? 1 : 3.3;
+      // eslint-disable-next-line max-len
+      this.projects = this.projects.filter((e) => e.Precio_por_m2_oferta > Number(this.prices.min) * type
+      && e.Precio_por_m2_oferta < Number(this.prices.max) * type);
+    },
     filterByInputUbication() {
       this.projects = this.totalProjects.filter((project) => {
         const direccion = project.Dirección.toLowerCase();
@@ -144,11 +131,12 @@ export default {
     filter() {
       this.filterByInputUbication();
       this.filterByRadioPlaces();
-      this.filterByRadioPlaces();
+      this.filterByPrice();
     },
   },
   created() {
     this.filterByInputUbication();
+    this.filterByPrice();
     eventBus.$on('infoProject', (payload) => {
       this.projects = payload;
     });

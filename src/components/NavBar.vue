@@ -97,7 +97,17 @@ export default {
         event_label: `NavBar Proyectos ${district} clicked`,
         value: 1,
       });
-      this.$router.push({ path: `/maps/${district}` });
+      this.$router.push({
+        path: '/maps',
+        query: {
+          district,
+          prices: {
+            max: '',
+            min: '',
+          },
+          typePrice: '',
+        },
+      });
     },
     projectsClick() {
       this.active = true;

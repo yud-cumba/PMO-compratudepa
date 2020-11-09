@@ -13,7 +13,7 @@ Vue.use(VueRouter);
 
 const routes = [
   { path: '/', component: Home },
-  { path: '/maps/:distric', component: MapsView },
+  { path: '/maps', component: MapsView },
   { path: '/inform', component: Inform },
   { path: '/chatbot', component: Chatbot },
   { path: '/advices', component: Advice },
