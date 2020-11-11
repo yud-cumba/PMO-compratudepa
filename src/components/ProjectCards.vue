@@ -26,7 +26,8 @@
                 <v-card-text class="d-flex flex-column">
                     <div class="d-flex">Información:
                         <v-spacer></v-spacer>
-                        <button class="btn green pa-1 my-1">
+                        <button class="btn green pa-1 my-1"
+                        @click="showMore(item)">
                         Ver más
                         </button>
                     </div>
@@ -59,6 +60,16 @@
 <script>
 export default {
   props: ['projects'],
+  methods: {
+    showMore(item) {
+      this.$gtag.event(item.Proyecto, {
+        event_category: 'Proyectos',
+        event_label: `${item.Proyecto} clicked to see details`,
+        value: 1,
+      });
+      this.$router.push({ path: `/detail/${item.id}` });
+    },
+  },
 };
 </script>
 

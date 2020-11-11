@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-parallax src="../assets/main.png"
+  <v-parallax src="../assets/sala.png"
   class="initial-search d-flex justify-center align-center">
     <v-card color="rgb(255, 255, 255, 0.5)" width="600">
       <v-row  class="mx-2">

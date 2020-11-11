@@ -45,6 +45,7 @@ export default {
       eventBus.$emit('infoProject', this.currentInmob);
     },
     latitude() {
+      this.z = 13;
       this.center = { lat: this.latitude, lng: this.longitude };
     },
   },

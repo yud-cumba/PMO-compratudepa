@@ -59,10 +59,13 @@
         </v-card>
       </div>
     </v-card>
-    <div class="ma-5">
+    <div v-if="projects.length>0" class="ma-5">
     <GoogleMap :latitude= "latitude" :zoom="zoom"
     :longitude= "longitude" :markers="projects" :totalMarkers="totalProjects"
     />
+    </div>
+    <div v-else class="ma-5 text-red">
+      No hay resultados de la búsqueda, intente con otro filtro
     </div>
     <ProjectCards :projects="projects"/>
   </div>
