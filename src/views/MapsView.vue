@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 <template>
   <div class="view">
     <v-card class="ma-5 pa-5">
@@ -13,7 +14,7 @@
           outlined
         ></v-text-field>
         <v-spacer></v-spacer>
-        <v-btn class="my-5 mx-5" @click="filter" color="green">
+        <v-btn class="my-5 mx-5" @click="filterFunction" color="green">
           Aplicar Filtro
         </v-btn>
       </div>
@@ -45,15 +46,11 @@
         </div>
         </v-card>
         <v-spacer></v-spacer>
-        <v-card class="mx-3 filter_places">
+        <v-card class="mx-3 filter_places d-flex flex-wrap pa-5">
           <v-checkbox
-              v-model="policeStation"
-              label="Comisaria"
-              color="green"
-          ></v-checkbox>
-          <v-checkbox
-              v-model="kinderGarden"
-              label="Kindergarden"
+          v-for="(value, key) in filterPlaces" :key="key"
+              v-model="filterPlaces[key]"
+              :label="key"
               color="green"
           ></v-checkbox>
         </v-card>
@@ -107,8 +104,26 @@ export default {
       },
       priceSelected: this.$route.query.typePrice !== '' ? this.$route.query.typePrice : 'Soles',
       search: this.$route.query.district,
-      kinderGarden: false,
-      policeStation: false,
+      filterPlaces: {
+        comisarias: false,
+        guarderias: false,
+        bancos: false,
+        canchas: false,
+        gyms: false,
+        clinicas: false,
+        estaciones: false,
+        hospitales: false,
+        mall: false,
+        parques: false,
+        piscinas: false,
+        restaurantes: false,
+        schools: false,
+        supermercados: false,
+        terrapuertos: false,
+        universidades: false,
+        vegano: false,
+        veterinarias: false,
+      },
       totalProjects,
       projects: totalProjects,
     };
@@ -132,12 +147,18 @@ export default {
       this.zoom = 13;
     },
     filterByRadioPlaces() {
-      // eslint-disable-next-line max-len
-      this.projects = this.policeStation ? this.projects.filter((e) => e.comisarias_coord.length > 0) : this.projects;
-      // eslint-disable-next-line max-len
-      this.projects = this.kinderGarden ? this.projects.filter((e) => e.kinder_names.length > 0) : this.projects;
+      const places = [
+        'comisarias', 'guarderias', 'bancos', 'canchas', 'gyms', 'clinicas', 'estaciones', 'hospitales',
+        'mall', 'parques', 'piscinas', 'restaurantes', 'schools', 'supermercados', 'terrapuertos', 'universidades',
+        'vegano', 'veterinarias',
+      ];
+      places.forEach((nameData) => {
+        const place = `${nameData}__coord`;
+        const filter = this.projects.filter((e) => e[place].length > 0);
+        this.projects = this[nameData] ? filter : this.projects;
+      });
     },
-    filter() {
+    filterFunction() {
       this.filterByInputUbication();
       this.filterByRadioPlaces();
       this.filterByPrice();

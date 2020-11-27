@@ -11,7 +11,7 @@
         :pdf-quality="2"
         :manual-pagination="false"
         pdf-format="a4"
-        pdf-orientation="portrait"
+        pdf-orientation="landscape"
         pdf-content-width="800px"
 
         @progress="onProgress($event)"
@@ -23,9 +23,9 @@
             <PdfContent></PdfContent>
         </section>
     </VueHtml2pdf>
-    <button @click="generateReport">
-        download
-    </button>
+    <v-btn @click="generateReport">
+        Descargar PDF
+    </v-btn>
    </div>
 </template>
 
