@@ -150,9 +150,9 @@ export default {
         'vegano', 'veterinarias',
       ];
       places.forEach((nameData) => {
-        const place = `${nameData}__coord`;
+        const place = `${nameData}_coord`;
         const filter = this.projects.filter((e) => e[place].length > 0);
-        this.projects = this[nameData] ? filter : this.projects;
+        this.projects = this.filterPlaces[nameData] ? filter : this.projects;
       });
     },
     filterFunction() {
