@@ -33,7 +33,7 @@ export default {
       {
         icon: dollarIcon,
         title: 'PAGO SEGURO Y CRÉDITOS',
-        text: 'En la plataforma encontrarás opciones de pago accesibles y seguros, también tendrás opción de acceder a crédiots hipotecarios. con nuestros bancos afiliados.',
+        text: 'En la plataforma encontrarás opciones de pago accesibles y seguros, también tendrás opción de acceder a créditos hipotecarios con nuestros bancos afiliados.',
       },
       {
         icon: clipboardIcon,

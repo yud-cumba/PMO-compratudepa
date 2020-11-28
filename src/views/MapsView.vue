@@ -19,7 +19,29 @@
         </v-btn>
       </div>
       <div class="d-flex">
+        <div>
+          <v-select
+            v-model="rooms"
+            class="mt-2 mx-2 pb-0 select-price"
+            :items="['1 dormitorio', '2 dormitorios', '3 dormitorios', '4 dormitorios']"
+            label="Número de habitaciones"
+            style="width: 230px"
+            dense
+            outlined
+            color="green"
+          ></v-select>
+          <v-select
+            v-model="rooms"
+            class="mx-2 pb-0 select-price"
+            :items="['1 dormitorio', '2 dormitorios', '3 dormitorios', '4 dormitorios']"
+            label="Número de pisos"
+            style="width: 230px"
+            dense
+            outlined
+            color="green"
+          ></v-select>
         <FilterPrice :setPrice="setPrice"/>
+        </div>
         <v-spacer></v-spacer>
         <v-card class="mx-3 filter_places d-flex flex-wrap pa-5">
           <v-checkbox
@@ -72,14 +94,10 @@ export default {
       zoom: 12,
       latitude: -12.089637033755114,
       longitude: -77.05453930635801,
-      prices: {
-        // eslint-disable-next-line max-len
-        min: this.$route.query.prices ? this.$route.query.prices.min : 2000,
-        // eslint-disable-next-line max-len
-        max: this.$route.query.prices ? this.$route.query.prices.max : 20000,
-      },
-      priceSelected: this.$route.query.typePrice !== '' ? this.$route.query.typePrice : 'Soles',
+      prices: this.$route.query.prices,
+      priceSelected: this.$route.query.typePrice,
       search: this.$route.query.district,
+      rooms: this.$route.query.district,
       filterPlaces: {
         comisarias: false,
         guarderias: false,
@@ -123,7 +141,7 @@ export default {
       });
       this.longitude = this.projects[0].position.lng;
       this.latitude = this.projects[0].position.lat;
-      this.zoom = 13;
+      this.zoom = 15;
     },
     filterByRadioPlaces() {
       const places = [

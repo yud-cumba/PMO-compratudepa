@@ -102,10 +102,10 @@ export default {
         query: {
           district,
           prices: {
-            max: '',
-            min: '',
+            min: 2000, max: 20000,
           },
-          typePrice: '',
+          typePrice: 'Soles',
+          rooms: false,
         },
       });
     },
