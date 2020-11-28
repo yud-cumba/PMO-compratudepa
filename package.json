@@ -8,6 +8,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@iconify/icons-emojione-monotone": "^1.1.0",
+    "@iconify/vue": "^1.0.6",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "firebase": "^7.22.1",

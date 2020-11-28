@@ -19,32 +19,7 @@
         </v-btn>
       </div>
       <div class="d-flex">
-        <v-card class="mx-3 filter_price">
-          <v-select
-          v-model="priceSelected"
-          :items="['Soles', 'Dólares']"
-          label="Tipo de moneda"
-          outlined
-        ></v-select>
-        <div class="d-flex">
-          <v-text-field
-            class="mb-5 mx-2"
-            v-model="prices.min"
-            label="Precio desde"
-            hide-details
-            dense
-            outlined
-          ></v-text-field>
-          <v-text-field
-            class="mb-5 mx-2"
-            v-model="prices.max"
-            label="Precio hasta"
-            hide-details
-            dense
-            outlined
-          ></v-text-field>
-        </div>
-        </v-card>
+        <FilterPrice :setPrice="setPrice"/>
         <v-spacer></v-spacer>
         <v-card class="mx-3 filter_places d-flex flex-wrap pa-5">
           <v-checkbox
@@ -72,6 +47,7 @@
 import inmobiliarias from '../data/inmobiliarias.json';
 import GoogleMap from '../components/GoogleMap.vue';
 import ProjectCards from '../components/ProjectCards.vue';
+import FilterPrice from '../components/FilterPrice.vue';
 // eslint-disable-next-line import/no-cycle
 import { eventBus } from '../main';
 
@@ -79,6 +55,7 @@ export default {
   components: {
     GoogleMap,
     ProjectCards,
+    FilterPrice,
   },
   data() {
     const totalProjects = inmobiliarias.features.map((inmob) => ({
@@ -90,7 +67,6 @@ export default {
       id: inmob.id,
       ...inmob.properties,
     }));
-    const cost = totalProjects.map((e) => e.Precio_por_m2_oferta);
 
     return {
       zoom: 12,
@@ -98,9 +74,9 @@ export default {
       longitude: -77.05453930635801,
       prices: {
         // eslint-disable-next-line max-len
-        min: this.$route.query.prices.min !== '' ? this.$route.query.prices.min : cost.reduce((a, b) => Math.min(a, b)),
+        min: this.$route.query.prices ? this.$route.query.prices.min : 2000,
         // eslint-disable-next-line max-len
-        max: this.$route.query.prices.max !== '' ? this.$route.query.prices.max : cost.reduce((a, b) => Math.max(a, b)),
+        max: this.$route.query.prices ? this.$route.query.prices.max : 20000,
       },
       priceSelected: this.$route.query.typePrice !== '' ? this.$route.query.typePrice : 'Soles',
       search: this.$route.query.district,
@@ -129,6 +105,9 @@ export default {
     };
   },
   methods: {
+    setPrice(price) {
+      this.prices = price;
+    },
     filterByPrice() {
       const type = (this.priceSelected === 'Soles') ? 1 : 3.3;
       // eslint-disable-next-line max-len

@@ -7,32 +7,26 @@
       flat
       tile
     >
-      <v-col class="col text-sm-body-2 px-10 mt-5" :key="data">
+      <v-col class="col text-sm-body-1 px-10 mt-5" :key="data">
         <h4 class="py-3">CompraTuDepa</h4>
         <p >Atención al cliente</p>
-        <p>Atención al cliente</p>
-        <p>Atención al cliente</p>
+        <p>Lima Perú</p>
+        <p>+51 98741414</p>
       </v-col>
-      <v-col class="col text-sm-body-2 px-10 mt-5" :key="data">
+      <v-col class="col text-sm-body-1 px-10 mt-5" :key="data">
         <h4 class="py-3">Menú</h4>
-        <p >Atención al cliente</p>
-        <p>Atención al cliente</p>
-        <p>Atención al cliente</p>
-        <p >Atención al cliente</p>
+        <p >Inicio</p>
+        <p>Proyectos</p>
+        <p>Te asesoramos</p>
+        <p >Términos y Condiciones</p>
       </v-col>
-      <v-col class="col text-sm-body-2 px-10 mt-5" :key="data">
+      <v-col class="col text-sm-body-1 px-10 mt-5" :key="data">
         <h4 class="py-3">Mi cuenta</h4>
-        <p >Atención al cliente</p>
-        <p>Atención al cliente</p>
-        <p>Atención al cliente</p>
-      </v-col>
-      <v-col class="col text-sm-body-2 px-10 mt-5" :key="data">
-        <h4 class="py-3">Contáctanos</h4>
-        <p >Atención al cliente</p>
-        <p>Atención al cliente</p>
+        <p >Política de privacidad</p>
+        <p>Términos y Condiciones</p>
         <p>Atención al cliente</p>
       </v-col>
-      <v-col class="col text-sm-body-2 px-10 mt-5" :key="data">
+      <v-col class="col text-sm-body-1 px-10 mt-5" :key="data">
         <h4 class="py-3">Estemos en contacto </h4>
         <v-text-field dense outlined label="Ingresa tu correo"
         append-outer-icon="mdi-map-marker"></v-text-field>
@@ -55,6 +49,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .col{
-  width: 20vw;
+  width: 25vw;
 }
 </style>
