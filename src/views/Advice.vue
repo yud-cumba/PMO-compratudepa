@@ -1,7 +1,9 @@
 <template>
 <v-card class="d-flex">
   <v-form class="form py-8 px-12 mx-5">
-    <h2 class="py-3">Déjanos tus datos para poder contactarte</h2>
+    <h2 class="py-3">
+      Déjanos tus datos para poder enviarte la cotización
+      </h2>
     <h4>Nombre</h4>
     <v-text-field
       v-model="name"
@@ -11,7 +13,7 @@
       outlined  dense
       required
     ></v-text-field>
-    <h4>E-mail</h4>
+    <h4>Correo electrónico</h4>
     <v-text-field
       v-model="email"
       :rules="emailRules"
@@ -27,12 +29,21 @@
       :rules="phoneRules"
       required
     ></v-text-field>
-    <h4>Descripción</h4>
-    <v-textarea outlined  dense
-     v-model="description">
-    </v-textarea>
+    <h4>Contraseña</h4>
+    <v-text-field
+      color="green"
+      v-model="password"
+      label="Crea una contraseña"
+      outlined  dense
+      :type="show? 'text' : 'password'"
+      :rules="passwordRules"
+      required
+      :append-icon="show?'mdi-eye':'mdi-eye-off'"
+      @click:append="show= !show"
+    ></v-text-field>
     <p class="d-flex">
     <v-checkbox
+    color="green"
        class="px-1 my-0"
       v-model="checkbox"
       label="      He leído y acepto los"
@@ -41,20 +52,25 @@
     ></v-checkbox>
      <PrivacyPolicy :acceptConditions="acceptConditions"/>
     </p>
+    <v-btn class="mx-4 green" color="green">
+      Atrás
+    </v-btn>
     <v-btn
       v-if="checkbox && name && phone && email"
-      class="mr-4 green"
+      class="mx-4 green"
       @click="submit"
     >
-      Enviar
+      Registrarse
     </v-btn>
      <v-btn
       v-else
       disabled
-      class="mr-4 green"
+      class="mx-4 green"
     >
-      Enviar
+      Registrarse
     </v-btn>
+    <p class="pa-5">¿Ya tienes cuenta?
+      <router-link to="/login" ><span class="green--text"> Inicia Sesión </span></router-link></p>
   </v-form>
   <v-parallax height="700" class="parallax" src="../assets/form-cafe.png">
   </v-parallax>
@@ -63,6 +79,7 @@
 
 <script>
 import PrivacyPolicy from '../components/PrivacyPolicy.vue';
+import { registerUserEmail } from '../firebase/auth';
 import { userAdd } from '../firebase/database';
 
 export default {
@@ -82,6 +99,12 @@ export default {
       (v) => !!v || 'Celular es requerido',
       (v) => (v && v.length < 10 && Number(v[0]) === 9) || 'Celular debe ser válido',
     ],
+    password: '',
+    passwordRules: [
+      (v) => !!v || 'Contraseña es requerida',
+      (v) => (v && v.length > 8) || 'Minino 8 carácteres',
+    ],
+    show: false,
     description: '',
     checkbox: false,
   }),
@@ -91,12 +114,14 @@ export default {
       this.checkbox = bol;
     },
     submit() {
-      userAdd({
-        name: this.name,
-        email: this.email,
-        phone: this.phone,
-        description: this.description,
-      }, this.phone);
+      registerUserEmail(this.email, this.password)
+        .then((result) => {
+          userAdd({
+            name: this.name,
+            email: this.email,
+            phone: this.phone,
+          }, result.user.uid);
+        });
     },
     clear() {
       this.$refs.form.reset();
