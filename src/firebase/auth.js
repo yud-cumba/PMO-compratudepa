@@ -2,6 +2,14 @@ import firebase from '../keys/firebaseConfig';
 
 export const currentUser = () => firebase.auth().currentUser;
 
+export const verifyIsLogin = (isLogin, isNotLogin) => firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    isLogin(user);
+  } else {
+    isNotLogin();
+  }
+});
+
 export const registerUserEmail = (email, password) => firebase.auth()
   .createUserWithEmailAndPassword(email, password);
 

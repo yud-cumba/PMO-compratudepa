@@ -1,9 +1,9 @@
 <template>
 <v-card class="d-flex ">
   <v-form class="form py-8 px-12 mx-5">
-    <h2 class="py-3">¡Regístrate para tener acceso a las asesorías!</h2>
+    <h2 class="py-3">¡Ingresa para tener acceso a las asesorías!</h2>
     <p class="pa-3">
-        Primero regístrate en nuestra plataforma con tan sólo tu correo y contraseña.
+        Ingresa en nuestra plataforma con tan sólo tu correo y contraseña.
     </p>
     <h4 class="my-2">Correo electrónico</h4>
     <v-text-field
@@ -30,9 +30,9 @@
     <v-btn
       v-if="email && password"
       class="mr-4 green"
-      @click="submit"
+      @click="login"
     >
-      Regístrate
+      Ingresar
     </v-btn>
      <v-btn
       v-else
@@ -41,7 +41,12 @@
     >
       Ingresar
     </v-btn>
+    <div v-if="error">{{error}}</div>
+    <!-- <p class="my-3" @click="rememberPassword">¿Olvidaste tu contraseña?</p> -->
     - o -
+    <p class="pt-4">Inicia sesión con</p>
+    <v-icon class="pb-4" @click="logInByGoogle" color="green">mdi-google</v-icon>
+    ¿No te registraste? <router-link to="/advices"> Hazlo aquí</router-link>
     </div>
   </v-form>
   <v-parallax height="700" class="parallax" src="../assets/login.png">
@@ -50,7 +55,7 @@
 </template>
 
 <script>
-import { userAdd } from '../firebase/database';
+import { logIn, logInGoogle } from '../firebase/auth';
 
 export default {
   data: () => ({
@@ -72,22 +77,20 @@ export default {
     show: false,
     description: '',
     checkbox: false,
+    error: false,
   }),
 
   methods: {
+    logInByGoogle() {
+      logInGoogle().then(() => this.$router.replace('/advices'));
+    },
     acceptConditions(bol) {
       this.checkbox = bol;
     },
-    submit() {
-      userAdd({
-        name: this.name,
-        email: this.email,
-        phone: this.phone,
-        description: this.description,
-      }, this.phone);
-    },
-    clear() {
-      this.$refs.form.reset();
+    login() {
+      logIn(this.email, this.password)
+        .then(() => this.$router.replace('/advices'))
+        .catch((error) => { this.error = error; });
     },
   },
 };
