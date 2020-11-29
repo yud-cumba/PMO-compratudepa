@@ -1,17 +1,17 @@
 <template>
-  <div>
+  <div >
     <div v-if="!isLogin">
        <SignUp />
     </div>
-    <div v-else>
-      <v-btn @click="logout">
+    <div class="px-12 mx-12 pt-5" v-else>
+      <!-- <v-btn @click="logout">
         Cerrar sesión
-      </v-btn>
-      <h1>TIPS</h1>
+      </v-btn> -->
+      <!-- <h2 class="ma-6">Tips</h2> -->
       <v-tabs
       v-model="tab"
-      background-color="white"
-      color="green"
+      background-color="green"
+      color="black"
       grow
     >
       <v-tab
