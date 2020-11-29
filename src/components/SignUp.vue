@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import PrivacyPolicy from '../components/PrivacyPolicy.vue';
+import PrivacyPolicy from './PrivacyPolicy.vue';
 import { registerUserEmail } from '../firebase/auth';
 import { userAdd } from '../firebase/database';
 

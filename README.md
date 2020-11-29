@@ -1,24 +1,11 @@
-# pmo-app
+# :iphone: BUNKER Red Social
 
-## Project setup
-```
-npm install
-```
+Bienvenid@ a nuestra plataforma COMPRATUDEPA, El lugar perfecto para comprar tu depa soñado
+**!COMPRA TU DEPA, tu espacio personalizado!**
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+<p align="center">
+  <img src="https://github.com/yud-cumba/pmo-app/blob/master/src/assets/presentacion.png" width="700" height="350">
+</p>
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+***
