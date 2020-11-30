@@ -162,6 +162,7 @@ export default {
     },
   },
   created() {
+    this.$store.commit('SET_LAYOUT', 'public-layout');
     this.filterByInputUbication();
     this.filterByPrice();
     eventBus.$on('infoProject', (payload) => {

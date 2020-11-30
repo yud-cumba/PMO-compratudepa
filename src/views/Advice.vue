@@ -4,9 +4,9 @@
        <SignUp />
     </div>
     <div class="px-12 mx-12 pt-5" v-else>
-      <!-- <v-btn @click="logout">
+      <v-btn @click="logout">
         Cerrar sesión
-      </v-btn> -->
+      </v-btn>
       <!-- <h2 class="ma-6">Tips</h2> -->
       <v-tabs
       v-model="tab"
@@ -67,6 +67,7 @@ export default {
     },
   },
   created() {
+    this.$store.commit('SET_LAYOUT', 'public-layout');
     this.verify();
   },
 };

@@ -118,6 +118,9 @@ export default {
       e6: 1,
     };
   },
+  created() {
+    this.$store.commit('SET_LAYOUT', 'public-layout');
+  },
 };
 </script>
 

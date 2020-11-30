@@ -105,6 +105,9 @@ export default {
       });
     },
   },
+  created() {
+    this.$store.commit('SET_LAYOUT', 'public-layout');
+  },
 };
 </script>
 

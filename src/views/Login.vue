@@ -93,6 +93,9 @@ export default {
         .catch((error) => { this.error = error; });
     },
   },
+  created() {
+    this.$store.commit('SET_LAYOUT', 'public-layout');
+  },
 };
 </script>
 

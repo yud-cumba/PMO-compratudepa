@@ -15,10 +15,10 @@
       </v-col>
       <v-col class="col text-sm-body-1 px-10 mt-5" :key="data">
         <h4 class="py-3">Menú</h4>
-        <p >Inicio</p>
-        <p>Proyectos</p>
-        <p>Te asesoramos</p>
-        <p >Términos y Condiciones</p>
+        <router-link to="/home"><p >Inicio</p></router-link>
+        <router-link to="/maps"><p>Proyectos</p></router-link>
+        <router-link to="/advice"><p>Te asesoramos</p></router-link>
+        <router-link to="/credits"><p >Términos y Condiciones</p></router-link>
       </v-col>
       <v-col class="col text-sm-body-1 px-10 mt-5" :key="data">
         <h4 class="py-3">Mi cuenta</h4>

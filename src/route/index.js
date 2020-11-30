@@ -9,6 +9,8 @@ import ProjectDetail from '../views/ProjectDetail.vue';
 import Advice from '../views/Advice.vue';
 import Credits from '../views/Credits.vue';
 import Login from '../views/Login.vue';
+import Oli from '../views/Oli.vue';
+import MyProjects from '../views/MyProjects.vue';
 
 Vue.use(VueRouter);
 
@@ -21,6 +23,8 @@ const routes = [
   { path: '/detail/:id', component: ProjectDetail },
   { path: '/credits', component: Credits },
   { path: '/login', component: Login },
+  { path: '/oli', component: Oli },
+  { path: '/Mis%20proyectos', component: MyProjects },
 ];
 
 const router = new VueRouter({

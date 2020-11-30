@@ -36,16 +36,64 @@
                 </p>
             </div>
         </div>
-        <div class="d-flex justify-center">
-            <v-btn class="green ma-7" dark>
+        <div class="d-flex justify-center pa-3">
+            <v-btn class="light-green accent-4 mb-3 mx-4" dark @click="asesorByWhatsApp">
+                <v-icon class="mr-3" right dark>
+                    mdi-whatsapp
+                </v-icon>
                 Contacta con un asesor
             </v-btn>
-            <v-btn class="green ma-7" dark>
+            <v-btn class="light-green accent-4 mb-3 mx-4" dark>
                 SOLICITA UNA COTIZACIÓN
             </v-btn>
-            <v-btn class="green ma-7" dark>
+            <v-btn class="light-green accent-4 mb-3 mx-4" dark>
+                <v-icon class="mr-3" right dark>
+                    mdi-domain
+                </v-icon>
                 SEPARA TU DEPA
             </v-btn>
+        </div>
+        <v-divider></v-divider>
+        <div class="d-flex justify-center pa-3">
+            <v-btn class="amber accent-2 pl-2 mr-1 py-7" @click="goOli">
+                <v-img src="../assets/oli.png" height="50" class="mr-1">
+                </v-img>
+                Con tu ayuda, apoyas a la fundación Oli
+            </v-btn>
+            <v-btn class="blue mb-3 mr-1 py-7" dark>
+                <v-icon class="mr-3" right dark>
+                    mdi-facebook
+                </v-icon>
+                Compartir por facebook
+            </v-btn>
+           <v-btn class="green mb-3 py-7" dark>
+                <v-icon class="mr-3" right dark>
+                    mdi-whatsapp
+                </v-icon>
+                Compartir por whatsapp
+            </v-btn>
+        </div>
+        <div class="d-flex pa-7 justify-center">
+            <div>
+                <v-img src="../assets/bcp.png" max-heigth="60" class="ma-4">
+                </v-img>
+                <v-img src="../assets/scotiabank.png"  class="ma-4">
+                </v-img>
+                <v-img src="../assets/interbank.png" class="ma-4">
+                </v-img>
+            </div>
+            <v-card style="width: 50%" class="mx-7">
+                <v-card-title>
+                    Información
+                </v-card-title>
+                <v-divider></v-divider>
+                <v-card-text>
+                    El proyecto se encuentra ubicada en una buena zona del distrito de San Isidro,
+                    cuenta con vistas a áreas verdes.
+                    Se encuentra en una zona céntrica y accesible para poder movilizarse
+                    a cualquier parte de la ciudad en poco tiempo.
+                </v-card-text>
+            </v-card>
         </div>
     </div>
 </template>
@@ -58,7 +106,19 @@ export default {
     rating: '',
     project: {},
   }),
+  methods: {
+    goOli() {
+      this.$router.replace('/oli');
+    },
+    asesorByWhatsApp() {
+      const yourMessage = 'Hola, te escribimos desde COMPRATUDEPA, puedes conversar con nuestro asesor y él responderá tus dudas';
+      const celular = '918604749';
+      const message = yourMessage.split(' ').join('%20');
+      window.location.href = `https://api.whatsapp.com/send/?phone=%2B51${celular}&text=%20${message}`;
+    },
+  },
   created() {
+    this.$store.commit('SET_LAYOUT', 'public-layout');
     this.project = inmobiliariasById(this.$route.params.id);
   },
 };

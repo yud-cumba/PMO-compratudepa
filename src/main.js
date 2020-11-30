@@ -7,6 +7,7 @@ import router from './route';
 import App from './App.vue';
 import vuetify from './plugins/vuetify';
 import { idAnalytics, apiKeyGoogleMap } from './keys/GoogleKeys';
+import store from './store';
 
 require('firebase/storage');
 
@@ -31,6 +32,7 @@ export const eventBus = new Vue();
 new Vue({
   router,
   vuetify,
+  store,
   render: (h) => h(App),
 }).$mount('#app');
 
