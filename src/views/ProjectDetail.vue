@@ -136,6 +136,7 @@ export default {
   created() {
     this.$store.commit('SET_LAYOUT', 'public-layout');
     this.project = inmobiliariasById(this.$route.params.id);
+    this.verify();
   },
 };
 </script>
