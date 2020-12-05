@@ -1,7 +1,7 @@
 <template>
   <div >
     <div v-if="!isLogin">
-       <SignUp />
+       <WithoutLogin/>
     </div>
     <div class="px-12 mx-12 pt-5" v-else>
       <v-btn @click="logout">
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import SignUp from '../components/SignUp.vue';
+import WithoutLogin from '../components/WithoutLogin.vue';
 import Credit from '../components/Credit.vue';
 
 import { verifyIsLogin, logout } from '../firebase/auth';
@@ -46,7 +46,7 @@ import { verifyIsLogin, logout } from '../firebase/auth';
 export default {
   components: {
     Credit,
-    SignUp,
+    WithoutLogin,
   },
   data: () => ({
     isLogin: false,

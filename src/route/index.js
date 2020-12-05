@@ -11,6 +11,7 @@ import Credits from '../views/Credits.vue';
 import Login from '../views/Login.vue';
 import Oli from '../views/Oli.vue';
 import MyProjects from '../views/MyProjects.vue';
+import SignUp from '../views/SignUp.vue';
 
 Vue.use(VueRouter);
 
@@ -25,6 +26,7 @@ const routes = [
   { path: '/login', component: Login },
   { path: '/oli', component: Oli },
   { path: '/Mis%20proyectos', component: MyProjects },
+  { path: '/signup', component: SignUp },
 ];
 
 const router = new VueRouter({

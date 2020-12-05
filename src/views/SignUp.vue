@@ -52,6 +52,7 @@
     ></v-checkbox>
      <PrivacyPolicy :acceptConditions="acceptConditions"/>
     </p>
+     <p class="red--text ma-4">{{error}}</p>
     <v-btn class="mx-4 green" color="green">
       Atrás
     </v-btn>
@@ -69,6 +70,7 @@
     >
       Registrarse
     </v-btn>
+    <ModalOk :dialog="registerOK"/>
     <p class="pa-5">¿Ya tienes cuenta?
       <router-link to="/login" ><span class="green--text"> Inicia Sesión </span></router-link></p>
   </v-form>
@@ -78,7 +80,8 @@
 </template>
 
 <script>
-import PrivacyPolicy from './PrivacyPolicy.vue';
+import ModalOk from '../components/ModalOk.vue';
+import PrivacyPolicy from '../components/PrivacyPolicy.vue';
 import { registerUserEmail } from '../firebase/auth';
 import { userAdd } from '../firebase/database';
 
@@ -107,6 +110,8 @@ export default {
     show: false,
     description: '',
     checkbox: false,
+    registerOK: false,
+    error: '',
   }),
 
   methods: {
@@ -121,6 +126,11 @@ export default {
             email: this.email,
             phone: this.phone,
           }, result.user.uid);
+          this.registerOK = true;
+        })
+        .catch(() => {
+          // e.code = auth/weak-password
+          this.error = 'El correo electrónico ya ha sido registrado';
         });
     },
     clear() {
@@ -129,6 +139,7 @@ export default {
   },
   components: {
     PrivacyPolicy,
+    ModalOk,
   },
 };
 </script>

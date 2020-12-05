@@ -46,7 +46,7 @@
     - o -
     <p class="pt-4">Inicia sesión con</p>
     <v-icon class="pb-4" @click="logInByGoogle" color="green">mdi-google</v-icon>
-    ¿No te registraste? <router-link to="/advices"> Hazlo aquí</router-link>
+    ¿No te registraste? <router-link to="/signup"> Hazlo aquí</router-link>
     </div>
   </v-form>
   <v-parallax height="700" class="parallax" src="../assets/login.png">
