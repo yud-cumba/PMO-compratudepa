@@ -9,8 +9,9 @@
         max-width="270"
       >
       </v-img>
-      <div v-if="isLogin">
-        {{user.name}}
+      <div v-if="isLogin" class="d-flex mx-3">
+        <h3>{{user.name}}</h3>
+        <v-icon color="green" x-large class="mx-2">mdi-account-circle</v-icon>
       </div>
       <div v-else>
         <v-btn
