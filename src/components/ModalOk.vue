@@ -5,6 +5,11 @@
       width="500"
     >
       <v-card >
+         <v-card-actions class="d-flex justify-end">
+           <v-btn fab small dark @click="dialogInvitation=false" color="teal" class="mx-5">
+             <v-icon>mdi-window-close</v-icon>
+          </v-btn>
+        </v-card-actions>
         <h2 class="d-flex flex-column align-center pa-10 text-center">
             Datos enviados correctamente
             <v-icon color="green" x-large class="my-6"
