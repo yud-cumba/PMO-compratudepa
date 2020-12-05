@@ -49,11 +49,9 @@
         v-if="isLogin"
         color="light-green lighten-4"
         dark
-        v-bind="attrs"
-        v-on="on"
         @click="addToFavorite"
       >
-        <v-icon color="green"> {{iconHeart}} </v-icon>
+        <v-icon color="green"> {{favorite? 'mdi-heart' : 'mdi-heart-outline'}} </v-icon>
       </v-btn>
       <div v-else>
         <ModalToLogin />
@@ -97,14 +95,16 @@
 <script>
 import { inmobiliariasById } from '../utils/projectMethods';
 import ModalToLogin from '../components/ModalToLogin.vue';
-import { verifyIsLogin } from '../firebase/auth';
+import { verifyIsLogin, currentUser } from '../firebase/auth';
+import { getUserByUid, userAddFavorite, userRemoveFavoriteById } from '../firebase/database';
 
 export default {
   data: () => ({
     rating: '',
     project: {},
     isLogin: false,
-    iconHeart: 'mdi-heart-outline',
+    favorite: false,
+    favoriteID: '',
   }),
   components: {
     ModalToLogin,
@@ -114,6 +114,11 @@ export default {
       verifyIsLogin(
         () => {
           this.isLogin = true;
+          getUserByUid(currentUser().uid).then((user) => {
+            [this.favoriteID] = Object.keys(user.favorites);
+            const favorites = Object.values(user.favorites);
+            this.favorite = !!favorites.filter((e) => e.id === this.project.id).length;
+          });
         },
         () => {
           this.isLogin = false;
@@ -129,8 +134,20 @@ export default {
       const message = yourMessage.split(' ').join('%20');
       window.location.href = `https://api.whatsapp.com/send/?phone=%2B51${celular}&text=%20${message}`;
     },
-    addFavorite() {
-
+    addToFavorite() {
+      if (this.favorite) {
+        userRemoveFavoriteById(currentUser().uid, this.favoriteID);
+        this.favorite = false;
+      } else {
+        userAddFavorite(currentUser().uid, this.project)
+          .then((e) => {
+          // eslint-disable-next-line no-underscore-dangle
+            const pieces = e.path.pieces_;
+            // eslint-disable-next-line prefer-destructuring
+            this.favoriteID = pieces[3];
+            this.favorite = true;
+          });
+      }
     },
   },
   created() {

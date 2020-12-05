@@ -18,6 +18,12 @@ export const getUserByUid = (UID) => firebase
     }
   }));
 
+export const userAddFavorite = (userid, data) => firebase.database().ref(`USERS/${userid}/favorites`).push({
+  ...data,
+});
+
+export const userRemoveFavoriteById = (userid, favoriteID) => firebase.database().ref(`USERS/${userid}/favorites/${favoriteID}`).remove();
+
 export const userUpdate = (data, id) => {
   firebase.database().ref(`USERS/${id}`).child(data.id).update({
     ...data,
