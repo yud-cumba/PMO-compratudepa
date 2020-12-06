@@ -7,14 +7,7 @@
           PROYECTO {{ project.Proyecto }} - {{ project.Distrito }}
         </h2>
         <div class="d-flex px-5">
-          <v-rating
-            v-model="rating"
-            background-color="grey"
-            color="yellow"
-            large
-          ></v-rating>
-          <p class="pa-3">0 comentarios</p>
-          <p class="pa-3 green--text">Escribe un comentario</p>
+          <Rating :projectID= "project.id"/>
         </div>
         <v-divider></v-divider>
         <h1 class="pa-5 green--text">
@@ -97,12 +90,12 @@
 import { inmobiliariasById } from '../utils/projectMethods';
 import ModalToLogin from '../components/ModalToLogin.vue';
 import ModalOk from '../components/ModalOk.vue';
+import Rating from '../components/Rating.vue';
 import { verifyIsLogin, currentUser } from '../firebase/auth';
 import { getUserByUid, userAddFavorite, userRemoveFavoriteById } from '../firebase/database';
 
 export default {
   data: () => ({
-    rating: '',
     project: {},
     isLogin: false,
     favorite: false,
@@ -110,6 +103,7 @@ export default {
     modalOK: false,
   }),
   components: {
+    Rating,
     ModalToLogin,
     ModalOk,
   },
@@ -119,9 +113,11 @@ export default {
         () => {
           this.isLogin = true;
           getUserByUid(currentUser().uid).then((user) => {
-            [this.favoriteID] = Object.keys(user.favorites);
-            const favorites = Object.values(user.favorites);
-            this.favorite = !!favorites.filter((e) => e.id === this.project.id).length;
+            Object.keys(user.favorites).forEach((favoriteID) => {
+              const favorite = user.favorites[favoriteID];
+              this.favorite = !!(favorite.id === this.$route.params.id);
+              this.favoriteID = this.favorite ? favoriteID : false;
+            });
           });
         },
         () => {
