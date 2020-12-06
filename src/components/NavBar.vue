@@ -95,7 +95,20 @@
             v-bind="attrs"
             v-on="on"
           >
-            CRÉDITOS
+            COMPROMISO SOCIAL
+          </div>
+        </template>
+      </v-menu>
+      <v-menu v-if= "isLogin" offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <div
+            class="text-lg-h6 px-6 mx-6"
+            @click="favoriteClick"
+            v-click-outside="onClickOutside"
+            v-bind="attrs"
+            v-on="on"
+          >
+            MIS FAVORITOS
           </div>
         </template>
       </v-menu>
@@ -179,12 +192,20 @@ export default {
       this.$router.push({ path: '/advices' });
     },
     creditsClick() {
-      this.$gtag.event('Creditos', {
+      this.$gtag.event('Oli', {
         event_category: 'NavBar',
-        event_label: 'NavBar Creditos clicked',
+        event_label: 'NavBar Oli clicked',
         value: 1,
       });
-      this.$router.push({ path: '/credits' });
+      this.$router.push({ path: '/oli' });
+    },
+    favoriteClick() {
+      this.$gtag.event('Favorite', {
+        event_category: 'NavBar',
+        event_label: 'NavBar Favorite clicked',
+        value: 1,
+      });
+      this.$router.push({ path: '/favorite' });
     },
   },
   created() {

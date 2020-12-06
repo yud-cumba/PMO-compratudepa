@@ -56,6 +56,7 @@
       <div v-else>
         <ModalToLogin />
       </div>
+      <ModalOk :dialog="modalOK" title="ESTE PROYECTO SE GUARDÓ EN TUS FAVORITOS"/>
     </div>
     <v-divider></v-divider>
     <div class="d-flex justify-center pa-3">
@@ -95,6 +96,7 @@
 <script>
 import { inmobiliariasById } from '../utils/projectMethods';
 import ModalToLogin from '../components/ModalToLogin.vue';
+import ModalOk from '../components/ModalOk.vue';
 import { verifyIsLogin, currentUser } from '../firebase/auth';
 import { getUserByUid, userAddFavorite, userRemoveFavoriteById } from '../firebase/database';
 
@@ -105,9 +107,11 @@ export default {
     isLogin: false,
     favorite: false,
     favoriteID: '',
+    modalOK: false,
   }),
   components: {
     ModalToLogin,
+    ModalOk,
   },
   methods: {
     verify() {
@@ -146,6 +150,7 @@ export default {
             // eslint-disable-next-line prefer-destructuring
             this.favoriteID = pieces[3];
             this.favorite = true;
+            this.modalOK = true;
           });
       }
     },

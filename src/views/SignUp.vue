@@ -70,7 +70,7 @@
     >
       Registrarse
     </v-btn>
-    <ModalOk :dialog="registerOK"/>
+    <ModalOk :dialog="registerOK" title="Datos enviados correctamente"/>
     <p class="pa-5">¿Ya tienes cuenta?
       <router-link to="/login" ><span class="green--text"> Inicia Sesión </span></router-link></p>
   </v-form>
