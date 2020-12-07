@@ -29,6 +29,19 @@ export const getFavoritesByUserId = (UID) => firebase
       rej(new Error('Aún no hay ningún favorito en tu lista'));
     }
   }));
+
+export const getRatingsByUserId = (UID) => firebase
+  .database()
+  .ref(`USERS/${UID}/ratings`)
+  .once('value')
+  .then((value) => new Promise((res, rej) => {
+    if (value.val()) {
+      res(Object.values(value.val()));
+    } else {
+      rej(new Error('Aún no hay ningún favorito en tu lista'));
+    }
+  }));
+
 export const userAddRating = (userid, data, projectID) => firebase.database().ref(`USERS/${userid}/ratings`).push({
   [projectID]: data,
 });

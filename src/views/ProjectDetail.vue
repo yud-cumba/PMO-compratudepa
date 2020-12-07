@@ -38,14 +38,9 @@
         <v-icon class="mr-3" right dark> mdi-domain </v-icon>
         SEPARA TU DEPA
       </v-btn>
-      <v-btn
-        v-if="isLogin"
-        color="light-green lighten-4"
-        dark
-        @click="addToFavorite"
-      >
-        <v-icon color="green"> {{favorite? 'mdi-heart' : 'mdi-heart-outline'}} </v-icon>
-      </v-btn>
+      <div v-if="isLogin">
+        <Favorite :project="project" :setModal="setModal"/>
+      </div>
       <div v-else>
         <ModalToLogin />
       </div>
@@ -91,8 +86,8 @@ import { inmobiliariasById } from '../utils/projectMethods';
 import ModalToLogin from '../components/ModalToLogin.vue';
 import ModalOk from '../components/ModalOk.vue';
 import Rating from '../components/Rating.vue';
-import { verifyIsLogin, currentUser } from '../firebase/auth';
-import { getUserByUid, userAddFavorite, userRemoveFavoriteById } from '../firebase/database';
+import { verifyIsLogin } from '../firebase/auth';
+import Favorite from '../components/Favorite.vue';
 
 export default {
   data: () => ({
@@ -106,24 +101,21 @@ export default {
     Rating,
     ModalToLogin,
     ModalOk,
+    Favorite,
   },
   methods: {
     verify() {
       verifyIsLogin(
         () => {
           this.isLogin = true;
-          getUserByUid(currentUser().uid).then((user) => {
-            Object.keys(user.favorites).forEach((favoriteID) => {
-              const favorite = user.favorites[favoriteID];
-              this.favorite = !!(favorite.id === this.$route.params.id);
-              this.favoriteID = this.favorite ? favoriteID : false;
-            });
-          });
         },
         () => {
           this.isLogin = false;
         },
       );
+    },
+    setModal(ok) {
+      this.modalOK = ok;
     },
     goOli() {
       this.$router.replace('/oli');
@@ -133,22 +125,6 @@ export default {
       const celular = '918604749';
       const message = yourMessage.split(' ').join('%20');
       window.location.href = `https://api.whatsapp.com/send/?phone=%2B51${celular}&text=%20${message}`;
-    },
-    addToFavorite() {
-      if (this.favorite) {
-        userRemoveFavoriteById(currentUser().uid, this.favoriteID);
-        this.favorite = false;
-      } else {
-        userAddFavorite(currentUser().uid, this.project)
-          .then((e) => {
-          // eslint-disable-next-line no-underscore-dangle
-            const pieces = e.path.pieces_;
-            // eslint-disable-next-line prefer-destructuring
-            this.favoriteID = pieces[3];
-            this.favorite = true;
-            this.modalOK = true;
-          });
-      }
     },
   },
   created() {

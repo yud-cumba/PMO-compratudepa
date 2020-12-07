@@ -1,10 +1,12 @@
 <template>
+  <div @click="addStars">
     <v-rating
         v-model="rating"
         background-color="grey"
         color="yellow"
         large
     ></v-rating>
+  </div>
 </template>
 
 <script>
@@ -17,11 +19,6 @@ export default {
     rating: 0,
     ratingID: false,
   }),
-  watch: {
-    rating() {
-      this.addStars();
-    },
-  },
   methods: {
     verify() {
       verifyIsLogin(
@@ -30,9 +27,10 @@ export default {
             if (user.ratings) {
               Object.keys(user.ratings).forEach((ratingID) => {
                 const [projectID] = Object.keys(user.ratings[ratingID]);
-                const [rating] = Object.values(user.ratings[ratingID]);
-                this.rating = projectID === this.projectID ? rating : 0;
-                this.ratingID = projectID === this.projectID ? ratingID : false;
+                if (projectID === this.projectID) {
+                  [this.rating] = Object.values(user.ratings[ratingID]);
+                  this.ratingID = projectID === ratingID;
+                }
               });
             }
           });
