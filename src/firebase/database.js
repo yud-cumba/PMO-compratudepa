@@ -1,11 +1,13 @@
 import firebase from '../keys/firebaseConfig';
 
-export const userAdd = (data, id) => {
+export const userAdd = (id, name, email, phone, photo) => {
   firebase.database().ref(`USERS/${id}`).set({
-    ...data,
+    name,
+    email,
+    ...(!!phone && { phone }),
+    ...(!!photo && { photo }),
   });
 };
-
 export const getUserByUid = (UID) => firebase
   .database()
   .ref(`USERS/${UID}`)
@@ -17,6 +19,12 @@ export const getUserByUid = (UID) => firebase
       rej(new Error(`No hay usuario con el id ${UID}`));
     }
   }));
+export const userFirstTime = (UID, name, email, phone, photo) => {
+  getUserByUid(UID)
+    .catch(() => {
+      userAdd(UID, name, email, phone, photo);
+    });
+};
 
 export const getFavoritesByUserId = (UID) => firebase
   .database()
@@ -38,7 +46,7 @@ export const getRatingsByUserId = (UID) => firebase
     if (value.val()) {
       res(Object.values(value.val()));
     } else {
-      rej(new Error('Aún no hay ningún favorito en tu lista'));
+      rej(new Error('Aún no calificaste ningún proyecto'));
     }
   }));
 

@@ -24,13 +24,13 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        <Credit/>
+        <Stepper/>
       </v-tab-item>
       <v-tab-item>
+        <Stepper/>
       </v-tab-item>
       <v-tab-item>
-      </v-tab-item>
-      <v-tab-item>
+        <Stepper/>
       </v-tab-item>
     </v-tabs-items>
     </div>
@@ -39,22 +39,21 @@
 
 <script>
 import WithoutLogin from '../components/WithoutLogin.vue';
-import Credit from '../components/Credit.vue';
 
 import { verifyIsLogin, logout } from '../firebase/auth';
+import Stepper from '../components/Stepper.vue';
 
 export default {
   components: {
-    Credit,
     WithoutLogin,
+    Stepper,
   },
   data: () => ({
     isLogin: false,
     tab: null,
     items: [
-      '1 CRÉDITO HIPOTECARIO', '2 BUENAS PRÁCTICAS MINUTA', '3 CHECKLIST DOCUMENTACIÓN',
+      '1 Checklist Documentario', '2 Crédito Hipotecario', '3 Buenas prácticas',
     ],
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
   }),
   methods: {
     logout,

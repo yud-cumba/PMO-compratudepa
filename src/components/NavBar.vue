@@ -1,6 +1,6 @@
 <template>
   <v-card class="elevation-1">
-    <v-card-title class="text-center d-flex">
+    <v-card-title class="text-center d-flex ">
       <v-img
         src="../assets/logoPMO.png"
         aspect-ratio="1"
@@ -10,8 +10,14 @@
       >
       </v-img>
       <div v-if="isLogin" class="d-flex mx-3">
-        <h3>{{user.name}}</h3>
-        <v-icon color="green" x-large class="mx-2">mdi-account-circle</v-icon>
+        <h3 class="mt-2">{{ user.name }}</h3>
+        <div v-if="!!user.photo">
+          <v-img :src="user.photo" class="rounded-circle mx-3" max-width="50">
+          </v-img>
+        </div>
+        <div v-else>
+          <v-icon color="green" x-large class="mx-3">mdi-account-circle</v-icon>
+        </div>
       </div>
       <div v-else>
         <v-btn
@@ -99,7 +105,7 @@
           </div>
         </template>
       </v-menu>
-      <v-menu v-if= "isLogin" offset-y>
+      <v-menu v-if="isLogin" offset-y>
         <template v-slot:activator="{ on, attrs }">
           <div
             class="text-lg-h6 px-6 mx-6"
@@ -125,9 +131,8 @@ export default {
   data() {
     return {
       active: false,
-      tab: null,
       isLogin: false,
-      user: [],
+      user: {},
     };
   },
   methods: {
@@ -135,10 +140,9 @@ export default {
       verifyIsLogin(
         () => {
           this.isLogin = true;
-          getUserByUid(currentUser().uid)
-            .then((user) => {
-              this.user = user;
-            });
+          getUserByUid(currentUser().uid).then((user) => {
+            this.user = user;
+          });
         },
         () => {
           this.isLogin = false;
@@ -208,9 +212,12 @@ export default {
       this.$router.push({ path: '/favorite' });
     },
   },
+  // Inicio Ciclo de vida
   created() {
     this.verify();
   },
+  // Fin Ciclo de vida
+
 };
 </script>
 

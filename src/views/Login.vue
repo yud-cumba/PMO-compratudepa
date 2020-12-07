@@ -56,6 +56,7 @@
 
 <script>
 import { logIn, logInGoogle } from '../firebase/auth';
+import { userFirstTime } from '../firebase/database';
 
 export default {
   data: () => ({
@@ -82,14 +83,17 @@ export default {
 
   methods: {
     logInByGoogle() {
-      logInGoogle().then(() => this.$router.replace('/advices'));
+      logInGoogle().then((user) => {
+        userFirstTime(user.uid, user.displayName, user.email, user.phoneNumber, user.photoURL);
+        this.$router.replace('/');
+      });
     },
     acceptConditions(bol) {
       this.checkbox = bol;
     },
     login() {
       logIn(this.email, this.password)
-        .then(() => this.$router.replace('/advices'))
+        .then(() => this.$router.replace('/'))
         .catch((error) => { this.error = error; });
     },
   },

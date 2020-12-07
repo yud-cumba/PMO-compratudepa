@@ -121,11 +121,7 @@ export default {
     submit() {
       registerUserEmail(this.email, this.password)
         .then((result) => {
-          userAdd({
-            name: this.name,
-            email: this.email,
-            phone: this.phone,
-          }, result.user.uid);
+          userAdd(result.user.uid, this.name, this.email, this.phone);
           this.registerOK = true;
         })
         .catch(() => {

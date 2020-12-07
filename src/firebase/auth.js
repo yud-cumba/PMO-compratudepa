@@ -24,7 +24,7 @@ export const logInFacebook = () => firebase.auth()
   .signInWithPopup(new firebase.auth.FacebookAuthProvider());
 
 export const logInGoogle = () => firebase.auth()
-  .signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  .signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((doc) => doc.user);
 
 export const logout = () => firebase.auth().signOut();
 
