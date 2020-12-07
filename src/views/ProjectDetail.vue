@@ -38,13 +38,7 @@
         <v-icon class="mr-3" right dark> mdi-domain </v-icon>
         SEPARA TU DEPA
       </v-btn>
-      <div v-if="isLogin">
-        <Favorite :project="project" :setModal="setModal"/>
-      </div>
-      <div v-else>
-        <ModalToLogin />
-      </div>
-      <ModalOk :dialog="modalOK" title="ESTE PROYECTO SE GUARDÓ EN TUS FAVORITOS"/>
+        <Favorite :project="project"/>
     </div>
     <v-divider></v-divider>
     <div class="d-flex justify-center pa-3">
@@ -83,40 +77,20 @@
 
 <script>
 import { inmobiliariasById } from '../utils/projectMethods';
-import ModalToLogin from '../components/ModalToLogin.vue';
-import ModalOk from '../components/ModalOk.vue';
 import Rating from '../components/Rating.vue';
-import { verifyIsLogin } from '../firebase/auth';
 import Favorite from '../components/Favorite.vue';
 
 export default {
   data: () => ({
     project: {},
-    isLogin: false,
     favorite: false,
     favoriteID: '',
-    modalOK: false,
   }),
   components: {
     Rating,
-    ModalToLogin,
-    ModalOk,
     Favorite,
   },
   methods: {
-    verify() {
-      verifyIsLogin(
-        () => {
-          this.isLogin = true;
-        },
-        () => {
-          this.isLogin = false;
-        },
-      );
-    },
-    setModal(ok) {
-      this.modalOK = ok;
-    },
     goOli() {
       this.$router.replace('/oli');
     },
@@ -130,7 +104,6 @@ export default {
   created() {
     this.$store.commit('SET_LAYOUT', 'public-layout');
     this.project = inmobiliariasById(this.$route.params.id);
-    this.verify();
   },
 };
 </script>

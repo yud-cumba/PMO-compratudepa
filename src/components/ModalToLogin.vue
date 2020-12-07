@@ -1,11 +1,6 @@
 <template>
   <div class="text-center">
     <v-dialog v-model="dialog" width="500">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn color="light-green lighten-4" dark v-bind="attrs" v-on="on">
-          <v-icon color="green"> mdi-heart-outline </v-icon>
-        </v-btn>
-      </template>
       <v-card class="pa-6">
         <v-card-actions class="d-flex justify-end">
           <v-icon large @click="dialog = false" color="green">
@@ -35,9 +30,7 @@
 
 <script>
 export default {
-  data: () => ({
-    dialog: false,
-  }),
+  props: ['dialog'],
 };
 </script>
 
