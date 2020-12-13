@@ -1,43 +1,6 @@
 <template>
   <v-card class="elevation-1">
-    <v-card-title class="text-center d-flex ">
-      <v-img
-        src="../assets/logoPMO.png"
-        aspect-ratio="1"
-        class="mr-auto"
-        max-height="60"
-        max-width="270"
-      >
-      </v-img>
-      <div v-if="isLogin" class="d-flex mx-3">
-        <h3 class="mt-2">{{ user.name }}</h3>
-        <div v-if="!!user.photo">
-          <v-img :src="user.photo" class="rounded-circle mx-3" max-width="50">
-          </v-img>
-        </div>
-        <div v-else>
-          <v-icon color="green" x-large class="mx-3">mdi-account-circle</v-icon>
-        </div>
-      </div>
-      <div v-else>
-        <v-btn
-          color="green"
-          outlined
-          class="mx-2"
-          @click="$router.replace('/login')"
-        >
-          Inicia seción
-        </v-btn>
-        <v-btn
-          color="green"
-          outlined
-          class="mx-2"
-          @click="$router.replace('/Mis%20proyectos')"
-        >
-          Quiero publicar
-        </v-btn>
-      </div>
-    </v-card-title>
+    <TitleNavBar :isLogin = "isLogin"/>
     <v-card-text class="d-flex justify-end px-4">
       <div
         class="text-lg-h6 px-6 mx-6"
@@ -123,6 +86,7 @@
 </template>
 
 <script>
+import TitleNavBar from './TitleNavBar.vue';
 import { verifyIsLogin, currentUser } from '../firebase/auth';
 import { getUserByUid } from '../firebase/database';
 
@@ -132,8 +96,10 @@ export default {
     return {
       active: false,
       isLogin: false,
-      user: {},
     };
+  },
+  components: {
+    TitleNavBar,
   },
   methods: {
     verify() {
@@ -172,7 +138,7 @@ export default {
           district,
           prices: {
             min: 2000,
-            max: 20000,
+            max: 2000000,
           },
           typePrice: 'Soles',
           rooms: false,
@@ -212,12 +178,9 @@ export default {
       this.$router.push({ path: '/favorite' });
     },
   },
-  // Inicio Ciclo de vida
   created() {
     this.verify();
   },
-  // Fin Ciclo de vida
-
 };
 </script>
 

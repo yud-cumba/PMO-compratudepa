@@ -46,7 +46,9 @@
     - o -
     <p class="pt-4">Inicia sesión con</p>
     <v-icon class="pb-4" @click="logInByGoogle" color="green">mdi-google</v-icon>
-    ¿No te registraste? <router-link to="/signup"> Hazlo aquí</router-link>
+    ¿No te registraste? <router-link to="/signup"  class="pb-4"> Hazlo aquí</router-link>
+    ¿Eres una inmobiliaria y quieres publicar?
+    <router-link to="/signupInmb"> Regístrate aquí</router-link>
     </div>
   </v-form>
   <v-parallax height="700" class="parallax" src="../assets/login.png">
@@ -55,11 +57,12 @@
 </template>
 
 <script>
-import { logIn, logInGoogle } from '../firebase/auth';
-import { userFirstTime } from '../firebase/database';
+import { logIn, logInGoogle, currentUser } from '../firebase/auth';
+import { userFirstTime, getUserByUid } from '../firebase/database';
 
 export default {
   data: () => ({
+    areInmobiliaria: false,
     valid: true,
     name: '',
     nameRules: [
@@ -84,8 +87,21 @@ export default {
   methods: {
     logInByGoogle() {
       logInGoogle().then((user) => {
-        userFirstTime(user.uid, user.displayName, user.email, user.phoneNumber, user.photoURL);
-        this.$router.replace('/');
+        const {
+          uid, displayName, email, phoneNumber, photoURL,
+        } = user;
+        userFirstTime(uid, displayName, email, 'cliente', phoneNumber, photoURL);
+        this.goAfterLogin();
+      });
+    },
+    goAfterLogin() {
+      getUserByUid(currentUser().uid).then((user) => {
+        const { role } = user;
+        if (role === 'inmobiliaria') {
+          this.$router.replace('/myprojects');
+        } else if (role === 'cliente') {
+          this.$router.replace('/');
+        }
       });
     },
     acceptConditions(bol) {
@@ -93,7 +109,7 @@ export default {
     },
     login() {
       logIn(this.email, this.password)
-        .then(() => this.$router.replace('/'))
+        .then(() => this.goAfterLogin())
         .catch((error) => { this.error = error; });
     },
   },

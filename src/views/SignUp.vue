@@ -73,6 +73,11 @@
     <ModalOk :dialog="registerOK" title="Datos enviados correctamente"/>
     <p class="pa-5">¿Ya tienes cuenta?
       <router-link to="/login" ><span class="green--text"> Inicia Sesión </span></router-link></p>
+      <div class="d-flex flex-column align-center">
+      - o -
+    <p class="pt-4">Regístrate con</p>
+    <v-icon class="pb-4" @click="logInByGoogle" color="green">mdi-google</v-icon>
+    </div>
   </v-form>
   <v-parallax height="700" class="parallax" src="../assets/form-cafe.png">
   </v-parallax>
@@ -82,8 +87,8 @@
 <script>
 import ModalOk from '../components/ModalOk.vue';
 import PrivacyPolicy from '../components/PrivacyPolicy.vue';
-import { registerUserEmail } from '../firebase/auth';
-import { userAdd } from '../firebase/database';
+import { registerUserEmail, logInGoogle } from '../firebase/auth';
+import { userAdd, userFirstTime } from '../firebase/database';
 
 export default {
   data: () => ({
@@ -115,13 +120,22 @@ export default {
   }),
 
   methods: {
+    logInByGoogle() {
+      logInGoogle().then((user) => {
+        const {
+          uid, displayName, email, phoneNumber, photoURL,
+        } = user;
+        userFirstTime(uid, displayName, email, 'cliente', phoneNumber, photoURL);
+        this.$router.replace('/');
+      });
+    },
     acceptConditions(bol) {
       this.checkbox = bol;
     },
     submit() {
       registerUserEmail(this.email, this.password)
         .then((result) => {
-          userAdd(result.user.uid, this.name, this.email, this.phone);
+          userAdd(result.user.uid, this.name, this.email, 'cliente', this.phone);
           this.registerOK = true;
         })
         .catch(() => {

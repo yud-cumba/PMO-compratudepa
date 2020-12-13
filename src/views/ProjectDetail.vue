@@ -1,25 +1,33 @@
 <template>
   <div>
     <div class="d-flex pa-7">
-      <v-img src="../assets/sala.png" class="img pa-8"> </v-img>
+      <v-carousel class="img">
+        <v-carousel-item
+          v-for="(img,i) in project.imagenes"
+          :key="i"
+          :src="img"
+          reverse-transition="fade-transition"
+          transition="fade-transition"
+        ></v-carousel-item>
+      </v-carousel>
       <div>
         <h2 class="px-5 text-capitalize">
-          PROYECTO {{ project.Proyecto }} - {{ project.Distrito }}
+          PROYECTO {{ project.builder_name }} - {{ project.distrito }}
         </h2>
         <div class="d-flex px-5">
           <Rating :projectID= "project.id"/>
         </div>
         <v-divider></v-divider>
         <h1 class="pa-5 green--text">
-          S/.{{ project.Precio_min }} - S/.{{ project.Precio_max }}
+          S/.{{ project.val_price1 }} - S/.{{ project.val_price2 }}
         </h1>
-        <p class="px-5 h6">Dirección: {{ project.Dirección }}</p>
-        <p class="px-5 h6">Fase: {{ project.Fase }}</p>
-        <p class="px-5 h6">Inmobiliaria: {{ project.Inmobiliaria }}</p>
+        <p class="px-5 h6">Dirección: {{ project.direccion }}</p>
+        <p class="px-5 h6">Fase: {{ project.project_phase }}</p>
+        <p class="px-5 h6">Inmobiliaria: {{ project.builder_name}}</p>
         <p class="px-5 h6">
-          Habitaciones: {{ project.Cuartos_max }} habitaciones
+          Habitaciones: {{ project.room_max }} habitaciones
         </p>
-        <p class="px-5 h6">Espacio: {{ project.Area_max }} metros cuadrados.</p>
+        <p class="px-5 h6">Espacio: {{ project.area_max }} metros cuadrados.</p>
       </div>
     </div>
     <div class="d-flex justify-center pa-3">
@@ -57,9 +65,9 @@
     </div>
     <div class="d-flex pa-7 justify-center">
       <div>
-        <v-img src="../assets/bcp.png" max-heigth="60" class="ma-4"> </v-img>
-        <v-img src="../assets/scotiabank.png" class="ma-4"> </v-img>
-        <v-img src="../assets/interbank.png" class="ma-4"> </v-img>
+        <v-img :src="require(`../assets/${bankToImg(project.finance_bank)}`)"
+        max-heigth="60" class="ma-4">
+        </v-img>
       </div>
       <v-card style="width: 50%" class="mx-7">
         <v-card-title> Información </v-card-title>
@@ -79,6 +87,7 @@
 import { inmobiliariasById } from '../utils/projectMethods';
 import Rating from '../components/Rating.vue';
 import Favorite from '../components/Favorite.vue';
+import bankToImg from '../utils/banksImgs';
 
 export default {
   data: () => ({
@@ -91,6 +100,7 @@ export default {
     Favorite,
   },
   methods: {
+    bankToImg,
     goOli() {
       this.$router.replace('/oli');
     },
@@ -110,7 +120,6 @@ export default {
 
 <style lang="scss" scoped>
 .img {
-  width: 55%;
-  height: 400px;
+  width: 50%;
 }
 </style>

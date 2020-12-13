@@ -4,19 +4,19 @@
       <div class="flip-card-inner rounded-lg">
         <v-card class="flip-card-front rounded-lg">
           <h3 class="title d-flex justify-space-between align-center px-4">
-            {{ item.Proyecto }}
+            {{item.builder_name }}
             <Favorite :project="item" :setModal="setModal"/>
           </h3>
-          <img src="../assets/main.png" class="img" />
+          <img :src="item.imagenes[0]" class="img" />
           <div class="pa-3 d-flex">
             <div class="text-caption">
               <div class="d-flex justify-start">
                 <img src="../assets/map-marker.png" class="mr-1 icon" />
-                {{ item.Dirección }}
+                {{ item.direccion }}
               </div>
               <div class="d-flex justify-start">
                 <img src="../assets/bed-empty.png" class="mr-1 icon" />
-                {{ `${item.Cuartos_max} habitaciones` }}
+                {{ `${item.room_max} habitaciones` }}
               </div>
               <Rating :projectID ="item.id"/>
             </div>
@@ -24,7 +24,7 @@
         </v-card>
         <v-card class="flip-card-back rounded-lg">
           <div class="title d-flex justify-end align-center green px-3">
-            <h4 style="width: 75%">{{ item.Proyecto }}</h4>
+            <h4 style="width: 75%">{{ item.builder_name }}</h4>
           </div>
           <v-card-text class="d-flex flex-column">
             <div class="d-flex">
@@ -36,24 +36,24 @@
             </div>
             <div class="information d-flex justify-start">
               <v-icon class="mr-1">mdi-map-marker</v-icon>
-              {{ item.Dirección }}
+              {{ item.direccion }}
             </div>
             <div class="information d-flex justify-start">
               <v-icon class="mr-1">mdi-bed-empty</v-icon>
-              {{ `${item.Cuartos_max} habitaciones` }}
+              {{ `${item.room_max} habitaciones` }}
             </div>
             <div class="information d-flex justify-start">
               <v-icon class="mr-1">mdi-arrow-collapse</v-icon>
-              {{ item.Áreas }}
+              {{ item.area_max }}
             </div>
             <div class="information d-flex justify-start">
               <v-icon class="mr-1">mdi-account-hard-hat</v-icon>
-              {{ `Fase :${item.Fase}` }}
+              {{ `Fase :${item.project_phase}` }}
             </div>
-            <div class="information d-flex justify-start">
+            <!-- <div class="information d-flex justify-start">
               <v-icon class="mr-1">mdi-domain</v-icon>
               {{ `Inmobiliaria ${item.Inmobiliaria}` }}
-            </div>
+            </div> -->
           </v-card-text>
         </v-card>
       </div>
@@ -73,9 +73,9 @@ export default {
       this.modalOK = ok;
     },
     showMore(item) {
-      this.$gtag.event(item.Proyecto, {
+      this.$gtag.event(item.builder_name, {
         event_category: 'Proyectos',
-        event_label: `${item.Proyecto} clicked to see details`,
+        event_label: `${item.builder_nameo} clicked to see details`,
         value: 1,
       });
       this.$router.push({ path: `/detail/${item.id}` });

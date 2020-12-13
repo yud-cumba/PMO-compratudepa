@@ -4,9 +4,6 @@
        <WithoutLogin/>
     </div>
     <div class="px-12 mx-12 pt-5" v-else>
-      <v-btn @click="logout">
-        Cerrar sesión
-      </v-btn>
       <!-- <h2 class="ma-6">Tips</h2> -->
       <v-tabs
       v-model="tab"
@@ -40,7 +37,7 @@
 <script>
 import WithoutLogin from '../components/WithoutLogin.vue';
 
-import { verifyIsLogin, logout } from '../firebase/auth';
+import { verifyIsLogin } from '../firebase/auth';
 import Stepper from '../components/Stepper.vue';
 
 export default {
@@ -56,7 +53,6 @@ export default {
     ],
   }),
   methods: {
-    logout,
     verify() {
       verifyIsLogin(() => {
         this.isLogin = true;

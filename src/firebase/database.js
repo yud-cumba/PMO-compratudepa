@@ -1,9 +1,10 @@
 import firebase from '../keys/firebaseConfig';
 
-export const userAdd = (id, name, email, phone, photo) => {
+export const userAdd = (id, name, email, role, phone, photo) => {
   firebase.database().ref(`USERS/${id}`).set({
     name,
     email,
+    role,
     ...(!!phone && { phone }),
     ...(!!photo && { photo }),
   });
@@ -19,10 +20,10 @@ export const getUserByUid = (UID) => firebase
       rej(new Error(`No hay usuario con el id ${UID}`));
     }
   }));
-export const userFirstTime = (UID, name, email, phone, photo) => {
+export const userFirstTime = (UID, name, email, role, phone, photo) => {
   getUserByUid(UID)
     .catch(() => {
-      userAdd(UID, name, email, phone, photo);
+      userAdd(UID, name, email, role, phone, photo);
     });
 };
 

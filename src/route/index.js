@@ -13,6 +13,8 @@ import Oli from '../views/Oli.vue';
 import MyProjects from '../views/MyProjects.vue';
 import SignUp from '../views/SignUp.vue';
 import Favorite from '../views/Favorite.vue';
+import SignUpInmb from '../views/SignUpInmb.vue';
+import AddNewProject from '../views/AddNewProject.vue';
 
 Vue.use(VueRouter);
 
@@ -26,9 +28,11 @@ const routes = [
   { path: '/credits', component: Credits },
   { path: '/login', component: Login },
   { path: '/oli', component: Oli },
-  { path: '/Mis%20proyectos', component: MyProjects },
+  { path: '/myprojects', component: MyProjects },
   { path: '/signup', component: SignUp },
   { path: '/favorite', component: Favorite },
+  { path: '/signupInmb', component: SignUpInmb },
+  { path: '/addnew', component: AddNewProject },
 ];
 
 const router = new VueRouter({

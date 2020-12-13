@@ -69,16 +69,16 @@ export default {
     ProjectCards,
   },
   data() {
-    const inmobiliarias = inm.features.map((doc) => ({ id: doc.id, ...doc.properties }))
-      .sort((a, b) => {
-        if (a.Unidades_ofertadas_mes < b.Unidades_ofertadas_mes) {
-          return 1;
-        }
-        if (a.Unidades_ofertadas_mes > b.Unidades_ofertadas_mes) {
-          return -1;
-        }
-        return 0;
-      });
+    const inmobiliarias = inm.features.map((doc) => ({ id: doc.id, ...doc.properties }));
+    // .sort((a, b) => {
+    //   if (a.Unidades_ofertadas_mes < b.Unidades_ofertadas_mes) {
+    //     return 1;
+    //   }
+    //   if (a.Unidades_ofertadas_mes > b.Unidades_ofertadas_mes) {
+    //     return -1;
+    //   }
+    //   return 0;
+    // });
     return {
       typePrice: 'Soles',
       inmobiliarias,

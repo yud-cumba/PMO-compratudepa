@@ -85,7 +85,7 @@ export default {
         lat: inmob.geometry.coordinates[1],
         lng: inmob.geometry.coordinates[0],
       },
-      title: inmob.properties.Proyecto,
+      title: inmob.properties.builder_name,
       id: inmob.id,
       ...inmob.properties,
     }));
@@ -129,19 +129,21 @@ export default {
     filterByPrice() {
       const type = (this.priceSelected === 'Soles') ? 1 : 3.3;
       // eslint-disable-next-line max-len
-      this.projects = this.projects.filter((e) => e.Precio_por_m2_oferta > Number(this.prices.min) * type
-      && e.Precio_por_m2_oferta < Number(this.prices.max) * type);
+      this.projects = this.projects.filter((e) => e.min_price > Number(this.prices.min) * type
+      && e.min_price < Number(this.prices.max) * type);
     },
     filterByInputUbication() {
       this.projects = this.totalProjects.filter((project) => {
-        const direccion = project.Dirección.toLowerCase();
-        const distrito = project.Distrito.toLowerCase();
+        const direccion = project.direccion.toLowerCase();
+        const distrito = project.distrito.toLowerCase();
         const search = this.search.toLowerCase();
         return direccion.includes(search) || distrito.includes(search);
       });
-      this.longitude = this.projects[0].position.lng;
-      this.latitude = this.projects[0].position.lat;
-      this.zoom = 15;
+      if (this.projects.length > 0) {
+        this.longitude = this.projects[3].position.lng;
+        this.latitude = this.projects[3].position.lat;
+        this.zoom = 15;
+      }
     },
     filterByRadioPlaces() {
       const places = [

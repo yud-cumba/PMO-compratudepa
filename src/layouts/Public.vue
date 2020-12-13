@@ -21,9 +21,9 @@ export default {
   },
   data() {
     const inmobiliarias = inm.features.map((inmob) => inmob.properties);
-    const lengthOfDistrics = Object.values(groupBy(inmobiliarias, 'Distrito'));
+    const lengthOfDistrics = Object.values(groupBy(inmobiliarias, 'distrito'));
     const quantityInmobByDistrict = lengthOfDistrics.map((inmb) => ({
-      district: inmb[0].Distrito,
+      district: inmb[0].distrito,
       quantity: inmb.length,
     })).sort((a, b) => {
       if (a.quantity < b.quantity) {
@@ -36,7 +36,7 @@ export default {
     });
     return {
       search: '',
-      groupByDistric: groupBy(inmobiliarias, 'Distrito'),
+      groupByDistric: groupBy(inmobiliarias, 'distrito'),
       quantityInmobByDistrict,
       inmobiliarias,
     };
