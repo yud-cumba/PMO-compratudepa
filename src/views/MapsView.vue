@@ -147,7 +147,7 @@ export default {
     },
     filterByRadioPlaces() {
       const places = [
-        'comisarias', 'guarderias', 'bancos', 'canchas', 'gyms', 'clinicas', 'estaciones', 'hospitales',
+        'comisarias', 'guarderias', 'bancos', 'canchas', 'gimnasios', 'clinicas', 'estaciones', 'hospitales',
         'mall', 'parques', 'piscinas', 'restaurantes', 'schools', 'supermercados', 'terrapuertos', 'universidades',
         'vegano', 'veterinarias',
       ];

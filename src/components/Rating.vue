@@ -3,8 +3,9 @@
     <v-rating
         v-model="rating"
         background-color="grey"
-        color="green"
-        large
+        length="5"
+        color="yellow"
+        :size="size"
     ></v-rating>
     <ModalToLogin :dialog="modalToLogin"/>
   </div>
@@ -16,7 +17,7 @@ import { verifyIsLogin, currentUser } from '../firebase/auth';
 import ModalToLogin from './ModalToLogin.vue';
 
 export default {
-  props: ['projectID'],
+  props: ['projectID', 'size'],
   data: () => ({
     rating: 0,
     ratingID: false,

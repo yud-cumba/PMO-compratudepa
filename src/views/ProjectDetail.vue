@@ -15,7 +15,7 @@
           PROYECTO {{ project.builder_name }} - {{ project.distrito }}
         </h2>
         <div class="d-flex px-5">
-          <Rating :projectID= "project.id"/>
+          <Rating :projectID= "project.id" size="40"/>
         </div>
         <v-divider></v-divider>
         <h1 class="pa-5 green--text">

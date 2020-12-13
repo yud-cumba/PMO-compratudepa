@@ -18,7 +18,7 @@
                 <img src="../assets/bed-empty.png" class="mr-1 icon" />
                 {{ `${item.room_max} habitaciones` }}
               </div>
-              <Rating :projectID ="item.id"/>
+              <Rating :projectID ="item.id" size="15"/>
             </div>
           </div>
         </v-card>
@@ -116,8 +116,8 @@ export default {
 }
 .flip-card {
   background-color: transparent;
-  width: 280px;
-  height: 320px;
+  width: 270px;
+  height: 300px;
   perspective: 1000px;
 }
 
