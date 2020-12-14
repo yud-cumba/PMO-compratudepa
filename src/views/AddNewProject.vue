@@ -41,7 +41,7 @@
               dense
               rounded
               v-model="date"
-              label="Date"
+              label="Fecha de entrada"
               persistent-hint
               prepend-inner-icon="mdi-calendar"
               v-bind="attrs"
@@ -106,12 +106,14 @@
           label="Ingrese espacio en m2"
         >
         </v-text-field>
-       <v-textarea color="green"
+        <v-textarea
+          color="green"
           filled
           dense
           rounded
-          label="Ingrese detalle del proyecto">
-       </v-textarea>
+          label="Ingrese detalle del proyecto"
+        >
+        </v-textarea>
       </v-col>
     </v-row>
     <h4>Datos del proyecto</h4>
@@ -159,79 +161,123 @@
     <h4>Cotización</h4>
     <v-row class="pa-4">
       <v-col>
-        <v-file-input color="green"
-        label="Suba la cotización en pdf de su proyecto"
+        <v-file-input
+          color="green"
+          label="Suba la cotización en pdf de su proyecto"
           filled
           dense
-          rounded>
+          rounded
+        >
         </v-file-input>
       </v-col>
     </v-row>
     <h4>Bancos con que trabaja</h4>
     <v-row class="pa-4">
       <div v-for="bank in banks" :key="bank">
-      <v-checkbox
-        :label="bank"
-        color="green"
-        class="mx-6"
-      ></v-checkbox>
+        <v-checkbox :label="bank" color="green" class="mx-6"></v-checkbox>
       </div>
-      <v-text-field label="Otro banco"
-       filled
-          dense
-          rounded
-      ></v-text-field>
-
+      <v-text-field label="Otro banco" filled dense rounded></v-text-field>
     </v-row>
     <h4>Amenities del proyecto</h4>
-     <v-row class="pa-4">
+    <v-row class="pa-4">
       <div v-for="amenitie in amenities" :key="amenitie">
-      <v-checkbox
-        :label="amenitie"
-        color="green"
-        class="mx-6"
-      ></v-checkbox>
+        <v-checkbox :label="amenitie" color="green" class="mx-6"></v-checkbox>
       </div>
     </v-row>
     <h4>Fotos</h4>
     <v-row>
-      <v-col>
-         <v-file-input
-    label="Foto principal del proyecto  "
-    filled
-    color="green"
+      <v-col >
+        <v-file-input
+        @change="readFileMain"
+          v-model="mainPhoto"
+          label="Foto principal del proyecto  "
+          filled
+          color="green"
           dense
           rounded
-    prepend-icon="mdi-camera"
-  ></v-file-input>
-  <v-img width ="200" height="200" class="mx-12 px-12" dark lazy-src="../assets/salam-1.png">
-  </v-img>
+          prepend-icon="mdi-camera"
+        ></v-file-input>
+        <v-img
+        v-if="urlmain"
+          width="400"
+          height="500"
+          class="mx-12 px-12"
+          dark
+          :src="urlmain"
+          lazy-src="../assets/salam-1.png"
+        >
+        </v-img>
       </v-col>
       <v-col>
-         <v-file-input
-         color="green"
-         filled
+        <v-file-input
+          @change="readFile"
+          v-model="aditionalPhotos"
+          color="green"
+          filled
           dense
           rounded
-    label="Fotos adicionales "
-    prepend-icon="mdi-camera"
-  ></v-file-input>
-  <v-img width ="200" class="mx-12 px-12" height="200" dark lazy-src="../assets/salam-1.png">
-  </v-img>
+          multiple
+          label="Fotos adicionales "
+          prepend-icon="mdi-camera"
+        ></v-file-input>
+        <v-carousel  v-if="urladitional.length>0" class="imgs m-12">
+          <v-carousel-item
+          v-for="(img,i) in urladitional"
+          :key="i"
+          :src="img"
+          reverse-transition="fade-transition"
+          transition="fade-transition"
+        ></v-carousel-item>
+        </v-carousel>
       </v-col>
+    </v-row>
+    <v-row class="d-flex justify-center my-5">
+      <v-btn color="green" @click="publishProject">Publicar proyecto</v-btn>
     </v-row>
   </v-card>
 </template>
 
 <script>
+import { addFileToStorage } from '../firebase/storage';
+import { currentUser } from '../firebase/auth';
+
 export default {
   data: () => ({
+    urlmain: false,
+    urladitional: [],
+    properties: {
+      builder_name: '',
+      direccion: '',
+      distrito: '',
+      project_phase: '',
+    },
+    aditionalPhotos: '',
+    mainPhoto: '',
     date: new Date().toISOString().substr(0, 10),
     menu1: false,
     menu2: false,
-    banks: ['BCP', 'Pichincha', 'Scotiabank', 'Saga Falabella', 'Interbank', 'GNB'],
+    banks: [
+      'BCP',
+      'Pichincha',
+      'Scotiabank',
+      'Saga Falabella',
+      'Interbank',
+      'GNB',
+    ],
     amenities: ['Parrillas', 'Petfriendly', 'Vegano', 'Piscinas'],
   }),
+  methods: {
+    readFile(e) {
+      this.urladitional = e.map((file) => URL.createObjectURL(file));
+    },
+    readFileMain(e) {
+      this.urlmain = URL.createObjectURL(e);
+    },
+    publishProject() {
+      addFileToStorage(`${currentUser().uid}/main`, [this.mainPhoto]);
+      addFileToStorage(`${currentUser().uid}/aditional`, this.aditionalPhotos);
+    },
+  },
   created() {
     this.$store.commit('SET_LAYOUT', 'realState-layout');
   },
@@ -239,4 +285,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.imgs{
+  width: 400px;
+  height: 200px;
+}
 </style>

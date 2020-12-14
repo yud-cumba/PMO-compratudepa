@@ -1,5 +1,4 @@
 const bankToImg = (bank) => {
-  alert(bank);
   if (bank.includes('BCP')) {
     return 'bank-bcp.png';
   } if (bank.includes('INTERBANK')) {

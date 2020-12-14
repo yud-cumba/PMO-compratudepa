@@ -13,7 +13,11 @@
 </template>
 
 <script>
+
 export default {
+  data: () => ({
+    user: {},
+  }),
   methods: {
     addProyect() {
       this.$router.replace('/addnew');
