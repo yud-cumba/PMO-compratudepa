@@ -5,6 +5,7 @@
     <v-row class="pa-4">
       <v-col>
         <v-text-field
+          v-model="project.properties.name"
           filled
           rounded
           color="green"
@@ -13,6 +14,7 @@
         >
         </v-text-field>
         <v-text-field
+          v-model="project.properties.direccion"
           filled
           rounded
           color="green"
@@ -20,7 +22,10 @@
           label="Ingrese dirección del proyecto"
         >
         </v-text-field>
-        <v-select color="green" filled dense rounded label="Elija el distrito">
+        <v-select
+        v-model="project.properties.distrito"
+        :items="districts"
+        color="green" filled dense rounded label="Elija el distrito">
         </v-select>
       </v-col>
       <v-col>
@@ -50,12 +55,14 @@
           </template>
           <v-date-picker
             color="green"
-            v-model="date"
+            v-model="project.properties.delivery_date"
             no-title
             @input="menu1 = false"
           ></v-date-picker>
         </v-menu>
         <v-select
+         :items="['En planos', 'En construcción', 'Terminado']"
+          v-model="project.properties.project_phase"
           color="green"
           filled
           dense
@@ -64,20 +71,25 @@
         >
         </v-select>
         <v-text-field
+        v-model="project.properties.room_max"
           color="green"
           filled
           dense
           rounded
           type="number"
-          label="Elija el número de habitaciones"
+          label="Elija el número de habitaciones "
         >
         </v-text-field>
       </v-col>
+      <GoogleMap :latitude= "latitude" :zoom="zoom"
+    :longitude= "longitude" :markers="projects" :totalMarkers="totalProjects"
+    />
     </v-row>
     <h4>Detalle</h4>
     <v-row class="pa-4">
       <v-col>
         <v-text-field
+          v-model="project.properties.cantidad"
           filled
           rounded
           color="green"
@@ -86,6 +98,7 @@
         >
         </v-text-field>
         <v-text-field
+          v-model="project.properties.floors"
           filled
           rounded
           color="green"
@@ -98,15 +111,17 @@
       </v-col>
       <v-col>
         <v-text-field
+           v-model="project.properties.area_max"
           color="green"
           filled
           dense
           rounded
           type="number"
-          label="Ingrese espacio en m2"
+          label="Ingrese área máxima en m2"
         >
         </v-text-field>
         <v-textarea
+           v-model="project.properties.descripcion"
           color="green"
           filled
           dense
@@ -120,21 +135,23 @@
     <v-row class="pa-4">
       <v-col>
         <v-text-field
+          v-model="project.properties.min_price"
           filled
           rounded
           color="green"
           dense
           type="number"
-          label="Ingrese precio de separación"
+          label="Ingrese precio de separación en soles"
         >
         </v-text-field>
         <v-text-field
+         v-model="project.properties.deposito_price"
           filled
           rounded
           color="green"
           dense
           type="number"
-          label="Ingrese precio de depósitos"
+          label="Ingrese precio de depósito"
         >
         </v-text-field>
       </v-col>
@@ -148,6 +165,7 @@
         >
         </v-select>
         <v-text-field
+          v-model="project.properties.room_max"
           color="green"
           filled
           dense
@@ -173,10 +191,19 @@
     </v-row>
     <h4>Bancos con que trabaja</h4>
     <v-row class="pa-4">
-      <div v-for="bank in banks" :key="bank">
+      <v-col>
+        <v-select
+          v-model="project.properties.finance_bank"
+          :items="banks"
+          filled
+          dense
+          rounded>
+        </v-select>
+      </v-col>
+      <!-- <div v-for="bank in banks" :key="bank">
         <v-checkbox :label="bank" color="green" class="mx-6"></v-checkbox>
-      </div>
-      <v-text-field label="Otro banco" filled dense rounded></v-text-field>
+      </div> -->
+      <!-- <v-text-field label="Otro banco" filled dense rounded></v-text-field> -->
     </v-row>
     <h4>Amenities del proyecto</h4>
     <v-row class="pa-4">
@@ -240,16 +267,20 @@
 <script>
 import { addFileToStorage } from '../firebase/storage';
 import { currentUser } from '../firebase/auth';
+import GoogleMap from '../components/GoogleMap.vue';
 
 export default {
+  components: () => ({
+    GoogleMap,
+  }),
   data: () => ({
-    urlmain: false,
+    urlmain: '',
     urladitional: [],
-    properties: {
-      builder_name: '',
-      direccion: '',
-      distrito: '',
-      project_phase: '',
+    project: {
+      properties: {
+        name: '',
+        direccion: '',
+      },
     },
     aditionalPhotos: '',
     mainPhoto: '',
@@ -263,6 +294,40 @@ export default {
       'Saga Falabella',
       'Interbank',
       'GNB',
+    ],
+    districts: [
+      'Cercado de Lima',
+      'Ate',
+      'Barranco',
+      'Breña',
+      'Comas',
+      'Chorrillos',
+      'El Agustino',
+      'Jesús María',
+      'La Molina',
+      'La Victoria',
+      'Lince',
+      'Magdalena del Mar',
+      'Miraflores',
+      'Pueblo Libre',
+      'Puente Piedra',
+      'Rimac',
+      'San Isidro',
+      'Independencia',
+      'San Juan de Miraflores',
+      'San Luis',
+      'San Martin de Porres',
+      'San Miguel',
+      'Santiago de Surco',
+      'Surquillo',
+      'Villa María del Triunfo',
+      'Ventanilla',
+      'San Juan de Lurigancho',
+      'Santa Rosa',
+      'Los Olivos',
+      'San Borja',
+      'Villa El Savador',
+      'Santa Anita',
     ],
     amenities: ['Parrillas', 'Petfriendly', 'Vegano', 'Piscinas'],
   }),

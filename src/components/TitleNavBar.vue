@@ -44,6 +44,7 @@
         >
           Quiero publicar
         </v-btn>
+        <Logout/>
       </div>
     </v-card-title>
 </template>
@@ -51,12 +52,16 @@
 <script>
 import { verifyIsLogin, currentUser } from '../firebase/auth';
 import { getUserByUid } from '../firebase/database';
+import Logout from './Logout.vue';
 
 export default {
   data: () => ({
     isLogin: false,
     user: {},
   }),
+  components: {
+    Logout,
+  },
   methods: {
     verify() {
       verifyIsLogin(

@@ -52,7 +52,7 @@ export default {
     drawer: true,
     mini: false,
     views: [
-      ['mdi-home', 'Inicio', '/home'],
+      ['mdi-home', 'Dashboard', '/dashboard'],
       ['mdi-form-select', 'Mis proyectos', '/myprojects'],
       ['mdi-account-group', 'Configuración', '/seeting'],
     ],

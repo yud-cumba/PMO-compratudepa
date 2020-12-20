@@ -9,15 +9,20 @@
       </v-btn>
       </div>
     </div>
+    <Logout/>
   </div>
 </template>
 
 <script>
+import Logout from '../components/Logout.vue';
 
 export default {
   data: () => ({
     user: {},
   }),
+  components: {
+    Logout,
+  },
   methods: {
     addProyect() {
       this.$router.replace('/addnew');

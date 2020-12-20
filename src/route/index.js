@@ -15,6 +15,7 @@ import SignUp from '../views/SignUp.vue';
 import Favorite from '../views/Favorite.vue';
 import SignUpInmb from '../views/SignUpInmb.vue';
 import AddNewProject from '../views/AddNewProject.vue';
+import Dashboard from '../views/Dashboard.vue';
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,7 @@ const routes = [
   { path: '/favorite', component: Favorite },
   { path: '/signupInmb', component: SignUpInmb },
   { path: '/addnew', component: AddNewProject },
+  { path: '/dashboard', component: Dashboard },
 ];
 
 const router = new VueRouter({
