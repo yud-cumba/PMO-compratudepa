@@ -22,11 +22,12 @@
           label="Ingrese dirección del proyecto"
         >
         </v-text-field>
-        <v-select
+        <v-autocomplete
         v-model="project.properties.distrito"
         :items="districts"
+        @change="currentLatLong(project.properties.distrito)"
         color="green" filled dense rounded label="Elija el distrito">
-        </v-select>
+        </v-autocomplete>
       </v-col>
       <v-col>
         <v-menu
@@ -81,9 +82,13 @@
         >
         </v-text-field>
       </v-col>
-      <GoogleMap :latitude= "latitude" :zoom="zoom"
-    :longitude= "longitude" :markers="projects" :totalMarkers="totalProjects"
-    />
+    </v-row>
+    <v-row v-if="project.properties.distrito" class="pa-12">
+        <h4 class="py-3">Recorre el mapa y clickea la ubicación de tu proyecto,
+         esto servirá para que los usuarios puedan encontrar tu proyecto por la ubicación</h4>
+      <GoogleMap :latitude="latitude" :zoom="zoom"
+      :longitude="longitude" :markers="marker" :totalMarkers="marker" :addMarker="addMarker"
+      />
     </v-row>
     <h4>Detalle</h4>
     <v-row class="pa-4">
@@ -106,8 +111,9 @@
           label="Ingrese número de pisos del proyecto"
         >
         </v-text-field>
-        <v-select color="green" filled dense rounded label="Elija el distrito">
-        </v-select>
+        <v-autocomplete color="green" filled dense rounded label="Elija el distrito"
+        :items="districts">
+        </v-autocomplete>
       </v-col>
       <v-col>
         <v-text-field
@@ -189,14 +195,30 @@
         </v-file-input>
       </v-col>
     </v-row>
-    <h4>Bancos con que trabaja</h4>
     <v-row class="pa-4">
       <v-col>
+        <h4 class="my-4">Bancos con que trabaja</h4>
         <v-select
           v-model="project.properties.finance_bank"
+          label="Escoja los bancos que financian"
           :items="banks"
           filled
           dense
+          multiple
+          color="green"
+          rounded>
+        </v-select>
+      </v-col>
+      <v-col>
+        <h4 class="my-4">Amenities del proyecto</h4>
+        <v-select
+          v-model="project.properties.areas_comunes"
+          label="Escoja los amenities que cuenta su proyecto"
+          :items="amenities"
+          color="green"
+          filled
+          dense
+          multiple
           rounded>
         </v-select>
       </v-col>
@@ -205,17 +227,29 @@
       </div> -->
       <!-- <v-text-field label="Otro banco" filled dense rounded></v-text-field> -->
     </v-row>
-    <h4>Amenities del proyecto</h4>
-    <v-row class="pa-4">
-      <div v-for="amenitie in amenities" :key="amenitie">
+    <!-- <h4>Amenities del proyecto</h4>
+    <v-row class="pa-4"> -->
+      <!-- <v-col>
+        <v-select
+          v-model="project.properties.finance_bank"
+          label="Escoja los amenities que cuenta su proyecto"
+          :items="amenities"
+          filled
+          dense
+          multiple
+          chips
+          rounded>
+        </v-select>
+      </v-col> -->
+      <!-- <div v-for="amenitie in amenities" :key="amenitie">
         <v-checkbox :label="amenitie" color="green" class="mx-6"></v-checkbox>
-      </div>
-    </v-row>
+      </div> -->
+    <!-- </v-row> -->
     <h4>Fotos</h4>
     <v-row>
       <v-col >
         <v-file-input
-        @change="readFileMain"
+          @change="readFileMain"
           v-model="mainPhoto"
           label="Foto principal del proyecto  "
           filled
@@ -265,21 +299,25 @@
 </template>
 
 <script>
-import { addFileToStorage } from '../firebase/storage';
+import { addFileToStorage, getFileFromStorage } from '../firebase/storage';
 import { currentUser } from '../firebase/auth';
 import GoogleMap from '../components/GoogleMap.vue';
+import ubigeo from '../data/ubigeo.json';
 
 export default {
-  components: () => ({
+  components: {
     GoogleMap,
-  }),
+  },
   data: () => ({
     urlmain: '',
     urladitional: [],
     project: {
+      geometry: {
+      },
       properties: {
         name: '',
         direccion: '',
+        imagenes: '',
       },
     },
     aditionalPhotos: '',
@@ -295,43 +333,62 @@ export default {
       'Interbank',
       'GNB',
     ],
-    districts: [
-      'Cercado de Lima',
-      'Ate',
-      'Barranco',
-      'Breña',
-      'Comas',
-      'Chorrillos',
-      'El Agustino',
-      'Jesús María',
-      'La Molina',
-      'La Victoria',
-      'Lince',
-      'Magdalena del Mar',
-      'Miraflores',
-      'Pueblo Libre',
-      'Puente Piedra',
-      'Rimac',
-      'San Isidro',
-      'Independencia',
-      'San Juan de Miraflores',
-      'San Luis',
-      'San Martin de Porres',
-      'San Miguel',
-      'Santiago de Surco',
-      'Surquillo',
-      'Villa María del Triunfo',
-      'Ventanilla',
-      'San Juan de Lurigancho',
-      'Santa Rosa',
-      'Los Olivos',
-      'San Borja',
-      'Villa El Savador',
-      'Santa Anita',
+    marker: [],
+    districts: ubigeo.map((e) => e.distrito),
+    amenities: [
+      'Areas verdes',
+      'Área de juegos para niños',
+      'Ascensor directo',
+      'Boulevard peatonal',
+      'Cancha de Fulbito',
+      'Cancha de Squash',
+      'Club House',
+      'Cuarto de servicio',
+      'Gimnasio',
+      'Jardín de niños',
+      'Karaoke',
+      'Lobby',
+      'Minimarket',
+      'Parque privado',
+      'Paseo de Aguas',
+      'Piscina',
+      'Sala Bar',
+      'Salón Gourmet',
+      'Sala de internet',
+      'Sala de Niños',
+      'Sala de cine',
+      'Sala de usos Múltuples',
+      'Sauna',
+      'Techo Panorámico',
+      'Techos Ecológicos',
+      'Terraza',
+      'Video vigilancia',
+      'Zona de Lavandería',
+      'Zona de Parrillas',
+      'Otros',
     ],
-    amenities: ['Parrillas', 'Petfriendly', 'Vegano', 'Piscinas'],
+    zoom: 12,
+    latitude: -12.089637033755114,
+    longitude: -77.05453930635801,
   }),
   methods: {
+    addMarker(position) {
+      this.marker = [
+        {
+          position,
+        },
+      ];
+      this.project.geometry = {
+        coordinates: [position.lng, position.lat],
+        type: 'Point',
+      };
+    },
+    currentLatLong(district) {
+      const currentDistrict = ubigeo.filter((e) => e.distrito === district)[0];
+      this.latitude = currentDistrict.lat;
+      this.longitude = currentDistrict.long;
+      this.zoom = 14;
+    },
     readFile(e) {
       this.urladitional = e.map((file) => URL.createObjectURL(file));
     },
@@ -339,8 +396,13 @@ export default {
       this.urlmain = URL.createObjectURL(e);
     },
     publishProject() {
-      addFileToStorage(`${currentUser().uid}/main`, [this.mainPhoto]);
-      addFileToStorage(`${currentUser().uid}/aditional`, this.aditionalPhotos);
+      const vm = this;
+      const photos = [this.mainPhoto].concat(this.aditionalPhotos);
+      addFileToStorage(`${currentUser().uid}/${this.project.properties.name}`, photos)
+        .then((photoNames) => photoNames.map((photo) => getFileFromStorage(`${currentUser().uid}/${this.project.properties.name}/${photo}`)))
+        .then((url) => Promise.all(url).then((urls) => {
+          vm.project.properties.imagenes = urls;
+        }));
     },
   },
   created() {
