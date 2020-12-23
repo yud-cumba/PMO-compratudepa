@@ -9,6 +9,10 @@ export const userAdd = (id, name, email, role, phone, photo) => {
     ...(!!photo && { photo }),
   });
 };
+
+export const addNewProject = (id, project) => {
+  firebase.database().ref(`PROJECTS/${id}`).set(project);
+};
 export const getUserByUid = (UID) => firebase
   .database()
   .ref(`USERS/${UID}`)

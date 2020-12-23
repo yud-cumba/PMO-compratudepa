@@ -300,6 +300,7 @@
 
 <script>
 import { addFileToStorage, getFileFromStorage } from '../firebase/storage';
+import { addNewProject } from '../firebase/database';
 import { currentUser } from '../firebase/auth';
 import GoogleMap from '../components/GoogleMap.vue';
 import ubigeo from '../data/ubigeo.json';
@@ -397,12 +398,27 @@ export default {
     },
     publishProject() {
       const vm = this;
+      vm.project.properties.id = new Date().getTime();
       const photos = [this.mainPhoto].concat(this.aditionalPhotos);
-      addFileToStorage(`${currentUser().uid}/${this.project.properties.name}`, photos)
+      const promises = addFileToStorage(`${currentUser().uid}/${this.project.properties.name}`, photos);
+      Promise.all(promises).then(() => photos.map((p) => p.name))
         .then((photoNames) => photoNames.map((photo) => getFileFromStorage(`${currentUser().uid}/${this.project.properties.name}/${photo}`)))
         .then((url) => Promise.all(url).then((urls) => {
           vm.project.properties.imagenes = urls;
-        }));
+        }))
+        .then(() => {
+          addNewProject(vm.project.properties.id, vm.project);
+        });
+      // addFileToStorage(`${currentUser().uid}/${this.project.properties.name}`, photos)
+      // eslint-disable-next-line max-len
+      //   .then((photoNames) => photoNames.map((photo) => getFileFromStorage(`${currentUser().uid}/${this.project.properties.name}/${photo}`)))
+      //   .then((url) => Promise.all(url).then((urls) => {
+      //     alert(urls);
+      //     vm.project.properties.imagenes = urls;
+      //   })).then(() => {
+      //     alert('add proyect');
+      //     console.log(this.project);
+      //   });
     },
   },
   created() {
