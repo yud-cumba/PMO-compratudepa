@@ -111,9 +111,15 @@
           label="Ingrese número de pisos del proyecto"
         >
         </v-text-field>
-        <v-autocomplete color="green" filled dense rounded label="Elija el distrito"
-        :items="districts">
-        </v-autocomplete>
+        <v-text-field
+          v-model="project.properties.project_whatsapp"
+          filled
+          rounded
+          color="green"
+          dense
+          label="Ingrese número de celular para contacto"
+        >
+        </v-text-field>
       </v-col>
       <v-col>
         <v-text-field
@@ -157,12 +163,13 @@
           color="green"
           dense
           type="number"
-          label="Ingrese precio de depósito"
+          label="Ingrese precio de depósito en soles"
         >
         </v-text-field>
       </v-col>
       <v-col>
         <v-select
+        v-model="project.properties.deposito_price"
           color="green"
           filled
           dense
@@ -293,7 +300,8 @@
       </v-col>
     </v-row>
     <v-row class="d-flex justify-center my-5">
-      <v-btn color="green" @click="publishProject">Publicar proyecto</v-btn>
+      <PreviewView :project="project.properties" :publish="publishProject"/>
+      <v-btn color="green" class="mx-10" @click="publishProject">Publicar proyecto</v-btn>
     </v-row>
   </v-card>
 </template>
@@ -303,11 +311,13 @@ import { addFileToStorage, getFileFromStorage } from '../firebase/storage';
 import { addNewProject } from '../firebase/database';
 import { currentUser } from '../firebase/auth';
 import GoogleMap from '../components/GoogleMap.vue';
+import PreviewView from '../components/PreviewView.vue';
 import ubigeo from '../data/ubigeo.json';
 
 export default {
   components: {
     GoogleMap,
+    PreviewView,
   },
   data: () => ({
     urlmain: '',
@@ -317,8 +327,9 @@ export default {
       },
       properties: {
         name: '',
+        coin: 'S/.',
         direccion: '',
-        imagenes: '',
+        imagenes: [],
       },
     },
     aditionalPhotos: '',
@@ -392,9 +403,11 @@ export default {
     },
     readFile(e) {
       this.urladitional = e.map((file) => URL.createObjectURL(file));
+      this.project.properties.imagenes = this.project.properties.imagenes.concat(this.urladitional);
     },
     readFileMain(e) {
       this.urlmain = URL.createObjectURL(e);
+      this.project.properties.imagenes.push(this.urlmain);
     },
     publishProject() {
       const vm = this;
@@ -409,16 +422,6 @@ export default {
         .then(() => {
           addNewProject(vm.project.properties.id, vm.project);
         });
-      // addFileToStorage(`${currentUser().uid}/${this.project.properties.name}`, photos)
-      // eslint-disable-next-line max-len
-      //   .then((photoNames) => photoNames.map((photo) => getFileFromStorage(`${currentUser().uid}/${this.project.properties.name}/${photo}`)))
-      //   .then((url) => Promise.all(url).then((urls) => {
-      //     alert(urls);
-      //     vm.project.properties.imagenes = urls;
-      //   })).then(() => {
-      //     alert('add proyect');
-      //     console.log(this.project);
-      //   });
     },
   },
   created() {

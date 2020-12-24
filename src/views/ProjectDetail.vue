@@ -28,7 +28,6 @@
             <v-stepper-step color="green" step="1" :complete="e1 > 1">
               En planos
             </v-stepper-step>
-
             <v-divider></v-divider>
 
             <v-stepper-step step="2" color="green" :complete="e1 > 2">
