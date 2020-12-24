@@ -2,7 +2,7 @@
 <div>
   <v-parallax src="../assets/sala.png"
   class="initial-search d-flex justify-center align-center">
-    <v-card color="rgb(255, 255, 255, 0.7)" width="600">
+    <v-card color="rgb(255, 255, 255, 0.7)" width="700">
       <v-row  class="mx-2">
         <v-text-field
           class="mt-5 mx-2"
@@ -34,17 +34,17 @@
             color="green"
           ></v-select>
           <v-select
-            v-model="rooms"
+            v-model="phase"
             class="mx-2 pb-0 select-price"
-            :items="['1 dormitorio', '2 dormitorios', '3 dormitorios', '4 dormitorios']"
-            label="Número de pisos"
+            :items="['En planos', 'En construcción', 'Terminado']"
+            label="Fase del proyecto"
             style="width: 230px"
             dense
             outlined
             color="green"
           ></v-select>
         </div>
-        <FilterPrice :setPrice="setPrice"/>
+        <FilterPrice :setPrice="setPrice" :setType="setType" :initialRange="range"/>
       </v-row>
     </v-card>
   </v-parallax>
@@ -58,6 +58,7 @@
 import Benefits from '../components/BenefitsCards.vue';
 import ProjectCards from '../components/ProjectCards.vue';
 import FilterPrice from '../components/FilterPrice.vue';
+import { getMinPrice, getMaxPrice } from '../utils/prices';
 
 import inm from '../data/inmobiliarias.json';
 
@@ -70,28 +71,27 @@ export default {
   },
   data() {
     const inmobiliarias = inm.features.map((doc) => ({ id: doc.id, ...doc.properties }));
-    // .sort((a, b) => {
-    //   if (a.Unidades_ofertadas_mes < b.Unidades_ofertadas_mes) {
-    //     return 1;
-    //   }
-    //   if (a.Unidades_ofertadas_mes > b.Unidades_ofertadas_mes) {
-    //     return -1;
-    //   }
-    //   return 0;
-    // });
+    const min = getMinPrice(inmobiliarias);
+    const max = getMaxPrice(inmobiliarias);
     return {
-      typePrice: 'Soles',
+      typePrice: 'S/.',
       inmobiliarias,
       search: '',
+      range: [min, max],
       prices: {
-        min: 2000, max: 20000,
+        max,
+        min,
       },
       rooms: false,
+      phase: '',
     };
   },
   methods: {
     setPrice(price) {
       this.prices = price;
+    },
+    setType(inDolar) {
+      this.typePrice = inDolar ? '$' : 'S/.';
     },
     searchInMap() {
       this.$router.push({

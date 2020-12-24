@@ -1,23 +1,19 @@
 <template>
   <v-card class="elevation-1">
-    <TitleNavBar :isLogin = "isLogin"/>
+    <TitleNavBar :isLogin="isLogin" />
     <v-card-text class="d-flex justify-end px-4">
       <div
         class="text-lg-h6 px-6 mx-6"
         @click="homeClick"
-        v-click-outside="onClickOutside"
-        v-bind="attrs"
-        v-on="on"
       >
         INICIO
       </div>
       <v-menu offset-y>
-        <template v-slot:activator="{ on, attrs }">
+        <template v-slot:activator="{ on }">
           <div
             class="text-lg-h6 px-6 mx-6"
             @click="projectsClick"
             v-click-outside="onClickOutside"
-            v-bind="attrs"
             v-on="on"
           >
             PROYECTOS
@@ -42,45 +38,24 @@
           </v-row>
         </v-card>
       </v-menu>
-      <v-menu offset-y>
-        <template v-slot:activator="{ on, attrs }">
           <div
             class="text-lg-h6 px-6 mx-6"
             @click="adviceClick"
-            v-click-outside="onClickOutside"
-            v-bind="attrs"
-            v-on="on"
           >
             TE ASESORAMOS
           </div>
-        </template>
-      </v-menu>
-      <v-menu offset-y>
-        <template v-slot:activator="{ on, attrs }">
           <div
             class="text-lg-h6 px-6 mx-6"
             @click="creditsClick"
-            v-click-outside="onClickOutside"
-            v-bind="attrs"
-            v-on="on"
           >
             COMPROMISO SOCIAL
           </div>
-        </template>
-      </v-menu>
-      <v-menu v-if="isLogin" offset-y>
-        <template v-slot:activator="{ on, attrs }">
           <div
             class="text-lg-h6 px-6 mx-6"
             @click="favoriteClick"
-            v-click-outside="onClickOutside"
-            v-bind="attrs"
-            v-on="on"
           >
             MIS FAVORITOS
           </div>
-        </template>
-      </v-menu>
     </v-card-text>
   </v-card>
 </template>
@@ -91,7 +66,7 @@ import { verifyIsLogin, currentUser } from '../firebase/auth';
 import { getUserByUid } from '../firebase/database';
 
 export default {
-  props: ['quantityInmobByDistrict', 'items'],
+  props: ['quantityInmobByDistrict'],
   data() {
     return {
       active: false,

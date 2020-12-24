@@ -127,10 +127,10 @@ export default {
       this.prices = price;
     },
     filterByPrice() {
-      const type = (this.priceSelected === 'Soles') ? 1 : 3.3;
+      // const type = (this.priceSelected === 'Soles') ? 1 : 3.3;
       // eslint-disable-next-line max-len
-      this.projects = this.projects.filter((e) => e.min_price > Number(this.prices.min) * type
-      && e.min_price < Number(this.prices.max) * type);
+      this.projects = this.projects.filter((e) => e.min_price > Number(this.prices.min)
+      && e.min_price < Number(this.prices.max));
     },
     filterByInputUbication() {
       this.projects = this.totalProjects.filter((project) => {

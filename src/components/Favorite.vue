@@ -39,13 +39,15 @@ export default {
         () => {
           this.isLogin = true;
           getUserByUid(currentUser().uid).then((user) => {
-            Object.keys(user.favorites).forEach((favoriteID) => {
-              const favorite = user.favorites[favoriteID];
-              if (favorite.id === this.project.id) {
-                this.favorite = true;
-                this.favoriteID = favoriteID;
-              }
-            });
+            if (user.favorites) {
+              Object.keys(user.favorites).forEach((favoriteID) => {
+                const favorite = user.favorites[favoriteID];
+                if (favorite.id === this.project.id) {
+                  this.favorite = true;
+                  this.favoriteID = favoriteID;
+                }
+              });
+            }
           });
         },
         () => {

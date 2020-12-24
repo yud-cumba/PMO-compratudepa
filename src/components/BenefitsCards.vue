@@ -2,7 +2,7 @@
     <div class="d-flex flex-column justify-center align-center px-12 mx-8">
         <h2 class="ma-8">{{title}}</h2>
         <div class="d-flex justify-center align-center mb-5">
-            <div v-for="reason in reasons" :key="reason.icon" >
+            <div v-for="reason in reasons" :key="reason.title" >
                 <div class="d-flex flex-column align-center ma-10 pa-3 card">
                     <IconifyIcon :icon="reason.icon"
                     :style="{color: '#41f683', fontSize: '69px'}" />

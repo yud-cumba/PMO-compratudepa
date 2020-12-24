@@ -1,6 +1,6 @@
 <template>
     <v-app>
-      <NavBar :quantityInmobByDistrict="quantityInmobByDistrict" :items="items"/>
+      <NavBar :quantityInmobByDistrict="quantityInmobByDistrict"/>
       <router-view></router-view>
       <v-divider></v-divider>
       <Footer/>
