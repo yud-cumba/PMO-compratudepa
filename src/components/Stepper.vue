@@ -17,8 +17,12 @@
               <v-card
                 color="grey lighten-1"
                 class="mb-12"
-                height="200px"
-              ></v-card>
+              >
+              <iframe width="560" height="315" :src="item.youtube" frameborder="0"
+              allow="accelerometer;
+              autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+              </v-card>
               <v-btn
                 v-if="index+1<items.length"
                 color="green"
@@ -46,29 +50,28 @@ export default {
     e6: 1,
     items: [
       {
-        title: 'PASO 1',
+        title: 'Verificación de la legalidad del inmueble',
         text:
-          'blabv lanjkhq sjkajkd ankjdanan dkj dblab lanjkhqs jkajk dankj dan andkjd',
+          'Te explicamos cómo hacerlo en el video a continuación',
+        youtube: 'https://www.youtube.com/embed/62TdZtUI0ko',
       },
       {
-        title: 'PASO 2',
+        title: 'Contrato, minuta',
         text:
-          'blabv lanjkhq sjkajkd ankjdanan dkj dblab lanjkhqs jkajk dankj dan andkjd',
+          'Te explicamos que son en el video a continuación',
+        youtube: 'https://www.youtube.com/embed/dPdMRzT23Zw',
       },
       {
-        title: 'PASO 3',
+        title: 'Puntos importantes de un contrato',
         text:
-          'blabv lanjkhq sjkajkd ankjdanan dkj dblab lanjkhqs jkajk dankj dan andkjd',
+          'Te explicamos cuales son los puntos más importantes a tener en cuenta en el video a continuación',
+        youtube: 'https://www.youtube.com/embed/lntgDXETKe8',
       },
       {
-        title: 'PASO 4',
+        title: 'Impuestos ',
         text:
-          'blabv lanjkhq sjkajkd ankjdanan dkj dblab lanjkhqs jkajk dankj dan andkjd',
-      },
-      {
-        title: 'PASO 5',
-        text:
-          'blabv lanjkhq sjkajkd ankjdanan dkj dblab lanjkhqs jkajk dankj dan andkjd',
+          'Te explicamos cuales son los impuestos a los que está sujeto el contrato en el video a continuación',
+        youtube: 'https://www.youtube.com/embed/62TdZtUI0ko',
       },
     ],
   }),
