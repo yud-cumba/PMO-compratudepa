@@ -66,7 +66,7 @@ import { verifyIsLogin, currentUser } from '../firebase/auth';
 import { getUserByUid } from '../firebase/database';
 
 export default {
-  props: ['quantityInmobByDistrict'],
+  props: ['quantityInmobByDistrict', 'prices'],
   data() {
     return {
       active: false,
@@ -111,12 +111,10 @@ export default {
         path: '/maps',
         query: {
           district,
-          prices: {
-            min: 2000,
-            max: 2000000,
-          },
-          typePrice: 'Soles',
-          rooms: false,
+          prices: this.prices,
+          typePrice: 'S/.',
+          rooms: '',
+          phase: '',
         },
       });
     },
