@@ -301,15 +301,30 @@
     </v-row>
     <v-row class="d-flex justify-center my-5">
       <PreviewView :project="project.properties" :publish="publishProject"/>
-      <v-btn color="green" class="mx-10" @click="publishProject">Publicar proyecto</v-btn>
+      <v-btn color="green" class="mx-10" @click="publishProject">
+        Publicar proyecto
+        <v-progress-circular
+                class="ml-2"
+                 v-if="loading"
+                 left
+                 :size="25"
+                 :width="5"
+                 color="white"
+                indeterminate
+
+                ></v-progress-circular>
+        </v-btn>
     </v-row>
+    <ModalOk :dialog="published"
+    :title="`El proyecto ${project.properties.name} fue publicado con éxito!`"/>
   </v-card>
 </template>
 
 <script>
 import { addFileToStorage, getFileFromStorage } from '../firebase/storage';
-import { addNewProject } from '../firebase/database';
+import { addNewProject, userAddProject } from '../firebase/database';
 import { currentUser } from '../firebase/auth';
+import ModalOk from '../components/ModalOk.vue';
 import GoogleMap from '../components/GoogleMap.vue';
 import PreviewView from '../components/PreviewView.vue';
 import ubigeo from '../data/ubigeo.json';
@@ -318,8 +333,10 @@ export default {
   components: {
     GoogleMap,
     PreviewView,
+    ModalOk,
   },
   data: () => ({
+    loading: false,
     urlmain: '',
     urladitional: [],
     project: {
@@ -379,6 +396,7 @@ export default {
       'Zona de Parrillas',
       'Otros',
     ],
+    published: false,
     zoom: 12,
     latitude: -12.089637033755114,
     longitude: -77.05453930635801,
@@ -410,6 +428,7 @@ export default {
       this.project.properties.imagenes.push(this.urlmain);
     },
     publishProject() {
+      this.loading = true;
       const vm = this;
       vm.project.properties.id = new Date().getTime();
       const photos = [this.mainPhoto].concat(this.aditionalPhotos);
@@ -419,8 +438,11 @@ export default {
         .then((url) => Promise.all(url).then((urls) => {
           vm.project.properties.imagenes = urls;
         }))
+        .then(() => addNewProject(vm.project.properties.id, vm.project))
+        .then(() => userAddProject(currentUser().uid, vm.project.properties.id))
         .then(() => {
-          addNewProject(vm.project.properties.id, vm.project);
+          this.loading = false;
+          this.published = true;
         });
     },
   },

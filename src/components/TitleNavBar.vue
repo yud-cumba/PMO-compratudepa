@@ -26,6 +26,7 @@
         >
           Quiero publicar
         </v-btn>
+        <Logout/>
       </div>
       <div v-else>
         <v-btn
@@ -44,7 +45,6 @@
         >
           Quiero publicar
         </v-btn>
-        <Logout/>
       </div>
     </v-card-title>
 </template>

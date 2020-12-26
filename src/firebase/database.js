@@ -10,9 +10,8 @@ export const userAdd = (id, name, email, role, phone, photo) => {
   });
 };
 
-export const addNewProject = (id, project) => {
-  firebase.database().ref(`PROJECTS/${id}`).set(project);
-};
+export const addNewProject = (id, project) => firebase.database().ref(`PROJECTS/${id}`).set(project);
+
 export const getUserByUid = (UID) => firebase
   .database()
   .ref(`USERS/${UID}`)
@@ -58,6 +57,8 @@ export const getRatingsByUserId = (UID) => firebase
 export const userAddRating = (userid, data, projectID) => firebase.database().ref(`USERS/${userid}/ratings`).push({
   [projectID]: data,
 });
+
+export const userAddProject = (userid, projectID) => firebase.database().ref(`USERS/${userid}/projects`).push(projectID);
 
 export const userRatingUpdate = (userId, rating, ratingID, projectID) => {
   firebase.database().ref(`USERS/${userId}/ratings`).child(ratingID).update({

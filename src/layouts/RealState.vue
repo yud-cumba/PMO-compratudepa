@@ -32,10 +32,12 @@
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-btn color="#747474" class="my-12 "
+          text dark @click="logout">
+            <v-icon class="pl-1" size="30">mdi-power-standby</v-icon>
+            <span class="text-router">Cerrar Sesión</span>
+          </v-btn>
       </v-list>
-      <template v-slot:append>
-        <div></div>
-      </template>
     </v-navigation-drawer>
     <v-content style="background-color: white">
             <Title/>
@@ -46,6 +48,7 @@
 
 <script>
 import Title from '../components/TitleRealState.vue';
+import { logout } from '../firebase/auth';
 
 export default {
   data: () => ({
@@ -59,6 +62,9 @@ export default {
   }),
   components: {
     Title,
+  },
+  methods: {
+    logout,
   },
 };
 </script>

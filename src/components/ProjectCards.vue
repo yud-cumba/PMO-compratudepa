@@ -50,10 +50,6 @@
               <v-icon class="mr-1">mdi-account-hard-hat</v-icon>
               {{ `Fase :${item.project_phase}` }}
             </div>
-            <!-- <div class="information d-flex justify-start">
-              <v-icon class="mr-1">mdi-domain</v-icon>
-              {{ `Inmobiliaria ${item.Inmobiliaria}` }}
-            </div> -->
           </v-card-text>
         </v-card>
       </div>

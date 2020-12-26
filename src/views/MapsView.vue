@@ -50,7 +50,7 @@
               v-for="(value, key) in amenities"
               :key="key"
               class="pa-0 ma-0"
-               style="width: 180px"
+               style="width: 160px"
             >
               <v-checkbox
                 class=" pa-0 ma-0"
@@ -77,7 +77,7 @@
               v-for="(value, key) in filterPlaces"
               :key="key"
               class="pa-0 ma-0"
-              style="width: 180px"
+              style="width: 160px"
             >
               <v-checkbox
                 class="text-capitalize pa-0 ma-0"
@@ -119,7 +119,7 @@
       />
     </div>
     <div v-else class="ma-5 text-red">
-      No hay resultados de la búsqueda, intente con otro filtro
+      <NoProjects/>
     </div>
     <ProjectCards :projects="projects" />
   </div>
@@ -132,12 +132,14 @@ import ProjectCards from '../components/ProjectCards.vue';
 import FilterPrice from '../components/FilterPrice.vue';
 // eslint-disable-next-line import/no-cycle
 import { eventBus } from '../main';
+import NoProjects from '../components/NoProjects.vue';
 
 export default {
   components: {
     GoogleMap,
     ProjectCards,
     FilterPrice,
+    NoProjects,
   },
   data() {
     const totalProjects = inmobiliarias.features.map((inmob) => ({

@@ -16,6 +16,7 @@ import Favorite from '../views/Favorite.vue';
 import SignUpInmb from '../views/SignUpInmb.vue';
 import AddNewProject from '../views/AddNewProject.vue';
 import Dashboard from '../views/Dashboard.vue';
+import SeparateYourDepa from '../views/SeparateYourDepa.vue';
 
 Vue.use(VueRouter);
 
@@ -35,6 +36,7 @@ const routes = [
   { path: '/signupInmb', component: SignUpInmb },
   { path: '/addnew', component: AddNewProject },
   { path: '/dashboard', component: Dashboard },
+  { path: '/separate', component: SeparateYourDepa },
 ];
 
 const router = new VueRouter({

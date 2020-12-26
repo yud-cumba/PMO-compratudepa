@@ -51,6 +51,7 @@
             COMPROMISO SOCIAL
           </div>
           <div
+            v-if="isLogin"
             class="text-lg-h6 px-6 mx-6"
             @click="favoriteClick"
           >

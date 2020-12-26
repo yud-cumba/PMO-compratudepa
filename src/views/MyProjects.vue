@@ -1,27 +1,29 @@
 <template>
   <div>
-    <div class="d-flex justify-space-between ma-5">
+    <v-row class="d-flex justify-space-between ma-5">
       <h2>Mis proyectos</h2>
       <div class="text-center">
-      <h3>Nuevo proyecto</h3>
-      <v-btn class="ma-2" fab dark color="green">
-        <v-icon dark @click="addProyect"> mdi-plus </v-icon>
-      </v-btn>
+        <h3>Nuevo proyecto</h3>
+        <v-btn class="ma-2" fab dark color="green">
+          <v-icon dark @click="addProyect"> mdi-plus </v-icon>
+        </v-btn>
       </div>
-    </div>
-    <Logout/>
+    </v-row>
+    <v-row>
+    </v-row>
+    <NoProjects/>
   </div>
 </template>
 
 <script>
-import Logout from '../components/Logout.vue';
+import NoProjects from '../components/NoProjects.vue';
 
 export default {
   data: () => ({
     user: {},
   }),
   components: {
-    Logout,
+    NoProjects,
   },
   methods: {
     addProyect() {

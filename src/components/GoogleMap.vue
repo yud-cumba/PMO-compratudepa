@@ -3,7 +3,7 @@
     ref="mapRef"
     :center="center"
     :zoom="z"
-    style="height: 500px"
+    style="width: 100%; height: 500px"
     @click="getLatLong"
   >
     <gmap-marker
