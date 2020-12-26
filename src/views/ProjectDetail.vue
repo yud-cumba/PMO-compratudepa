@@ -37,7 +37,7 @@
             <v-divider></v-divider>
 
             <v-stepper-step color="green" step="3">
-              Terminado
+              Entrega inmediata
             </v-stepper-step>
           </v-stepper-header>
         </v-stepper>

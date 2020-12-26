@@ -26,7 +26,7 @@
           <v-select
             v-model="rooms"
             class="mt-2 mx-2 pb-0 select-price"
-            :items="['1 dormitorio', '2 dormitorios', '3 dormitorios', '4 dormitorios']"
+            :items="itemsRooms"
             label="Número de habitaciones"
             style="width: 230px"
             dense
@@ -36,7 +36,7 @@
           <v-select
             v-model="phase"
             class="mx-2 pb-0 select-price"
-            :items="['En planos', 'En construcción', 'Terminado']"
+            :items="['En planos', 'En construcción', 'Entrega inmediata']"
             label="Fase del proyecto"
             style="width: 230px"
             dense
@@ -44,7 +44,8 @@
             color="green"
           ></v-select>
         </div>
-        <FilterPrice :setPrice="setPrice" :setType="setType" :initialRange="range"/>
+        <FilterPrice :setPrice="setPrice" :setType="setType"
+        :priceInitial="[prices.min, prices.max]"/>
       </v-row>
     </v-card>
   </v-parallax>
@@ -77,12 +78,17 @@ export default {
       typePrice: 'S/.',
       inmobiliarias,
       search: '',
-      range: [min, max],
       prices: {
         max,
         min,
       },
-      rooms: false,
+      itemsRooms: [1, 2, 3, 4].map((e) => {
+        if (e === 1) {
+          return { text: `${e} dormitorio`, value: e };
+        }
+        return { text: `${e} dormitorios`, value: e };
+      }),
+      rooms: '',
       phase: '',
     };
   },
@@ -100,7 +106,8 @@ export default {
           district: this.search,
           prices: this.prices,
           typePrice: this.typePrice,
-          rooms: this.rooms ? this.rooms.substr(0, 1) : false,
+          rooms: this.rooms,
+          phase: this.phase,
         },
       });
     },

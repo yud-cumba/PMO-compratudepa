@@ -15,7 +15,7 @@
   ></v-switch>
   </div>
     <v-range-slider
-    v-model="range"
+    v-model="price"
     :max="initialRange[1]"
     :min="initialRange[0]"
     hide-details
@@ -29,14 +29,14 @@
         <div class="d-flex">
         <p class="mt-2">{{type? '$' : 'S/.'}}</p>
         <v-text-field
-        :value="range[0]"
+        :value="price[0]"
         class="mt-0 pt-0"
         hide-details
         single-line
         type="number"
         color="green"
         style="width: 80px"
-        @change="$set(range, 0, $event)"
+        @change="$set(price, 0, $event)"
         ></v-text-field>
         </div>
         </div>
@@ -47,14 +47,14 @@
         <div class="d-flex">
         <p class="mt-2">{{type? '$' : 'S/.'}}</p>
         <v-text-field
-        :value="range[1]"
+        :value="price[1]"
         class="mt-0 pt-0"
         hide-details
         single-line
         type="number"
         style="width: 80px"
         color="green"
-        @change="$set(range, 1, $event)"
+        @change="$set(price, 1, $event)"
         ></v-text-field>
         </div>
         </div>
@@ -65,24 +65,31 @@
 </template>
 
 <script>
+import { getMinPrice, getMaxPrice } from '../utils/prices';
+import inm from '../data/inmobiliarias.json';
+
 export default {
-  props: ['setPrice', 'setType', 'initialRange'],
+  props: ['setPrice', 'setType', 'priceInitial'],
   data() {
+    const inmobiliarias = inm.features.map((doc) => ({ id: doc.id, ...doc.properties }));
+    const min = getMinPrice(inmobiliarias);
+    const max = getMaxPrice(inmobiliarias);
     return {
       type: false,
-      range: [],
+      initialRange: [min, max],
+      price: [],
     };
   },
   watch: {
     type() {
       this.setType(this.type);
     },
-    range() {
-      this.setPrice({ min: this.range[0], max: this.range[1] });
+    price() {
+      this.setPrice({ min: this.price[0], max: this.price[1] });
     },
   },
   created() {
-    this.range = this.initialRange;
+    this.price = this.priceInitial;
   },
 };
 </script>

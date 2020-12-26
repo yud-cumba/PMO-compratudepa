@@ -3,7 +3,7 @@
     ref="mapRef"
     :center="center"
     :zoom="z"
-    style="width: 100%; height: 500px"
+    style="height: 500px"
     @click="getLatLong"
   >
     <gmap-marker
@@ -56,37 +56,11 @@ export default {
       this.center = { lat: this.latitude, lng: this.longitude };
     },
   },
-  // computed: {
-  //   google: gmapApi,
-  // },
-  // mounted() {
-  //   this.$refs.mapRef.$mapPromise.then((map) => {
-  //     let infoWindow = gmapApi.maps.InfoWindow({
-  //       content: 'Click the map to get Lat/Lng!',
-  //       position: { lat: this.latitude, lng: this.longitude },
-  //     });
-  //     console.log(map);
-  //     infoWindow.open(map);
-  //     map.addListener('click', (mapsMouseEvent) => {
-  //       // Close the current InfoWindow.
-  //       console.log(mapsMouseEvent);
-  //       infoWindow.close();
-  //       // Create a new InfoWindow.
-  //       infoWindow = gmapApi.maps.InfoWindow({
-  //         position: mapsMouseEvent.latLng,
-  //       });
-  //       infoWindow.setContent(
-  //         JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2),
-  //       );
-  //       infoWindow.open(map);
-  //     });
-  //   });
-  // },
-  // created() {
-  //   eventBus.$on('inputProject', (payload) => {
-  //     // eslint-disable-next-line prefer-destructuring
-  //     this.markers = this.totalMakers.filter((e) => e.title === payload.project);
-  //   });
-  // },
+  created() {
+    eventBus.$on('inputProject', (payload) => {
+      // eslint-disable-next-line prefer-destructuring
+      this.markers = this.totalMakers.filter((e) => e.title === payload.project);
+    });
+  },
 };
 </script>

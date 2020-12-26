@@ -1,8 +1,8 @@
-/* eslint-disable max-len */
 <template>
   <div class="view">
     <v-card class="ma-5 pa-5">
-      <div class="d-flex">
+      <v-row>
+      <v-col >
         <v-text-field
           class="my-5 mx-2"
           v-model="search"
@@ -13,55 +13,115 @@
           dense
           outlined
         ></v-text-field>
-        <v-spacer></v-spacer>
-        <v-btn class="my-5 mx-5" @click="filterFunction" color="green">
-          Aplicar Filtro
-        </v-btn>
-      </div>
-      <div class="d-flex">
-        <div>
-          <v-select
+        <v-select
             v-model="rooms"
             class="mt-2 mx-2 pb-0 select-price"
-            :items="['1 dormitorio', '2 dormitorios', '3 dormitorios', '4 dormitorios']"
+            :items="itemsRooms"
             label="Número de habitaciones"
-            style="width: 230px"
             dense
             outlined
             color="green"
           ></v-select>
           <v-select
-            v-model="rooms"
+            v-model="phase"
             class="mx-2 pb-0 select-price"
-            :items="['1 dormitorio', '2 dormitorios', '3 dormitorios', '4 dormitorios']"
-            label="Número de pisos"
-            style="width: 230px"
+            :items="['En planos', 'En construcción', 'Entrega inmediata']"
+            label="Fase del proyecto"
             dense
             outlined
             color="green"
           ></v-select>
-        <FilterPrice :setPrice="setPrice"/>
-        </div>
-        <v-spacer></v-spacer>
-        <v-card class="mx-3 filter_places d-flex flex-wrap pa-5">
-          <v-checkbox
-          v-for="(value, key) in filterPlaces" :key="key"
-              v-model="filterPlaces[key]"
-              :label="key"
-              color="green"
-          ></v-checkbox>
+          <FilterPrice
+            :setPrice="setPrice"
+            :setType="setType"
+            :priceInitial="[
+              this.$route.query.prices.min,
+              this.$route.query.prices.max,
+            ]"
+          />
+      </v-col>
+      <v-col>
+        <v-card
+          class="mx-3 filter_places d-flex flex-wrap px-5 pt-3"
+        >
+          <p>¿Que amenities quieres encontrar?</p>
+          <div class="d-flex flex-wrap">
+            <div
+              v-for="(value, key) in amenities"
+              :key="key"
+              class="pa-0 ma-0"
+               style="width: 180px"
+            >
+              <v-checkbox
+                class=" pa-0 ma-0"
+                v-model="amenities[key]"
+                :label="key"
+                color="green"
+              ></v-checkbox>
+            </div>
+          </div>
         </v-card>
+      </v-col>
+      <v-col>
+        <div class="d-flex">
+        <v-btn class="mb-5 ml-auto mr-5" @click="filterFunction" color="green">
+          Aplicar Filtro
+        </v-btn>
+        </div>
+        <v-card
+          class="mx-3 filter_places d-flex flex-wrap px-5 pt-3"
+        >
+          <p>¿Que puedes encontrar cerca?</p>
+          <div class="d-flex flex-wrap">
+            <div
+              v-for="(value, key) in filterPlaces"
+              :key="key"
+              class="pa-0 ma-0"
+              style="width: 180px"
+            >
+              <v-checkbox
+                class="text-capitalize pa-0 ma-0"
+                v-model="filterPlaces[key]"
+                :label="key"
+                color="green"
+              ></v-checkbox>
+            </div>
+          </div>
+        </v-card>
+      </v-col>
+      </v-row>
+    </v-card>
+    <v-card v-if="filtersSelected.length > 0" class="mx-5 px-4">
+      <p class="ma-0 pt-1 pa-0">Filtros seleccionados</p>
+      <div class="d-flex ma-0 pa-0">
+      <v-chip
+      class="mx-1 my-3"
+        v-for="filter in filtersSelected"
+        :key="filter.text"
+        @click:close="removeFilter(filter)"
+        close
+      >
+        {{ filter.text }}
+      </v-chip>
+      <v-btn class="ml-auto " @click="removeAllFilter" color="green">
+        Limpiar filtros
+      </v-btn>
       </div>
     </v-card>
-    <div v-if="projects.length>0" class="ma-5">
-    <GoogleMap :latitude= "latitude" :zoom="zoom"
-    :longitude= "longitude" :markers="projects" :totalMarkers="totalProjects"
-    />
+    <div v-if="projects.length > 0" class="ma-5">
+      <h3 class="pb-5">Se muestran {{ projects.length }} resultados</h3>
+      <GoogleMap
+        :latitude="latitude"
+        :zoom="zoom"
+        :longitude="longitude"
+        :markers="projects"
+        :totalMarkers="totalProjects"
+      />
     </div>
     <div v-else class="ma-5 text-red">
       No hay resultados de la búsqueda, intente con otro filtro
     </div>
-    <ProjectCards :projects="projects"/>
+    <ProjectCards :projects="projects" />
   </div>
 </template>
 
@@ -92,12 +152,20 @@ export default {
 
     return {
       zoom: 12,
+      itemsRooms: [1, 2, 3, 4].map((e) => {
+        if (e === 1) {
+          return { text: `${e} dormitorio`, value: e };
+        }
+        return { text: `${e} dormitorios`, value: e };
+      }),
       latitude: -12.089637033755114,
       longitude: -77.05453930635801,
       prices: this.$route.query.prices,
       priceSelected: this.$route.query.typePrice,
       search: this.$route.query.district,
-      rooms: this.$route.query.district,
+      rooms: this.$route.query.rooms,
+      phase: this.$route.query.phase,
+      filtersSelected: [],
       filterPlaces: {
         comisarias: false,
         guarderias: false,
@@ -118,6 +186,28 @@ export default {
         vegano: false,
         veterinarias: false,
       },
+      amenities: {
+        'Areas verdes': false,
+        'Área de juegos para niños': false,
+        'Ascensor directo': false,
+        'Cancha de Fulbito': false,
+        'Cancha de Squash': false,
+        'Cuarto de servicio': false,
+        Gimnasio: false,
+        'Jardín de niños': false,
+        Karaoke: false,
+        Lobby: false,
+        Minimarket: false,
+        Piscina: false,
+        'Sala de internet': false,
+        'Sala de cine': false,
+        Sauna: false,
+        'Techos Ecológicos': false,
+        Terraza: false,
+        'Video vigilancia': false,
+        'Zona de Lavandería': false,
+        'Zona de Parrillas': false,
+      },
       totalProjects,
       projects: totalProjects,
     };
@@ -126,11 +216,65 @@ export default {
     setPrice(price) {
       this.prices = price;
     },
+    setType(inDolar) {
+      this.typePrice = inDolar ? '$' : 'S/.';
+    },
+    removeItemFromArr(arr, item) {
+      const i = arr.indexOf(item);
+      if (i !== -1) {
+        arr.splice(i, 1);
+      }
+    },
+    removeAllFilter() {
+      this.search = '';
+      this.filtersSelected = [];
+      this.projects = this.totalProjects;
+    },
+    removeFilter(filter) {
+      this.projects = this.totalProjects;
+      switch (filter.type) {
+        case 'rooms':
+          this.rooms = '';
+          break;
+        case 'phase':
+          this.phase = '';
+          break;
+        case 'places':
+          this.filterPlaces[filter.place] = false;
+          break;
+        case 'amenities':
+          this.amenities[filter.amenitie] = false;
+          break;
+        default:
+          this.projects = this.totalProjects;
+      }
+      this.removeItemFromArr(this.filtersSelected, filter);
+      this.filterFunction();
+    },
+    filterByRooms() {
+      if (this.rooms) {
+        this.projects = this.projects.filter(
+          (e) => e.room_max >= Number(this.rooms),
+        );
+        this.filtersSelected.push({
+          text: `${this.rooms} habitacion(es)`,
+          type: 'rooms',
+        });
+      }
+    },
+    filterByPhase() {
+      if (this.phase) {
+        this.projects = this.projects.filter(
+          (e) => e.project_phase === this.phase,
+        );
+        this.filtersSelected.push({ text: this.phase, type: 'phase' });
+      }
+    },
     filterByPrice() {
-      // const type = (this.priceSelected === 'Soles') ? 1 : 3.3;
-      // eslint-disable-next-line max-len
-      this.projects = this.projects.filter((e) => e.min_price > Number(this.prices.min)
-      && e.min_price < Number(this.prices.max));
+      this.projects = this.projects.filter(
+        (e) => e.min_price > Number(this.prices.min)
+          && e.min_price < Number(this.prices.max),
+      );
     },
     filterByInputUbication() {
       this.projects = this.totalProjects.filter((project) => {
@@ -147,26 +291,94 @@ export default {
     },
     filterByRadioPlaces() {
       const places = [
-        'comisarias', 'guarderias', 'bancos', 'canchas', 'gimnasios', 'clinicas', 'estaciones', 'hospitales',
-        'mall', 'parques', 'piscinas', 'restaurantes', 'schools', 'supermercados', 'terrapuertos', 'universidades',
-        'vegano', 'veterinarias',
+        'comisarias',
+        'guarderias',
+        'bancos',
+        'canchas',
+        'gimnasios',
+        'clinicas',
+        'estaciones',
+        'hospitales',
+        'mall',
+        'parques',
+        'piscinas',
+        'restaurantes',
+        'schools',
+        'supermercados',
+        'terrapuertos',
+        'universidades',
+        'vegano',
+        'veterinarias',
       ];
       places.forEach((nameData) => {
-        const place = `${nameData}_coord`;
-        const filter = this.projects.filter((e) => e[place].length > 0);
-        this.projects = this.filterPlaces[nameData] ? filter : this.projects;
+        if (this.filterPlaces[nameData]) {
+          const place = `${nameData}_coord`;
+          this.projects = this.projects.filter((e) => e[place].length > 0);
+          this.filtersSelected.push({
+            text: nameData,
+            type: 'places',
+            place: nameData,
+          });
+        }
+      });
+    },
+    filterByAmenities() {
+      const amenities = [
+        'Areas verdes',
+        'Área de juegos para niños',
+        'Ascensor directo',
+        'Boulevard peatonal',
+        'Cancha de Fulbito',
+        'Cancha de Squash',
+        'Club House',
+        'Cuarto de servicio',
+        'Gimnasio',
+        'Jardín de niños',
+        'Karaoke',
+        'Lobby',
+        'Minimarket',
+        'Parque privado',
+        'Paseo de Aguas',
+        'Piscina',
+        'Sala Bar',
+        'Salón Gourmet',
+        'Sala de internet',
+        'Sala de Niños',
+        'Sala de cine',
+        'Sala de usos Múltuples',
+        'Sauna',
+        'Techo Panorámico',
+        'Techos Ecológicos',
+        'Terraza',
+        'Video vigilancia',
+        'Zona de Lavandería',
+        'Zona de Parrillas',
+        'Otros',
+      ];
+      amenities.forEach((nameData) => {
+        if (this.amenities[nameData]) {
+          this.projects = this.projects.filter((e) => e.areas_comunes.includes(nameData));
+          this.filtersSelected.push({
+            text: nameData,
+            type: 'amenities',
+            amenitie: nameData,
+          });
+        }
       });
     },
     filterFunction() {
+      this.filtersSelected = [];
       this.filterByInputUbication();
+      this.filterByRooms();
+      this.filterByPhase();
       this.filterByRadioPlaces();
+      this.filterByAmenities();
       this.filterByPrice();
     },
   },
   created() {
     this.$store.commit('SET_LAYOUT', 'public-layout');
-    this.filterByInputUbication();
-    this.filterByPrice();
+    this.filterFunction();
     eventBus.$on('infoProject', (payload) => {
       this.projects = payload;
     });
@@ -175,13 +387,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.view{
-  width:100%;
-}
-.filter_price{
-  width: 40%;
-}
-.filter_places{
-  width: 60%;
+.view {
+  width: 100%;
 }
 </style>

@@ -62,7 +62,7 @@
           ></v-date-picker>
         </v-menu>
         <v-select
-         :items="['En planos', 'En construcción', 'Terminado']"
+         :items="['En planos', 'En construcción', 'Entrega inmediata']"
           v-model="project.properties.project_phase"
           color="green"
           filled
