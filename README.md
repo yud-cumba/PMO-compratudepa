@@ -9,13 +9,10 @@ Bienvenid@ a nuestra plataforma COMPRATUDEPA, El lugar perfecto para comprar tu 
 
 ## Comenzando 🚀
 
-_Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas._
 COMPRATUDEPA es mi primer proyecto propio desarrollado con VUEJS por una iniciativa de dos grandes ingenieros. El objetivo de COMPRATUDEPA es brindar a la problación información accesible de los departamentos que ofrece el mercado inmobiliario así como tener información adecuada del proceso de financiación. Contamos con la información de casi 600 proyectos de Lima .
 Además permite a las inmobiliarias subir sus propios proyectos y así expandirse en el mercado.
 
 ## Construido con 🛠️
-
-_Menciona las herramientas que utilizaste para crear tu proyecto_
 
 * [VUE](http://www.dropwizard.io/1.0.2/docs/) - El framework web usado
 * [VUETIFY](http://www.dropwizard.io/1.0.2/docs/) - La librería UI
