@@ -9,7 +9,7 @@ Bienvenid@ a nuestra plataforma COMPRATUDEPA, El lugar perfecto para comprar tu 
 
 ## Comenzando 🚀
 
-COMPRATUDEPA es mi primer proyecto propio desarrollado con VUEJS por una iniciativa de dos grandes ingenieros. El objetivo de COMPRATUDEPA es brindar a la problación información accesible de los departamentos que ofrece el mercado inmobiliario así como tener información adecuada del proceso de financiación. Contamos con la información de casi 600 proyectos de Lima .
+COMPRATUDEPA es mi primer proyecto completo desarrollado con VUEJS por una iniciativa de dos grandes ingenieros. El objetivo de COMPRATUDEPA es brindar a la problación información accesible de los departamentos que ofrece el mercado inmobiliario así como tener información adecuada del proceso de financiación. Contamos con la información de casi 600 proyectos de Lima .
 Además permite a las inmobiliarias subir sus propios proyectos y así expandirse en el mercado.
 
 ## Construido con 🛠️
