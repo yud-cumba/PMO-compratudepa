@@ -46,8 +46,8 @@
               filled
               dense
               rounded
-              v-model="date"
-              label="Fecha de entrada"
+              label="Fecha de entrega"
+              :value="project.properties.delivery_date"
               persistent-hint
               prepend-inner-icon="mdi-calendar"
               v-bind="attrs"
@@ -56,8 +56,9 @@
           </template>
           <v-date-picker
             color="green"
-            v-model="project.properties.delivery_date"
+            locale="ES-es"
             no-title
+            v-model="date"
             @input="menu1 = false"
           ></v-date-picker>
         </v-menu>
@@ -168,15 +169,6 @@
         </v-text-field>
       </v-col>
       <v-col>
-        <v-select
-        v-model="project.properties.deposito_price"
-          color="green"
-          filled
-          dense
-          rounded
-          label="Ingrese precio de estacionamientos"
-        >
-        </v-select>
         <v-text-field
           v-model="project.properties.room_max"
           color="green"
@@ -189,7 +181,7 @@
         </v-text-field>
       </v-col>
     </v-row>
-    <h4>Cotización</h4>
+    <!-- <h4>Cotización</h4>
     <v-row class="pa-4">
       <v-col>
         <v-file-input
@@ -201,7 +193,7 @@
         >
         </v-file-input>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row class="pa-4">
       <v-col>
         <h4 class="my-4">Bancos con que trabaja</h4>
@@ -229,29 +221,7 @@
           rounded>
         </v-select>
       </v-col>
-      <!-- <div v-for="bank in banks" :key="bank">
-        <v-checkbox :label="bank" color="green" class="mx-6"></v-checkbox>
-      </div> -->
-      <!-- <v-text-field label="Otro banco" filled dense rounded></v-text-field> -->
     </v-row>
-    <!-- <h4>Amenities del proyecto</h4>
-    <v-row class="pa-4"> -->
-      <!-- <v-col>
-        <v-select
-          v-model="project.properties.finance_bank"
-          label="Escoja los amenities que cuenta su proyecto"
-          :items="amenities"
-          filled
-          dense
-          multiple
-          chips
-          rounded>
-        </v-select>
-      </v-col> -->
-      <!-- <div v-for="amenitie in amenities" :key="amenitie">
-        <v-checkbox :label="amenitie" color="green" class="mx-6"></v-checkbox>
-      </div> -->
-    <!-- </v-row> -->
     <h4>Fotos</h4>
     <v-row>
       <v-col >
@@ -321,6 +291,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import { addFileToStorage, getFileFromStorage } from '../firebase/storage';
 import { addNewProject, userAddProject } from '../firebase/database';
 import { currentUser } from '../firebase/auth';
@@ -339,6 +310,7 @@ export default {
     loading: false,
     urlmain: '',
     urladitional: [],
+    date: new Date().toISOString().substr(0, 10),
     project: {
       geometry: {
       },
@@ -347,11 +319,23 @@ export default {
         coin: 'S/.',
         direccion: '',
         imagenes: [],
+        distrito: '',
+        delivery_date: '',
+        deposito_price: '',
+        min_price: '',
+        project_phase: '',
+        room_max: '',
+        cantidad: '',
+        project_whatsapp: '',
+        floors: '',
+        area_max: '',
+        descripcion: '',
+        finance_bank: '',
+        areas_comunes: [],
       },
     },
     aditionalPhotos: '',
     mainPhoto: '',
-    date: new Date().toISOString().substr(0, 10),
     menu1: false,
     menu2: false,
     banks: [
@@ -401,6 +385,11 @@ export default {
     latitude: -12.089637033755114,
     longitude: -77.05453930635801,
   }),
+  watch: {
+    date() {
+      this.project.properties.delivery_date = moment(this.date).format('DD/MM/YYYY');
+    },
+  },
   methods: {
     addMarker(position) {
       this.marker = [
@@ -448,6 +437,7 @@ export default {
   },
   created() {
     this.$store.commit('SET_LAYOUT', 'realState-layout');
+    this.project.properties.builder_name = this.$route.query.name;
   },
 };
 </script>

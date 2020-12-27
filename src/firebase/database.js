@@ -29,6 +29,29 @@ export const userFirstTime = (UID, name, email, role, phone, photo) => {
       userAdd(UID, name, email, role, phone, photo);
     });
 };
+export const getProjectById = (id) => firebase
+  .database()
+  .ref(`PROJECTS/${id}`)
+  .once('value')
+  .then((value) => new Promise((res) => {
+    if (value.val()) {
+      res(value.val());
+    }
+  }));
+
+export const getProjectsByUserId = (UID) => firebase
+  .database()
+  .ref(`USERS/${UID}/projects`)
+  .once('value')
+  .then((value) => new Promise((res, rej) => {
+    if (value.val()) {
+      const ids = Object.values(value.val());
+      const projects = ids.map((id) => getProjectById(id));
+      Promise.all(projects).then((projectArray) => res(projectArray));
+    } else {
+      rej(new Error('No hay proyectos'));
+    }
+  }));
 
 export const getFavoritesByUserId = (UID) => firebase
   .database()

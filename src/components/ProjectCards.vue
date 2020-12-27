@@ -71,7 +71,7 @@ export default {
     showMore(item) {
       this.$gtag.event(item.builder_name, {
         event_category: 'Proyectos',
-        event_label: `${item.builder_nameo} clicked to see details`,
+        event_label: `${item.builder_name} clicked to see details`,
         value: 1,
       });
       this.$router.push({ path: `/detail/${item.id}` });

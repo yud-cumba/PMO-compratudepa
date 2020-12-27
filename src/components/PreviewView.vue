@@ -36,7 +36,6 @@
       <div class="pl-6 card">
         <h2 class="px-5 text-capitalize">{{ project.name }} - {{ project.distrito }}</h2>
         <v-rating
-        v-model="rating"
         background-color="grey"
         length="5"
         color="yellow"

@@ -116,6 +116,7 @@
 
 <script>
 import { inmobiliariasById } from '../utils/projectMethods';
+import { getProjectById } from '../firebase/database';
 import Rating from '../components/Rating.vue';
 import Favorite from '../components/Favorite.vue';
 import bankToImg from '../utils/banksImgs';
@@ -145,12 +146,25 @@ export default {
   created() {
     this.$store.commit('SET_LAYOUT', 'public-layout');
     const inmobiliariasByJson = inmobiliariasById(this.$route.params.id);
-    this.project = inmobiliariasByJson;
-    if (this.project.project_phase === 'En planos') {
-      this.e1 = 1;
-    }
-    if (this.project.project_phase === 'En construcción') {
-      this.e1 = 2;
+    if (inmobiliariasByJson) {
+      this.project = inmobiliariasByJson;
+      if (this.project.project_phase === 'En planos') {
+        this.e1 = 1;
+      }
+      if (this.project.project_phase === 'En construcción') {
+        this.e1 = 2;
+      }
+    } else {
+      getProjectById(this.$route.params.id)
+        .then((project) => {
+          this.project = project.properties;
+          if (this.project.project_phase === 'En planos') {
+            this.e1 = 1;
+          }
+          if (this.project.project_phase === 'En construcción') {
+            this.e1 = 2;
+          }
+        });
     }
   },
 };
