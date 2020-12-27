@@ -19,7 +19,7 @@
             PROYECTOS
           </div>
         </template>
-        <v-card class="text-caption">
+        <v-card v-if="quantityInmobByDistrict.length>0" class="text-caption">
           <v-row v-for="m in 4" :key="m" no-gutters>
             <v-col v-for="n in 6" :key="n">
               <v-card

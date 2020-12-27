@@ -12,6 +12,20 @@ export const userAdd = (id, name, email, role, phone, photo) => {
 
 export const addNewProject = (id, project) => firebase.database().ref(`PROJECTS/${id}`).set(project);
 
+export const getClients = () => firebase
+  .database()
+  .ref('USERS')
+  .orderByChild('role')
+  .equalTo('cliente')
+  .once('value')
+  .then((value) => new Promise((res, rej) => {
+    if (value.val()) {
+      res(Object.values(value.val()));
+    } else {
+      rej(new Error('No hay usuario con el id'));
+    }
+  }));
+
 export const getUserByUid = (UID) => firebase
   .database()
   .ref(`USERS/${UID}`)

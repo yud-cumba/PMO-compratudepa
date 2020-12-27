@@ -65,18 +65,15 @@
 </template>
 
 <script>
-import { getMinPrice, getMaxPrice } from '../utils/prices';
-import inm from '../data/inmobiliarias.json';
+// eslint-disable-next-line import/no-cycle
+import { eventBus } from '../main';
 
 export default {
-  props: ['setPrice', 'setType', 'priceInitial'],
+  props: ['setPrice', 'setType'],
   data() {
-    const inmobiliarias = inm.features.map((doc) => ({ id: doc.id, ...doc.properties }));
-    const min = getMinPrice(inmobiliarias);
-    const max = getMaxPrice(inmobiliarias);
     return {
       type: false,
-      initialRange: [min, max],
+      initialRange: [],
       price: [],
     };
   },
@@ -89,7 +86,10 @@ export default {
     },
   },
   created() {
-    this.price = this.priceInitial;
+    eventBus.$on('prices', (payload) => {
+      this.initialRange = [payload.min, payload.max];
+      this.price = [payload.min, payload.max];
+    });
   },
 };
 </script>

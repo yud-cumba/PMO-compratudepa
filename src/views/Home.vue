@@ -44,8 +44,7 @@
             color="green"
           ></v-select>
         </div>
-        <FilterPrice :setPrice="setPrice" :setType="setType"
-        :priceInitial="[prices.min, prices.max]"/>
+        <FilterPrice :setPrice="setPrice" :setType="setType"/>
       </v-row>
     </v-card>
   </v-parallax>
@@ -60,9 +59,9 @@ import Benefits from '../components/BenefitsCards.vue';
 import ProjectCards from '../components/ProjectCards.vue';
 import FilterPrice from '../components/FilterPrice.vue';
 import { getMinPrice, getMaxPrice } from '../utils/prices';
-import { getAllProjects } from '../firebase/database';
-
-import inm from '../data/inmobiliarias.json';
+import { getAllProjectsTotal } from '../utils/projectMethods';
+// eslint-disable-next-line import/no-cycle
+import { eventBus } from '../main';
 
 export default {
   name: 'Home',
@@ -72,17 +71,11 @@ export default {
     ProjectCards,
   },
   data() {
-    const inmobiliarias = inm.features.map((doc) => ({ id: doc.id, ...doc.properties }));
-    const min = getMinPrice(inmobiliarias);
-    const max = getMaxPrice(inmobiliarias);
     return {
       typePrice: 'S/.',
-      inmobiliarias,
+      inmobiliarias: [],
       search: '',
-      prices: {
-        max,
-        min,
-      },
+      prices: { },
       itemsRooms: [1, 2, 3, 4].map((e) => {
         if (e === 1) {
           return { text: `${e} dormitorio`, value: e };
@@ -115,12 +108,13 @@ export default {
   },
   created() {
     this.$store.commit('SET_LAYOUT', 'public-layout');
-    getAllProjects().then((projects) => {
-      const firebaseProjects = projects.map((e) => e.properties);
-      console.log(firebaseProjects);
-      alert(this.inmobiliarias.length);
-      this.inmobiliarias = this.inmobiliarias.concat(firebaseProjects).reverse();
-      alert(this.inmobiliarias.length);
+    getAllProjectsTotal().then((projects) => {
+      eventBus.$emit('allProjects', projects);
+      this.inmobiliarias = projects.map((e) => e.properties);
+      const min = Number(getMinPrice(this.inmobiliarias));
+      const max = Number(getMaxPrice(this.inmobiliarias));
+      this.prices = { min, max };
+      eventBus.$emit('prices', { min, max });
     });
   },
 };

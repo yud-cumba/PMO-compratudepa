@@ -45,7 +45,6 @@ export default {
   },
   created() {
     this.$store.commit('SET_LAYOUT', 'realState-layout');
-    console.log(currentUser());
     getUserByUid(currentUser().uid).then((user) => {
       this.user = user;
     });

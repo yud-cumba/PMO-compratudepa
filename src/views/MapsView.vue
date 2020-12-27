@@ -34,10 +34,6 @@
           <FilterPrice
             :setPrice="setPrice"
             :setType="setType"
-            :priceInitial="[
-              this.$route.query.prices.min,
-              this.$route.query.prices.max,
-            ]"
           />
       </v-col>
       <v-col>
@@ -126,10 +122,11 @@
 </template>
 
 <script>
-import inmobiliarias from '../data/inmobiliarias.json';
 import GoogleMap from '../components/GoogleMap.vue';
 import ProjectCards from '../components/ProjectCards.vue';
 import FilterPrice from '../components/FilterPrice.vue';
+import { getAllProjectsTotal } from '../utils/projectMethods';
+import { getMinPrice, getMaxPrice } from '../utils/prices';
 // eslint-disable-next-line import/no-cycle
 import { eventBus } from '../main';
 import NoProjects from '../components/NoProjects.vue';
@@ -142,16 +139,6 @@ export default {
     NoProjects,
   },
   data() {
-    const totalProjects = inmobiliarias.features.map((inmob) => ({
-      position: {
-        lat: inmob.geometry.coordinates[1],
-        lng: inmob.geometry.coordinates[0],
-      },
-      title: inmob.properties.builder_name,
-      id: inmob.id,
-      ...inmob.properties,
-    }));
-
     return {
       zoom: 12,
       itemsRooms: [1, 2, 3, 4].map((e) => {
@@ -210,8 +197,8 @@ export default {
         'Zona de Lavandería': false,
         'Zona de Parrillas': false,
       },
-      totalProjects,
-      projects: totalProjects,
+      totalProjects: [],
+      projects: [],
     };
   },
   methods: {
@@ -274,8 +261,8 @@ export default {
     },
     filterByPrice() {
       this.projects = this.projects.filter(
-        (e) => e.min_price > Number(this.prices.min)
-          && e.min_price < Number(this.prices.max),
+        (e) => Number(e.min_price) >= Number(this.prices.min)
+          && Number(e.min_price) <= Number(this.prices.max),
       );
     },
     filterByInputUbication() {
@@ -381,6 +368,22 @@ export default {
   created() {
     this.$store.commit('SET_LAYOUT', 'public-layout');
     this.filterFunction();
+    getAllProjectsTotal().then((projects) => {
+      this.totalProjects = projects.map((inmob) => ({
+        position: {
+          lat: inmob.geometry.coordinates[1],
+          lng: inmob.geometry.coordinates[0],
+        },
+        title: inmob.properties.builder_name,
+        id: inmob.id,
+        ...inmob.properties,
+      }));
+      this.filterFunction();
+      const min = Number(getMinPrice(projects.map((e) => e.properties)));
+      const max = Number(getMaxPrice(projects.map((e) => e.properties)));
+      this.prices = { min, max };
+      eventBus.$emit('prices', { min, max });
+    });
     eventBus.$on('infoProject', (payload) => {
       this.projects = payload;
     });

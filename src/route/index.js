@@ -17,6 +17,7 @@ import SignUpInmb from '../views/SignUpInmb.vue';
 import AddNewProject from '../views/AddNewProject.vue';
 import Dashboard from '../views/Dashboard.vue';
 import SeparateYourDepa from '../views/SeparateYourDepa.vue';
+import Leads from '../views/Leads.vue';
 
 Vue.use(VueRouter);
 
@@ -37,6 +38,7 @@ const routes = [
   { path: '/addnew', component: AddNewProject },
   { path: '/dashboard', component: Dashboard },
   { path: '/separate', component: SeparateYourDepa },
+  { path: '/leads', component: Leads },
 ];
 
 const router = new VueRouter({
