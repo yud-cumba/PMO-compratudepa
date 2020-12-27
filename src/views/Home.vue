@@ -60,6 +60,7 @@ import Benefits from '../components/BenefitsCards.vue';
 import ProjectCards from '../components/ProjectCards.vue';
 import FilterPrice from '../components/FilterPrice.vue';
 import { getMinPrice, getMaxPrice } from '../utils/prices';
+import { getAllProjects } from '../firebase/database';
 
 import inm from '../data/inmobiliarias.json';
 
@@ -114,6 +115,13 @@ export default {
   },
   created() {
     this.$store.commit('SET_LAYOUT', 'public-layout');
+    getAllProjects().then((projects) => {
+      const firebaseProjects = projects.map((e) => e.properties);
+      console.log(firebaseProjects);
+      alert(this.inmobiliarias.length);
+      this.inmobiliarias = this.inmobiliarias.concat(firebaseProjects).reverse();
+      alert(this.inmobiliarias.length);
+    });
   },
 };
 </script>

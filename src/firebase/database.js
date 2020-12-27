@@ -39,6 +39,16 @@ export const getProjectById = (id) => firebase
     }
   }));
 
+export const getAllProjects = () => firebase
+  .database()
+  .ref('PROJECTS')
+  .once('value')
+  .then((value) => new Promise((res) => {
+    if (value.val()) {
+      res(Object.values(value.val()));
+    }
+  }));
+
 export const getProjectsByUserId = (UID) => firebase
   .database()
   .ref(`USERS/${UID}/projects`)

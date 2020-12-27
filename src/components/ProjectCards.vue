@@ -4,7 +4,7 @@
       <div class="flip-card-inner rounded-lg">
         <v-card class="flip-card-front rounded-lg">
           <h3 class="title d-flex justify-space-between align-center px-4">
-            {{item.builder_name }}
+            {{item.name }}
             <Favorite :project="item" :setModal="setModal"/>
           </h3>
           <img :src="item.imagenes[0]" class="img" />
@@ -24,7 +24,7 @@
         </v-card>
         <v-card class="flip-card-back rounded-lg">
           <div class="title d-flex justify-end align-center green px-3">
-            <h4 style="width: 75%">{{ item.builder_name }}</h4>
+            <h4 style="width: 75%">{{ item.name }}</h4>
           </div>
           <v-card-text class="d-flex flex-column">
             <div class="d-flex">
@@ -44,7 +44,7 @@
             </div>
             <div class="information d-flex justify-start">
               <v-icon class="mr-1">mdi-arrow-collapse</v-icon>
-              {{ item.area_max }}
+              {{ item.area_max }} m2
             </div>
             <div class="information d-flex justify-start">
               <v-icon class="mr-1">mdi-account-hard-hat</v-icon>
