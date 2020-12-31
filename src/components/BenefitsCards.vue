@@ -1,16 +1,18 @@
 <template>
-    <div class="d-flex flex-column justify-center align-center px-12 mx-8">
-        <h2 class="ma-8">{{title}}</h2>
-        <div class="d-flex justify-center align-center mb-5">
-            <div v-for="reason in reasons" :key="reason.title" >
-                <div class="d-flex flex-column align-center ma-10 pa-3 card">
-                    <IconifyIcon :icon="reason.icon"
-                    :style="{color: '#41f683', fontSize: '69px'}" />
-                    <h2 class="pa-3">{{reason.title}}</h2>
-                    <h4 class="mt-">{{reason.text}}</h4>
-                </div>
-            </div>
-        </div>
+    <div class="d-flex flex-column justify-center align-center pa-5">
+        <h2>{{title}}</h2>
+        <v-row no-gutters>
+            <v-col v-for="reason in reasons" :key="reason.title"
+            class="pa-5" >
+            <v-card class="d-flex flex-column justify-center align-center pa-4"
+            style="height: 300px">
+              <IconifyIcon :icon="reason.icon"
+              :style="{color: '#41f683', fontSize: '69px'}" />
+              <h2 class="pa-3">{{reason.title}}</h2>
+              <h4 class="mt-">{{reason.text}}</h4>
+            </v-card>
+            </v-col>
+        </v-row>
     </div>
 </template>
 
@@ -49,8 +51,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.card{
-    width: 270px;
-    height: 350px;
-}
 </style>

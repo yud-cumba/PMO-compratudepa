@@ -2,22 +2,21 @@
 <div>
   <v-parallax src="../assets/sala.png"
   class="initial-search d-flex justify-center align-center">
-    <v-card color="rgb(255, 255, 255, 0.7)" width="700">
+    <v-card color="rgb(255, 255, 255, 0.7)" class="py-3 px-6">
       <v-row  class="mx-2">
         <v-text-field
           class="mt-5 mx-2"
           v-model="search"
           append-icon="mdi-magnify"
           label="Buscar por ubicacion"
-          style="width: 350px"
           single-line
           hide-details
           dense
           outlined
           color="green"
         ></v-text-field>
-        <v-spacer></v-spacer>
-        <v-btn @click="searchInMap" class="ma-5 green">
+        <v-btn v-if="!isMobile"
+        @click="searchInMap" class="ma-5 green">
           Buscar
         </v-btn>
       </v-row>
@@ -28,7 +27,6 @@
             class="mt-2 mx-2 pb-0 select-price"
             :items="itemsRooms"
             label="Número de habitaciones"
-            style="width: 230px"
             dense
             outlined
             color="green"
@@ -38,13 +36,16 @@
             class="mx-2 pb-0 select-price"
             :items="['En planos', 'En construcción', 'Entrega inmediata']"
             label="Fase del proyecto"
-            style="width: 230px"
             dense
             outlined
             color="green"
           ></v-select>
         </div>
         <FilterPrice :setPrice="setPrice" :setType="setType"/>
+        <v-btn v-if="isMobile"
+        @click="searchInMap" class="ma-5 green white--text">
+          Buscar
+        </v-btn>
       </v-row>
     </v-card>
   </v-parallax>
@@ -84,9 +85,13 @@ export default {
       }),
       rooms: '',
       phase: '',
+      isMobile: false,
     };
   },
   methods: {
+    onResize() {
+      this.isMobile = window.innerWidth < 800;
+    },
     setPrice(price) {
       this.prices = price;
     },
@@ -117,16 +122,19 @@ export default {
       eventBus.$emit('prices', { min, max });
     });
   },
+  beforeDestroy() {
+    if (typeof window === 'undefined') return;
+
+    window.removeEventListener('resize', this.onResize, { passive: true });
+  },
+
+  mounted() {
+    this.onResize();
+
+    window.addEventListener('resize', this.onResize, { passive: true });
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.initial-search{
- width: 100vw;
- height: 75vh;
-//  background-image: url('../assets/main.png');
-}
-.select-price{
- width: 150px;
-}
 </style>

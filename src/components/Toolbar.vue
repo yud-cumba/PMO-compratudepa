@@ -1,94 +1,135 @@
 <template>
 <div>
-  <div v-if="isMobile">
-    <ToolBar :isLogin="isLogin" :quantityInmobByDistrict='quantityInmobByDistrict'/>
+    <v-toolbar color="green" dark @click.stop="drawer = !drawer" class="hidden-md-and-up">
+    <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    <div v-if="isLogin" class="d-flex ml-auto">
+        <h3 class="mt-2 white--text">{{ user.name }}</h3>
+        <div v-if="!!user.photo">
+          <v-img :src="user.photo" class="rounded-circle mx-3" max-width="50">
+          </v-img>
+        </div>
+        <div v-else>
+          <v-icon color="white" x-large class="mx-3">mdi-account-circle</v-icon>
+        </div>
     </div>
-  <v-card v-else class="elevation-1">
-    <TitleNavBar :isLogin="isLogin"/>
-    <v-card-text  class="d-flex justify-end px-4">
-      <div
-        class="text-lg-h6 px-6 mx-6"
+  </v-toolbar>
+  <v-navigation-drawer
+      v-model="drawer"
+      temporary
+      absolute
+      width = "200"
+      id = "drawer"
+    >
+    <v-img
+        src="../assets/logoPMO.png"
+        aspect-ratio="1"
+        class="my-5"
+        max-height="40"
+        max-width="180"
+      />
+    <v-list
+    nav
+        dense>
+        <v-list-item-group
+          active-class="green--text text--green"
+        >
+        <v-list-item
         @click="homeClick"
-      >
-        INICIO
-      </div>
-      <v-menu offset-y>
+        >
+            INICIO
+        </v-list-item>
+       <v-menu offset-y>
         <template v-slot:activator="{ on }">
           <div
-            class="text-lg-h6 px-6 mx-6"
+          class="mx-2 my-1"
             @click="projectsClick"
-            v-click-outside="onClickOutside"
             v-on="on"
           >
             PROYECTOS
           </div>
         </template>
         <v-card v-if="quantityInmobByDistrict.length>0" class="text-caption">
-          <v-row v-for="m in 4" :key="m" no-gutters>
-            <v-col v-for="n in 6" :key="n">
-              <v-card
+          <v-row v-for="m in 10" :key="m" no-gutters>
+            <v-col v-for="n in 3" :key="n">
+              <v-card style="width: 82px"
                 class="pa-2 card card-tab elevation-0"
                 @click="
                   clickByDistrict(
-                    quantityInmobByDistrict[m + (n - 1) * 4 - 1].district
+                    quantityInmobByDistrict[m + (n - 1) * 10 - 1].district
                   )
                 "
                 tile
               >
-                {{ quantityInmobByDistrict[m + (n - 1) * 4 - 1].district }}
-                ({{ quantityInmobByDistrict[m + (n - 1) * 4 - 1].quantity }})
+                {{ quantityInmobByDistrict[m + (n - 1) * 10 - 1].district }}
               </v-card>
             </v-col>
           </v-row>
         </v-card>
       </v-menu>
-          <div
-            class="text-lg-h6 px-6 mx-6"
+        <v-list-item
             @click="adviceClick"
-          >
+        >
             TE ASESORAMOS
-          </div>
-          <div
-            class="text-lg-h6 px-6 mx-6"
-            @click="creditsClick"
-          >
-            COMPROMISO SOCIAL
-          </div>
-          <div
-            v-if="isLogin"
-            class="text-lg-h6 px-6 mx-6"
-            @click="favoriteClick"
-          >
+        </v-list-item>
+        <v-list-item
+        @click="creditsClick"
+        >
+           COMPROMISO SOCIAL
+        </v-list-item>
+        <v-list-item
+        @click="favoriteClick"
+         v-if="isLogin"
+        >
             MIS FAVORITOS
-          </div>
-    </v-card-text>
-  </v-card>
+        </v-list-item>
+        </v-list-item-group>
+    </v-list>
+    <div class="d-flex flex-column">
+        <v-btn  v-if="isLogin" color="#747474" class="mt-auto mx-2"
+          text dark @click="logout">
+            <v-icon  size="30">mdi-power-standby</v-icon>
+            <span class="text-router">Cerrar Sesión</span>
+          </v-btn>
+          <div v-else class="mt-auto mx-2">
+        <v-btn
+          color="green"
+          outlined
+          class="my-1"
+          @click="$router.replace('/login')"
+        >
+          Inicia sesión
+        </v-btn>
+        <v-btn
+          color="green"
+          outlined
+          class="my-1"
+          @click="$router.replace('/signupInmb')"
+        >
+          Quiero publicar
+        </v-btn>
+      </div>
+    </div>
+    </v-navigation-drawer>
 </div>
 </template>
 
 <script>
-import TitleNavBar from './TitleNavBar.vue';
-import ToolBar from './Toolbar.vue';
-import { verifyIsLogin, currentUser } from '../firebase/auth';
+
+import { verifyIsLogin, currentUser, logout } from '../firebase/auth';
 import { getUserByUid } from '../firebase/database';
+// import Logout from './Logout.vue';
 
 export default {
-  props: ['quantityInmobByDistrict', 'prices'],
-  data() {
-    return {
-      active: false,
-      isLogin: false,
-      isMobile: false,
-    };
-  },
+  props: ['isLogin', 'quantityInmobByDistrict'],
+  data: () => ({
+    user: {},
+    drawer: false,
+  }),
   components: {
-    TitleNavBar,
-    ToolBar,
+    // Logout,
   },
   methods: {
-    onResize() {
-      this.isMobile = window.innerWidth < 800;
-    },
+    logout,
     verify() {
       verifyIsLogin(
         () => {
@@ -101,9 +142,6 @@ export default {
           this.isLogin = false;
         },
       );
-    },
-    onClickOutside() {
-      this.active = false;
     },
     homeClick() {
       this.$gtag.event('Inicio', {
@@ -163,17 +201,6 @@ export default {
       this.$router.push({ path: '/favorite' });
     },
   },
-  beforeDestroy() {
-    if (typeof window === 'undefined') return;
-
-    window.removeEventListener('resize', this.onResize, { passive: true });
-  },
-
-  mounted() {
-    this.onResize();
-
-    window.addEventListener('resize', this.onResize, { passive: true });
-  },
   created() {
     this.verify();
   },
@@ -181,7 +208,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.text-caption {
-  width: 70vw;
-}
+
 </style>

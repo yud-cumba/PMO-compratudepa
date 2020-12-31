@@ -1,5 +1,5 @@
 <template>
-    <v-card-title class="text-center d-flex ">
+    <v-card-title class="text-center d-flex navBar">
       <v-img
         src="../assets/logoPMO.png"
         aspect-ratio="1"
@@ -17,16 +17,7 @@
         <div v-else>
           <v-icon color="green" x-large class="mx-3">mdi-account-circle</v-icon>
         </div>
-        <v-btn
-          v-if="user.role==='inmobiliaria'"
-          color="green"
-          outlined
-          class="mx-2"
-          @click="$router.replace('/myprojects')"
-        >
-          Quiero publicar
-        </v-btn>
-        <Logout/>
+        <Logout :role="user.role"/>
       </div>
       <div v-else>
         <v-btn
@@ -56,8 +47,8 @@ import Logout from './Logout.vue';
 
 export default {
   data: () => ({
-    isLogin: false,
     user: {},
+    isLogin: false,
   }),
   components: {
     Logout,
@@ -84,5 +75,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

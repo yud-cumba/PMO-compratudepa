@@ -1,7 +1,6 @@
 <template>
 <div class="card px-3 mt-2 ml-1">
   <v-card
-    min-width="400"
     color="transparent"
     outlined
   >
@@ -99,5 +98,10 @@ export default {
     height: 110px;
     border:0.5px solid gray;
     border-radius: 5px;
+}
+@media (max-width: 480px){
+  .card{
+    height: 140px;
+  }
 }
 </style>
