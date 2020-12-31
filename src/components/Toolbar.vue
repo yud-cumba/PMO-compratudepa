@@ -120,7 +120,7 @@ import { getUserByUid } from '../firebase/database';
 // import Logout from './Logout.vue';
 
 export default {
-  props: ['isLogin', 'quantityInmobByDistrict'],
+  props: ['isLogin', 'quantityInmobByDistrict', 'prices'],
   data: () => ({
     user: {},
     drawer: false,

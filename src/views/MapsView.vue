@@ -60,7 +60,7 @@
       </v-col>
       <v-col>
         <div class="d-flex">
-        <v-btn class="mb-5 ml-auto mr-5" @click="filterFunction" color="green">
+        <v-btn  v-if="!isMobile" class="mb-5 ml-auto mr-5" @click="filterFunction" color="green">
           Aplicar Filtro
         </v-btn>
         </div>
@@ -86,10 +86,13 @@
         </v-card>
       </v-col>
       </v-row>
+      <v-btn  v-if="isMobile" class="mx-2" @click="filterFunction" color="green">
+          Aplicar Filtro
+        </v-btn>
     </v-card>
     <v-card v-if="filtersSelected.length > 0" class="mx-5 px-4">
       <p class="ma-0 pt-1 pa-0">Filtros seleccionados</p>
-      <div class="d-flex ma-0 pa-0">
+      <div class="d-flex ma-0 pa-0 flex-wrap">
       <v-chip
       class="mx-1 my-3"
         v-for="filter in filtersSelected"
@@ -99,7 +102,7 @@
       >
         {{ filter.text }}
       </v-chip>
-      <v-btn class="ml-auto " @click="removeAllFilter" color="green">
+      <v-btn :class="!isMobile? 'ml-auto' : 'mx-2 my-2' " @click="removeAllFilter" color="green">
         Limpiar filtros
       </v-btn>
       </div>
@@ -141,6 +144,7 @@ export default {
   data() {
     return {
       zoom: 12,
+      isMobile: false,
       itemsRooms: [1, 2, 3, 4].map((e) => {
         if (e === 1) {
           return { text: `${e} dormitorio`, value: e };
@@ -302,7 +306,7 @@ export default {
       places.forEach((nameData) => {
         if (this.filterPlaces[nameData]) {
           const place = `${nameData}_coord`;
-          this.projects = this.projects.filter((e) => e[place].length > 0);
+          this.projects = this.projects.filter((e) => e[place] && e[place].length > 0);
           this.filtersSelected.push({
             text: nameData,
             type: 'places',
@@ -364,6 +368,20 @@ export default {
       this.filterByAmenities();
       this.filterByPrice();
     },
+    onResize() {
+      this.isMobile = window.innerWidth < 800;
+    },
+  },
+  beforeDestroy() {
+    if (typeof window === 'undefined') return;
+
+    window.removeEventListener('resize', this.onResize, { passive: true });
+  },
+
+  mounted() {
+    this.onResize();
+
+    window.addEventListener('resize', this.onResize, { passive: true });
   },
   created() {
     this.$store.commit('SET_LAYOUT', 'public-layout');

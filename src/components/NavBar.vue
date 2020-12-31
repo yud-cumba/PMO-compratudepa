@@ -1,7 +1,8 @@
 <template>
 <div>
   <div v-if="isMobile">
-    <ToolBar :isLogin="isLogin" :quantityInmobByDistrict='quantityInmobByDistrict'/>
+    <ToolBar :isLogin="isLogin"
+    :quantityInmobByDistrict='quantityInmobByDistrict' :prices='prices'/>
     </div>
   <v-card v-else class="elevation-1">
     <TitleNavBar :isLogin="isLogin"/>
