@@ -3,7 +3,7 @@
     <div v-if="!isLogin">
        <WithoutLogin/>
     </div>
-    <div class="px-12 mx-12 pt-5" v-else>
+    <div  v-else class="pa-6">
       <!-- <h2 class="ma-6">Tips</h2> -->
       <v-tabs
       v-model="tab"

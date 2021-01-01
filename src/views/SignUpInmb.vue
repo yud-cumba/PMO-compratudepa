@@ -1,7 +1,8 @@
 <template>
-<v-card class="d-flex">
-  <v-form class="form py-8 px-12 mx-5">
-    <h2 class="py-3">
+<v-row class="pa-5">
+  <v-col class="pa-5">
+    <v-form>
+    <h2>
       ¡Regístrate para publicar tu proyecto !
       </h2>
       <h4 class="pb-5" >Para registrarse sólo debes dejar estos datos acontinuación.</h4>
@@ -80,9 +81,12 @@
     <v-icon class="pb-4" @click="logInByGoogle" color="green">mdi-google</v-icon>
     </div>
   </v-form>
-  <v-parallax height="700" class="parallax" src="../assets/login.png">
+  </v-col>
+  <v-col v-if="!isMobile" cols="8">
+  <v-parallax  height="700" src="../assets/login.png">
   </v-parallax>
-</v-card>
+  </v-col>
+</v-row>
 </template>
 
 <script>
@@ -93,6 +97,7 @@ import { userAdd, userFirstTime } from '../firebase/database';
 
 export default {
   data: () => ({
+    isMobile: false,
     valid: true,
     name: '',
     nameRules: [
@@ -121,6 +126,9 @@ export default {
   }),
 
   methods: {
+    onResize() {
+      this.isMobile = window.innerWidth < 800;
+    },
     logInByGoogle() {
       logInGoogle().then((user) => {
         const {
@@ -151,6 +159,17 @@ export default {
   components: {
     PrivacyPolicy,
     ModalOk,
+  },
+  beforeDestroy() {
+    if (typeof window === 'undefined') return;
+
+    window.removeEventListener('resize', this.onResize, { passive: true });
+  },
+
+  mounted() {
+    this.onResize();
+
+    window.addEventListener('resize', this.onResize, { passive: true });
   },
 };
 </script>

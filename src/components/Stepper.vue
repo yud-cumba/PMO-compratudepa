@@ -1,7 +1,8 @@
 <template>
-    <div class="d-flex justify-center align-center">
-      <v-card class="ma-12">
-        <v-stepper class="px-7" v-model="e6" vertical>
+    <v-row class="d-flex justify-center align-center">
+      <v-col>
+          <v-card >
+        <v-stepper class="px-2" v-model="e6" vertical>
           <div v-for="(item, index) in items" :key="item.title">
             <v-stepper-step
               color="green"
@@ -37,11 +38,12 @@
           </div>
         </v-stepper>
       </v-card>
-      <div class="ma-12">
+      </v-col>
+      <v-col class="ma-12">
         <h2 class="ma-12">Te acompañamos en el proceso</h2>
         <v-img src="../assets/co-workers.svg"> </v-img>
-      </div>
-    </div>
+      </v-col>
+    </v-row>
 </template>
 
 <script>

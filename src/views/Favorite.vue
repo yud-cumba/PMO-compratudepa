@@ -1,11 +1,11 @@
 <template>
-  <div class="pa-7 mx-10 my-5">
+  <div class="pa-7">
     <h1>Mis proyectos favoritos</h1>
     <h3 class="my-6">
       Aquí podras visualizar los proyectos a los que le diste corazoncito
     </h3>
     <div v-if="errorFavorites" class="red--text pa-5">
-        {{this.errorFavorites}}
+      <NoProjects :message="errorFavorites"/>
     </div>
     <div v-else>
         <ProjectCards :projects="myFavorites"/>
@@ -16,7 +16,7 @@
       estrellas que le diste
     </h3>
     <div v-if="errorStarts" class="red--text pa-5">
-        {{this.errorStarts}}
+        <NoProjects :message="errorStarts"/>
     </div>
     <div v-else>
         <ProjectCards :projects="myStarts" />
@@ -29,6 +29,7 @@ import { getFavoritesByUserId, getRatingsByUserId } from '../firebase/database';
 import { currentUser } from '../firebase/auth';
 import { inmobiliariasById } from '../utils/projectMethods';
 import ProjectCards from '../components/ProjectCards.vue';
+import NoProjects from '../components/NoProjects.vue';
 
 export default {
   data: () => ({
@@ -39,6 +40,7 @@ export default {
   }),
   components: {
     ProjectCards,
+    NoProjects,
   },
   created() {
     this.$store.commit('SET_LAYOUT', 'public-layout');

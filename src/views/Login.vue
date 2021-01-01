@@ -1,11 +1,13 @@
 <template>
-<v-card class="d-flex ">
-  <v-form class="form py-8 px-12 mx-5">
-    <h2 class="py-3">¡Ingresa para tener acceso a las asesorías!</h2>
-    <p class="pa-3">
+<div class="pa-5">
+<v-row >
+  <v-col class="pa-5">
+    <v-form>
+    <h2 >¡Ingresa para tener acceso a las asesorías!</h2>
+    <p >
         Ingresa en nuestra plataforma con tan sólo tu correo y contraseña.
     </p>
-    <h4 class="my-2">Correo electrónico</h4>
+    <h4>Correo electrónico</h4>
     <v-text-field
       color="green"
       v-model="email"
@@ -14,7 +16,7 @@
       label="Ingresa tu correo electrónico."
       outlined  dense
     ></v-text-field>
-    <h4 class="my-2">Contraseña</h4>
+    <h4 >Contraseña</h4>
     <v-text-field
       color="green"
       v-model="password"
@@ -51,9 +53,12 @@
     <router-link to="/signupInmb"> Regístrate aquí</router-link>
     </div>
   </v-form>
-  <v-parallax height="700" class="parallax" src="../assets/login.png">
+  </v-col>
+  <v-col  v-if="!isMobile" cols="8">
+     <v-parallax src="../assets/login.png">
   </v-parallax>
-</v-card>
+  </v-col>
+  </v-row></div>
 </template>
 
 <script>
@@ -82,9 +87,13 @@ export default {
     description: '',
     checkbox: false,
     error: false,
+    isMobile: false,
   }),
 
   methods: {
+    onResize() {
+      this.isMobile = window.innerWidth < 800;
+    },
     logInByGoogle() {
       logInGoogle().then((user) => {
         const {
@@ -116,15 +125,19 @@ export default {
   created() {
     this.$store.commit('SET_LAYOUT', 'public-layout');
   },
+  beforeDestroy() {
+    if (typeof window === 'undefined') return;
+
+    window.removeEventListener('resize', this.onResize, { passive: true });
+  },
+
+  mounted() {
+    this.onResize();
+
+    window.addEventListener('resize', this.onResize, { passive: true });
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.parallax{
-    width:65vw;
-    height: 100vh;
-}
-.form{
-    width:35vw
-}
 </style>

@@ -118,7 +118,7 @@
       />
     </div>
     <div v-else class="ma-5 text-red">
-      <NoProjects/>
+      <NoProjects message="No se encontraron proyectos"/>
     </div>
     <ProjectCards :projects="projects" />
   </div>

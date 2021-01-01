@@ -1,8 +1,8 @@
 <template>
-  <v-card class="pa-5 ma-10">
+  <v-card class="pa-5">
     <h1>Sube un nuevo proyecto</h1>
     <h4>Datos del proyecto</h4>
-    <v-row class="pa-4">
+    <v-row class="d-flex">
       <v-col>
         <v-text-field
           v-model="project.properties.name"
@@ -23,10 +23,15 @@
         >
         </v-text-field>
         <v-autocomplete
-        v-model="project.properties.distrito"
-        :items="districts"
-        @change="currentLatLong(project.properties.distrito)"
-        color="green" filled dense rounded label="Elija el distrito">
+          v-model="project.properties.distrito"
+          :items="districts"
+          @change="currentLatLong(project.properties.distrito)"
+          color="green"
+          filled
+          dense
+          rounded
+          label="Elija el distrito"
+        >
         </v-autocomplete>
       </v-col>
       <v-col>
@@ -63,7 +68,7 @@
           ></v-date-picker>
         </v-menu>
         <v-select
-         :items="['En planos', 'En construcción', 'Entrega inmediata']"
+          :items="['En planos', 'En construcción', 'Entrega inmediata']"
           v-model="project.properties.project_phase"
           color="green"
           filled
@@ -73,7 +78,7 @@
         >
         </v-select>
         <v-text-field
-        v-model="project.properties.room_max"
+          v-model="project.properties.room_max"
           color="green"
           filled
           dense
@@ -84,11 +89,18 @@
         </v-text-field>
       </v-col>
     </v-row>
-    <v-row v-if="project.properties.distrito" class="pa-12">
-        <h4 class="py-3">Recorre el mapa y clickea la ubicación de tu proyecto,
-         esto servirá para que los usuarios puedan encontrar tu proyecto por la ubicación</h4>
-      <GoogleMap :latitude="latitude" :zoom="zoom"
-      :longitude="longitude" :markers="marker" :totalMarkers="marker" :addMarker="addMarker"
+    <v-row v-if="project.properties.distrito">
+      <h4 class="py-3">
+        Recorre el mapa y clickea la ubicación de tu proyecto, esto servirá para
+        que los usuarios puedan encontrar tu proyecto por la ubicación
+      </h4>
+      <GoogleMap
+        :latitude="latitude"
+        :zoom="zoom"
+        :longitude="longitude"
+        :markers="marker"
+        :totalMarkers="marker"
+        :addMarker="addMarker"
       />
     </v-row>
     <h4>Detalle</h4>
@@ -124,7 +136,7 @@
       </v-col>
       <v-col>
         <v-text-field
-           v-model="project.properties.area_max"
+          v-model="project.properties.area_max"
           color="green"
           filled
           dense
@@ -134,7 +146,7 @@
         >
         </v-text-field>
         <v-textarea
-           v-model="project.properties.descripcion"
+          v-model="project.properties.descripcion"
           color="green"
           filled
           dense
@@ -158,7 +170,7 @@
         >
         </v-text-field>
         <v-text-field
-         v-model="project.properties.deposito_price"
+          v-model="project.properties.deposito_price"
           filled
           rounded
           color="green"
@@ -205,7 +217,8 @@
           dense
           multiple
           color="green"
-          rounded>
+          rounded
+        >
         </v-select>
       </v-col>
       <v-col>
@@ -218,13 +231,14 @@
           filled
           dense
           multiple
-          rounded>
+          rounded
+        >
         </v-select>
       </v-col>
     </v-row>
     <h4>Fotos</h4>
     <v-row>
-      <v-col >
+      <v-col>
         <v-file-input
           @change="readFileMain"
           v-model="mainPhoto"
@@ -236,7 +250,7 @@
           prepend-icon="mdi-camera"
         ></v-file-input>
         <v-img
-        v-if="urlmain"
+          v-if="urlmain"
           width="400"
           height="500"
           class="mx-12 px-12"
@@ -258,35 +272,40 @@
           label="Fotos adicionales "
           prepend-icon="mdi-camera"
         ></v-file-input>
-        <v-carousel  v-if="urladitional.length>0" class="imgs m-12">
+        <v-carousel v-if="urladitional.length > 0" class="imgs m-12">
           <v-carousel-item
-          v-for="(img,i) in urladitional"
-          :key="i"
-          :src="img"
-          reverse-transition="fade-transition"
-          transition="fade-transition"
-        ></v-carousel-item>
+            v-for="(img, i) in urladitional"
+            :key="i"
+            :src="img"
+            reverse-transition="fade-transition"
+            transition="fade-transition"
+          ></v-carousel-item>
         </v-carousel>
       </v-col>
     </v-row>
     <v-row class="d-flex justify-center my-5">
-      <PreviewView :project="project.properties" :publish="publishProject"/>
-      <v-btn color="green" class="mx-10" @click="publishProject">
+      <PreviewView
+        :project="project.properties"
+        :publish="publishProject"
+        :loading="loading"
+      />
+      <v-btn color="green" class="ma-3" @click="publishProject">
         Publicar proyecto
         <v-progress-circular
-                class="ml-2"
-                 v-if="loading"
-                 left
-                 :size="25"
-                 :width="5"
-                 color="white"
-                indeterminate
-
-                ></v-progress-circular>
-        </v-btn>
+          class="ml-2"
+          v-if="loading"
+          left
+          :size="25"
+          :width="5"
+          color="white"
+          indeterminate
+        ></v-progress-circular>
+      </v-btn>
     </v-row>
-    <ModalOk :dialog="published"
-    :title="`El proyecto ${project.properties.name} fue publicado con éxito!`"/>
+    <ModalOk
+      :dialog="published"
+      :title="`El proyecto ${project.properties.name} fue publicado con éxito!`"
+    />
   </v-card>
 </template>
 
@@ -312,8 +331,7 @@ export default {
     urladitional: [],
     date: new Date().toISOString().substr(0, 10),
     project: {
-      geometry: {
-      },
+      geometry: {},
       properties: {
         name: '',
         coin: 'S/.',
@@ -387,7 +405,9 @@ export default {
   }),
   watch: {
     date() {
-      this.project.properties.delivery_date = moment(this.date).format('DD/MM/YYYY');
+      this.project.properties.delivery_date = moment(this.date).format(
+        'DD/MM/YYYY',
+      );
     },
   },
   methods: {
@@ -410,7 +430,9 @@ export default {
     },
     readFile(e) {
       this.urladitional = e.map((file) => URL.createObjectURL(file));
-      this.project.properties.imagenes = this.project.properties.imagenes.concat(this.urladitional);
+      this.project.properties.imagenes = this.project.properties.imagenes.concat(
+        this.urladitional,
+      );
     },
     readFileMain(e) {
       this.urlmain = URL.createObjectURL(e);
@@ -421,9 +443,15 @@ export default {
       const vm = this;
       vm.project.properties.id = new Date().getTime();
       const photos = [this.mainPhoto].concat(this.aditionalPhotos);
-      const promises = addFileToStorage(`${currentUser().uid}/${this.project.properties.name}`, photos);
-      Promise.all(promises).then(() => photos.map((p) => p.name))
-        .then((photoNames) => photoNames.map((photo) => getFileFromStorage(`${currentUser().uid}/${this.project.properties.name}/${photo}`)))
+      const promises = addFileToStorage(
+        `${currentUser().uid}/${this.project.properties.name}`,
+        photos,
+      );
+      Promise.all(promises)
+        .then(() => photos.map((p) => p.name))
+        .then((photoNames) => photoNames.map((photo) => getFileFromStorage(
+          `${currentUser().uid}/${this.project.properties.name}/${photo}`,
+        )))
         .then((url) => Promise.all(url).then((urls) => {
           vm.project.properties.imagenes = urls;
         }))
@@ -443,7 +471,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.imgs{
+.imgs {
   width: 400px;
   height: 200px;
 }

@@ -5,11 +5,11 @@
       outlined
       type="error"
     >
-     No se encontraron proyectos
+     {{message}}
     </v-alert>
     <IconifyIcon
       :icon="detectiveIcon"
-      :style="{ color: 'grey', fontSize: '300px' }"
+      :style="{ color: 'grey', fontSize: '250px' }"
     />
     </v-row>
 </template>
@@ -20,6 +20,7 @@ import IconifyIcon from '@iconify/vue';
 import detectiveIcon from '@iconify/icons-emojione-monotone/detective';
 
 export default {
+  props: ['message'],
   data: () => ({
     detectiveIcon,
   }),

@@ -1,30 +1,31 @@
 <template>
 <div>
   <div v-if="isMobile">
-    <ToolBar :isLogin="isLogin"
+    <ToolBar :isLogin="isLogin" :role="user.role"
     :quantityInmobByDistrict='quantityInmobByDistrict' :prices='prices'/>
     </div>
   <v-card v-else class="elevation-1">
     <TitleNavBar :isLogin="isLogin"/>
-    <v-card-text  class="d-flex justify-end px-4">
-      <div
-        class="text-lg-h6 px-6 mx-6"
+    <v-list class="d-flex">
+      <v-list-item
+        class="text-lg-h6 ml-auto d-flex justify-end"
         @click="homeClick"
       >
         INICIO
-      </div>
+      </v-list-item>
+      <v-list-item>
       <v-menu offset-y>
         <template v-slot:activator="{ on }">
-          <div
-            class="text-lg-h6 px-6 mx-6"
+          <v-list-item
+            class="text-lg-h6 d-flex justify-end"
             @click="projectsClick"
             v-click-outside="onClickOutside"
             v-on="on"
           >
             PROYECTOS
-          </div>
+          </v-list-item>
         </template>
-        <v-card v-if="quantityInmobByDistrict.length>0" class="text-caption">
+        <v-card v-if="quantityInmobByDistrict.length>0">
           <v-row v-for="m in 4" :key="m" no-gutters>
             <v-col v-for="n in 6" :key="n">
               <v-card
@@ -43,26 +44,27 @@
           </v-row>
         </v-card>
       </v-menu>
-          <div
-            class="text-lg-h6 px-6 mx-6"
+      </v-list-item>
+          <v-list-item
+            class="text-lg-h6 d-flex justify-end"
             @click="adviceClick"
           >
             TE ASESORAMOS
-          </div>
-          <div
-            class="text-lg-h6 px-6 mx-6"
+          </v-list-item>
+          <v-list-item
+            class="text-lg-h6 d-flex justify-end"
             @click="creditsClick"
           >
             COMPROMISO SOCIAL
-          </div>
-          <div
+          </v-list-item>
+          <v-list-item
             v-if="isLogin"
-            class="text-lg-h6 px-6 mx-6"
+            class="text-lg-h6 d-flex justify-end"
             @click="favoriteClick"
           >
             MIS FAVORITOS
-          </div>
-    </v-card-text>
+          </v-list-item>
+    </v-list>
   </v-card>
 </div>
 </template>
@@ -80,6 +82,7 @@ export default {
       active: false,
       isLogin: false,
       isMobile: false,
+      user: '',
     };
   },
   components: {

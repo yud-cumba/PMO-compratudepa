@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex justify-end green white--text pa-3">
-    <h2 class="mt-1">{{ user.name }}</h2>
+    <h3 class="mt-1">{{ user.name }}</h3>
     <div v-if="!!user.photo">
       <v-img :src="user.photo" class="rounded-circle mx-3" max-width="50">
       </v-img>
