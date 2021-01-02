@@ -3,13 +3,17 @@
         <h1 class="my-10">Para conocer lo que te ofrecemos
             <router-link to="/login" class="green--text"> Inicia Sesión </router-link>
         </h1>
-        <div class="d-flex">
-            <ul style="width:50%" class="text-start pa-12 mx-12">
+        <v-row class="d-flex">
+            <v-col>
+                <ul  class="text-start">
                 <li class="my-5 ma-12" v-for="item in items" :key="item"><h3>{{item}}</h3></li>
             </ul>
-            <v-img src="../assets/withoutlogin.png" width="200">
+            </v-col>
+            <v-col>
+                <v-img src="../assets/withoutlogin.png">
             </v-img>
-        </div>
+            </v-col>
+        </v-row>
     </div>
 </template>
 
