@@ -184,7 +184,7 @@ export default {
       this.$router.replace('/oli');
     },
     asesorByWhatsApp(celular) {
-      const yourMessage = 'Hola, soy un pontencial cliente que encontró tu proyecto en COMPRATUDEPA, y estoy interesado en él, espero pueda enviarme mayor información';
+      const yourMessage = 'Hola, encontré tu proyecto en la prlataforma COMPRATUDEPA (compratudepa.online), y estoy interesado en él, espero pueda enviarme mayor información';
       const message = yourMessage.split(' ').join('%20');
       window.location.href = `https://api.whatsapp.com/send/?phone=%2B51${celular}&text=%20${message}`;
     },

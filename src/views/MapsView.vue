@@ -1,6 +1,11 @@
 <template>
-  <div class="view">
-    <v-card class="ma-5 pa-5">
+  <div class="view pa-5" >
+    <v-expansion-panels v-model="panel">
+    <v-expansion-panel>
+      <v-expansion-panel-header class="text-lg-h6">
+        Filtros
+      </v-expansion-panel-header>
+      <v-expansion-panel-content>
       <v-row>
       <v-col >
         <v-text-field
@@ -89,8 +94,10 @@
       <v-btn  v-if="isMobile" class="mx-2" @click="filterFunction" color="green">
           Aplicar Filtro
         </v-btn>
-    </v-card>
-    <v-card v-if="filtersSelected.length > 0" class="mx-5 px-4">
+        </v-expansion-panel-content>
+        </v-expansion-panel>
+    </v-expansion-panels>
+    <v-card v-if="filtersSelected.length > 0" class="my-3 px-4">
       <p class="ma-0 pt-1 pa-0">Filtros seleccionados</p>
       <div class="d-flex ma-0 pa-0 flex-wrap">
       <v-chip
@@ -143,6 +150,7 @@ export default {
   },
   data() {
     return {
+      panels: [],
       zoom: 12,
       isMobile: false,
       itemsRooms: [1, 2, 3, 4].map((e) => {
@@ -361,6 +369,7 @@ export default {
     },
     filterFunction() {
       this.filtersSelected = [];
+      this.panel = [];
       this.filterByInputUbication();
       this.filterByRooms();
       this.filterByPhase();
