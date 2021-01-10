@@ -8,16 +8,18 @@
       <v-expansion-panel-content>
       <v-row>
       <v-col >
-        <v-text-field
+        <v-autocomplete
           class="my-5 mx-2"
           v-model="search"
+          :items="districts"
+          color="green"
           append-icon="mdi-magnify"
           label="Search"
           single-line
           hide-details
           dense
           outlined
-        ></v-text-field>
+        ></v-autocomplete>
         <v-select
             v-model="rooms"
             class="mt-2 mx-2 pb-0 select-price"
@@ -136,6 +138,7 @@ import GoogleMap from '../components/GoogleMap.vue';
 import ProjectCards from '../components/ProjectCards.vue';
 import FilterPrice from '../components/FilterPrice.vue';
 import { getAllProjectsTotal } from '../utils/projectMethods';
+import districts from '../data/districts.json';
 // eslint-disable-next-line import/no-cycle
 import { eventBus } from '../main';
 import NoProjects from '../components/NoProjects.vue';
@@ -149,6 +152,7 @@ export default {
   },
   data() {
     return {
+      districts,
       panel: [],
       zoom: 12,
       isMobile: false,

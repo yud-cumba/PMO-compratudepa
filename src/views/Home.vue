@@ -62,6 +62,7 @@ import ProjectCards from '../components/ProjectCards.vue';
 import FilterPrice from '../components/FilterPrice.vue';
 import { getMinPrice, getMaxPrice } from '../utils/prices';
 import { getAllProjectsTotal } from '../utils/projectMethods';
+import districts from '../data/districts.json';
 // eslint-disable-next-line import/no-cycle
 import { eventBus } from '../main';
 
@@ -74,14 +75,7 @@ export default {
   },
   data() {
     return {
-      districts: ['Lince', 'Santiago De Surco', 'San Isidro', 'Surquillo',
-        'Cercado de lima', 'Jesus Maria', 'San Borja', 'Magdalena Del Mar',
-        'San Miguel', 'Breña', 'Miraflores', 'Chorrillos', 'Barranco',
-        'Pueblo Libre', 'La Victoria', 'Ate', 'Piura', 'Carabayllo',
-        'Chiclayo', 'Callao', 'San Martin De Porres', 'La Perla', 'Rimac',
-        'Trujillo', 'Tarapoto', 'Cayma', 'El Tallan', 'Cerro Colorado',
-        'El Agustino', 'Chaclacayo', 'San Bartolo', 'Comas',
-        'Puente Piedra'],
+      districts,
       typePrice: 'S/.',
       inmobiliarias: [],
       search: '',
