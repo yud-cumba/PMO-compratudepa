@@ -4,8 +4,9 @@
   class="initial-search d-flex justify-center align-center">
     <v-card color="rgb(255, 255, 255, 0.7)" class="py-3 px-6">
       <v-row  class="mx-2">
-        <v-text-field
+        <v-autocomplete
           class="mt-5 mx-2"
+          :items="districts"
           v-model="search"
           append-icon="mdi-magnify"
           label="Buscar por ubicacion"
@@ -14,7 +15,7 @@
           dense
           outlined
           color="green"
-        ></v-text-field>
+        ></v-autocomplete>
         <v-btn v-if="!isMobile"
         @click="searchInMap" class="ma-5 green">
           Buscar
@@ -61,6 +62,7 @@ import ProjectCards from '../components/ProjectCards.vue';
 import FilterPrice from '../components/FilterPrice.vue';
 import { getMinPrice, getMaxPrice } from '../utils/prices';
 import { getAllProjectsTotal } from '../utils/projectMethods';
+import districts from '../data/districts.json';
 // eslint-disable-next-line import/no-cycle
 import { eventBus } from '../main';
 
@@ -73,6 +75,7 @@ export default {
   },
   data() {
     return {
+      districts,
       typePrice: 'S/.',
       inmobiliarias: [],
       search: '',
@@ -103,7 +106,10 @@ export default {
         path: '/maps',
         query: {
           district: this.search,
-          prices: this.prices,
+          prices: {
+            min: this.prices.min,
+            max: this.prices.max,
+          },
           typePrice: this.typePrice,
           rooms: this.rooms,
           phase: this.phase,

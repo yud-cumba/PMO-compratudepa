@@ -5,7 +5,7 @@
           {{ favorite ? "mdi-heart" : "mdi-heart-outline" }}
         </v-icon>
       </v-btn>
-      <ModalToLogin :dialog="modalToLogin"/>
+      <ModalToLogin :dialog="modalToLogin" :setModalToLogin="setModalToLogin"/>
       <ModalOk :dialog="modalOk" title="ESTE PROYECTO SE GUARDÓ EN TUS FAVORITOS"/>
   </div>
 </template>
@@ -34,6 +34,9 @@ export default {
     modalToLogin: false,
   }),
   methods: {
+    setModalToLogin(dialog) {
+      this.modalToLogin = dialog;
+    },
     verify() {
       verifyIsLogin(
         () => {

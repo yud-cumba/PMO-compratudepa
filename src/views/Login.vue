@@ -109,7 +109,7 @@ export default {
         if (role === 'inmobiliaria') {
           this.$router.replace('/myprojects');
         } else if (role === 'cliente') {
-          this.$router.replace('/');
+          this.$router.go(-1);
         }
       });
     },

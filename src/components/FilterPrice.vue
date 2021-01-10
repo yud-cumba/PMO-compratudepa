@@ -28,14 +28,13 @@
         <div class="d-flex">
         <p class="mt-2">{{type? '$' : 'S/.'}}</p>
         <v-text-field
-        :value="price[0]"
+         v-model="price[0]"
         class="mt-0 pt-0"
         hide-details
         single-line
         type="number"
         color="green"
         style="width: 80px"
-        @change="$set(price, 0, $event)"
         ></v-text-field>
         </div>
         </div>
@@ -46,14 +45,13 @@
         <div class="d-flex">
         <p class="mt-2">{{type? '$' : 'S/.'}}</p>
         <v-text-field
-        :value="price[1]"
+        v-model="price[1]"
         class="mt-0 pt-0"
         hide-details
         single-line
         type="number"
         style="width: 80px"
         color="green"
-        @change="$set(price, 1, $event)"
         ></v-text-field>
         </div>
         </div>
@@ -72,8 +70,8 @@ export default {
   data() {
     return {
       type: false,
-      initialRange: [],
-      price: [],
+      initialRange: [0, 0],
+      price: [0, 0],
     };
   },
   watch: {

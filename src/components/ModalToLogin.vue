@@ -3,7 +3,7 @@
     <v-dialog v-model="dialog" width="500">
       <v-card class="pa-6">
         <v-card-actions class="d-flex justify-end">
-          <v-icon large @click="dialog = false" color="green">
+          <v-icon large @click="closeModal" color="green">
             mdi-window-close</v-icon
           >
         </v-card-actions>
@@ -11,14 +11,14 @@
           Iniciar sesión para realizar esta acción y acceder a otros beneficios.
         </h2>
         <v-card-actions class="d-flex flex-column align-center my-6">
-          <v-btn color="green my-5" class="mx-2" @click="$router.replace('/login')">
+          <v-btn color="green my-5" class="mx-2" @click="$router.push('/login')">
             Inicia seción
           </v-btn>
           <v-btn
             color="green"
             outlined
             class="mx-2 my-5"
-            @click="$router.replace('/advices')"
+            @click="$router.push('/advices')"
           >
             Conoce aquí los beneficios
           </v-btn>
@@ -30,7 +30,13 @@
 
 <script>
 export default {
-  props: ['dialog'],
+  props: ['dialog', 'setModalToLogin'],
+  methods: {
+    closeModal() {
+      this.dialog = false;
+      this.setModalToLogin(this.dialog);
+    },
+  },
 };
 </script>
 

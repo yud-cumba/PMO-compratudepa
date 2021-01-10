@@ -1,18 +1,25 @@
 <template>
-  <div class="view">
-    <v-card class="ma-5 pa-5">
+  <div class="view pa-5" >
+    <v-expansion-panels v-model="panel">
+    <v-expansion-panel>
+      <v-expansion-panel-header class="text-lg-h6">
+        Filtros
+      </v-expansion-panel-header>
+      <v-expansion-panel-content>
       <v-row>
       <v-col >
-        <v-text-field
+        <v-autocomplete
           class="my-5 mx-2"
           v-model="search"
+          :items="districts"
+          color="green"
           append-icon="mdi-magnify"
           label="Search"
           single-line
           hide-details
           dense
           outlined
-        ></v-text-field>
+        ></v-autocomplete>
         <v-select
             v-model="rooms"
             class="mt-2 mx-2 pb-0 select-price"
@@ -89,8 +96,10 @@
       <v-btn  v-if="isMobile" class="mx-2" @click="filterFunction" color="green">
           Aplicar Filtro
         </v-btn>
-    </v-card>
-    <v-card v-if="filtersSelected.length > 0" class="mx-5 px-4">
+        </v-expansion-panel-content>
+        </v-expansion-panel>
+    </v-expansion-panels>
+    <v-card v-if="filtersSelected.length > 0" class="my-3 px-4">
       <p class="ma-0 pt-1 pa-0">Filtros seleccionados</p>
       <div class="d-flex ma-0 pa-0 flex-wrap">
       <v-chip
@@ -129,7 +138,7 @@ import GoogleMap from '../components/GoogleMap.vue';
 import ProjectCards from '../components/ProjectCards.vue';
 import FilterPrice from '../components/FilterPrice.vue';
 import { getAllProjectsTotal } from '../utils/projectMethods';
-import { getMinPrice, getMaxPrice } from '../utils/prices';
+import districts from '../data/districts.json';
 // eslint-disable-next-line import/no-cycle
 import { eventBus } from '../main';
 import NoProjects from '../components/NoProjects.vue';
@@ -143,6 +152,8 @@ export default {
   },
   data() {
     return {
+      districts,
+      panel: [],
       zoom: 12,
       isMobile: false,
       itemsRooms: [1, 2, 3, 4].map((e) => {
@@ -377,11 +388,14 @@ export default {
 
     window.removeEventListener('resize', this.onResize, { passive: true });
   },
-
   mounted() {
     this.onResize();
-
     window.addEventListener('resize', this.onResize, { passive: true });
+  },
+  watch: {
+    panel() {
+      eventBus.$emit('prices', this.prices);
+    },
   },
   created() {
     this.$store.commit('SET_LAYOUT', 'public-layout');
@@ -397,10 +411,6 @@ export default {
         ...inmob.properties,
       }));
       this.filterFunction();
-      const min = Number(getMinPrice(projects.map((e) => e.properties)));
-      const max = Number(getMaxPrice(projects.map((e) => e.properties)));
-      this.prices = { min, max };
-      eventBus.$emit('prices', { min, max });
     });
     eventBus.$on('infoProject', (payload) => {
       this.projects = payload;
