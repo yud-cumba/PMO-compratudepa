@@ -372,6 +372,7 @@ export default {
     },
     filterFunction() {
       this.filtersSelected = [];
+      this.panel = undefined;
       this.filterByInputUbication();
       this.filterByRooms();
       this.filterByPhase();
@@ -399,7 +400,6 @@ export default {
   },
   created() {
     this.$store.commit('SET_LAYOUT', 'public-layout');
-    this.filterFunction();
     getAllProjectsTotal().then((projects) => {
       this.totalProjects = projects.map((inmob) => ({
         position: {
