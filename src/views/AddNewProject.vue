@@ -317,6 +317,7 @@ import { currentUser } from '../firebase/auth';
 import ModalOk from '../components/ModalOk.vue';
 import GoogleMap from '../components/GoogleMap.vue';
 import PreviewView from '../components/PreviewView.vue';
+import districts from '../data/districts.json';
 import ubigeo from '../data/ubigeo.json';
 
 export default {
@@ -365,7 +366,7 @@ export default {
       'GNB',
     ],
     marker: [],
-    districts: ubigeo.map((e) => e.distrito),
+    districts,
     amenities: [
       'Areas verdes',
       'Área de juegos para niños',

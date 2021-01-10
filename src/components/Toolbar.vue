@@ -78,7 +78,7 @@
             color="#747474"
             text
             dark
-            @click="$router.replace('/myprojects')"
+            @click="$router.push('/myprojects')"
             ><v-icon class="mr-2" size="30">mdi-bank-plus</v-icon>
             <span class="text-router">Quiero publicar</span>
           </v-btn>
@@ -89,11 +89,11 @@
         </div>
         <div v-else class="pa-3">
           <v-list-item>
-            <v-btn color="green" outlined @click="$router.replace('/login')">
+            <v-btn color="green" outlined @click="$router.push('/login')">
               Inicia sesión
             </v-btn>
           </v-list-item>
-          <v-btn color="green" outlined @click="$router.replace('/signupInmb')">
+          <v-btn color="green" outlined @click="$router.push('/signupInmb')">
             Quiero publicar
           </v-btn>
         </div>

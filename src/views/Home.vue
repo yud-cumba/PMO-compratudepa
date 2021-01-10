@@ -2,14 +2,14 @@
 <div>
   <v-parallax src="../assets/sala.png"
   class="initial-search d-flex justify-center align-center">
-    <v-card color="rgb(255, 255, 255, 0.7)" class="py-3 px-6">
+    <v-card color="rgb(255, 255, 255, 0.9)" class="py-3 px-6">
       <v-row  class="mx-2">
         <v-autocomplete
           class="mt-5 mx-2"
           :items="districts"
           v-model="search"
           append-icon="mdi-magnify"
-          label="Buscar por ubicacion"
+          label="Buscar por ubicación"
           single-line
           hide-details
           dense
@@ -106,10 +106,8 @@ export default {
         path: '/maps',
         query: {
           district: this.search,
-          prices: {
-            min: this.prices.min,
-            max: this.prices.max,
-          },
+          pricesMin: this.prices.min,
+          pricesMax: this.prices.max,
           typePrice: this.typePrice,
           rooms: this.rooms,
           phase: this.phase,

@@ -1,6 +1,14 @@
 <template>
   <div class="pa-3">
     <v-row>
+       <v-btn
+        class="mx-4" fab dark small color="green"
+        @click="
+            $router.go(-1)">
+            <v-icon dark>mdi-arrow-left</v-icon>
+        </v-btn>
+    </v-row>
+    <v-row>
       <v-col>
         <v-carousel>
           <v-carousel-item
@@ -64,7 +72,7 @@
         </div>
         <v-divider></v-divider>
         <h1 class="pa-5 green--text">
-          {{ project.coin }} {{ project.min_price }}
+          Desde {{ project.coin }} {{ priceStyle(project.min_price) }}
         </h1>
         <p class="px-5 h6">
           <v-icon class="mr-1">mdi-map-marker</v-icon>
@@ -89,7 +97,7 @@
         <p class="px-5 h6">
           <v-icon class="mr-1">mdi-arrow-collapse</v-icon>
           <strong class="text-uppercase">Espacio: </strong
-          >{{ project.area_max }} m2.
+          >Desde {{ project.area_min }} m2, hasta {{ project.area_max }} m2.
         </p>
         <p class="px-5 h6">
           <v-icon class="mr-1">mdi-account-hard-hat</v-icon>
@@ -181,12 +189,21 @@ export default {
   methods: {
     bankToImg,
     goOli() {
-      this.$router.replace('/oli');
+      this.$router.push('/oli');
     },
     asesorByWhatsApp(celular) {
       const yourMessage = 'Hola, encontré tu proyecto en la prlataforma COMPRATUDEPA (compratudepa.online), y estoy interesado en él, espero pueda enviarme mayor información';
       const message = yourMessage.split(' ').join('%20');
       window.location.href = `https://api.whatsapp.com/send/?phone=%2B51${celular}&text=%20${message}`;
+    },
+    priceStyle(value) {
+      const num2 = value.toString().split('.');
+      const thousands = num2[0].split('').reverse().join('').match(/.{1,3}/g)
+        .join(',');
+      const decimals = (num2[1]) ? `.${num2[1]}` : '';
+
+      const answer = thousands.split('').reverse().join('') + decimals;
+      return answer;
     },
   },
   created() {

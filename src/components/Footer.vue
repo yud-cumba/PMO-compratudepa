@@ -23,7 +23,7 @@
       flat
       tile
     >
-      <v-col class="col text-sm-body-1 px-10 mt-5">
+      <v-col class="col text-sm-body-1 ">
         <v-img
         src="../assets/logoPMO.png"
         aspect-ratio="1"
@@ -31,8 +31,10 @@
         max-height="40"
         max-width="180"
       />
-        <p class=" mx-2">Lima Perú</p>
-        <p class=" mx-2">+51 98741414</p>
+        <p class=" mx-2">
+          <v-icon>mdi-map-marker</v-icon>Lima, Perú</p>
+        <p class=" mx-2">
+          contacto@compratudepa.online</p>
       </v-col>
       <v-col class="col text-sm-body-1 px-10 mt-5" >
         <h4 class="py-3">Menú</h4>
@@ -45,9 +47,7 @@
       </v-col>
       <v-col class="col text-sm-body-1 px-10 mt-5">
         <h4 class="py-3">Mi cuenta</h4>
-        <p >Política de privacidad</p>
-        <p>Términos y Condiciones</p>
-        <p>Atención al cliente</p>
+        <PrivacyPolicy title="Política de privacidad"/>
       </v-col>
       <v-col class="col text-sm-body-1 px-10 mt-5" >
         <h4 class="py-3">Estemos en contacto </h4>
@@ -59,7 +59,10 @@
 </template>
 
 <script>
+import PrivacyPolicy from './PrivacyPolicy.vue';
+
 export default {
+  components: { PrivacyPolicy },
   data: () => ({
     icons: [
       'mdi-facebook',

@@ -44,7 +44,7 @@
             </div>
             <div class="information d-flex justify-start">
               <v-icon class="mr-1">mdi-arrow-collapse</v-icon>
-              {{ item.area_max }} m2
+              Desde {{ item.area_min }} m2, hasta {{ item.area_max }} m2
             </div>
             <div class="information d-flex justify-start">
               <v-icon class="mr-1">mdi-account-hard-hat</v-icon>
@@ -112,8 +112,8 @@ export default {
 }
 .flip-card {
   background-color: transparent;
-  width: 270px;
-  height: 300px;
+  width: 260px;
+  height: 310px;
   perspective: 1000px;
 }
 

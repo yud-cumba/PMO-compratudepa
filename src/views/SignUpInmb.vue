@@ -52,7 +52,7 @@
       :rules="[v => !!v || 'Debes aceptar los terminos y condiciones ']"
       required
     ></v-checkbox>
-     <PrivacyPolicy :acceptConditions="acceptConditions"/>
+     <PrivacyPolicy :acceptConditions="acceptConditions" title="términos y condiciones"/>
     </p>
      <p class="red--text ma-4">{{error}}</p>
     <v-btn class="mx-4 green" color="green">
@@ -135,7 +135,7 @@ export default {
           uid, displayName, email, phoneNumber, photoURL,
         } = user;
         userFirstTime(uid, displayName, email, 'inmobiliaria', phoneNumber, photoURL);
-        this.$router.replace('/');
+        this.$router.push('/');
       });
     },
     acceptConditions(bol) {

@@ -107,7 +107,7 @@ export default {
       getUserByUid(currentUser().uid).then((user) => {
         const { role } = user;
         if (role === 'inmobiliaria') {
-          this.$router.replace('/myprojects');
+          this.$router.push('/myprojects');
         } else if (role === 'cliente') {
           this.$router.go(-1);
         }

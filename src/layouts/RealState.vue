@@ -41,7 +41,7 @@
         </v-list-item-group>
       </v-list>
       <template v-slot:append>
-        <v-btn color="#747474" text dark @click="logout, $router.replace('/')" class="my-2">
+        <v-btn color="#747474" text dark @click="logout, $router.push('/')" class="my-2">
           <v-icon size="30" class="mx-2"> mdi-power-standby</v-icon>
           <span class="text-router">Cerrar Sesión</span>
         </v-btn>

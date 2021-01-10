@@ -2,8 +2,8 @@
   <div class="view pa-5" >
     <v-expansion-panels v-model="panel">
     <v-expansion-panel>
-      <v-expansion-panel-header class="text-lg-h6">
-        Filtros
+      <v-expansion-panel-header>
+        <h2>Filtros</h2>
       </v-expansion-panel-header>
       <v-expansion-panel-content>
       <v-row>
@@ -126,6 +126,12 @@
         :totalMarkers="totalProjects"
       />
     </div>
+    <v-progress-linear
+      v-else-if="loading"
+      indeterminate
+      color="green"
+      class="my-5"
+    ></v-progress-linear>
     <div v-else class="ma-5 text-red">
       <NoProjects message="No se encontraron proyectos"/>
     </div>
@@ -162,9 +168,13 @@ export default {
         }
         return { text: `${e} dormitorios`, value: e };
       }),
+      loading: false,
       latitude: -12.089637033755114,
       longitude: -77.05453930635801,
-      prices: this.$route.query.prices,
+      prices: {
+        min: this.$route.query.pricesMin,
+        max: this.$route.query.pricesMax,
+      },
       priceSelected: this.$route.query.typePrice,
       search: this.$route.query.district,
       rooms: this.$route.query.rooms,
@@ -222,6 +232,12 @@ export default {
     },
     setType(inDolar) {
       this.typePrice = inDolar ? '$' : 'S/.';
+    },
+    withoutAccentMark(cadena) {
+      const acentos = {
+        á: 'a', é: 'e', í: 'i', ó: 'o', ú: 'u', Á: 'A', É: 'E', Í: 'I', Ó: 'O', Ú: 'U',
+      };
+      return cadena.split('').map((letra) => acentos[letra] || letra).join('').toString();
     },
     removeItemFromArr(arr, item) {
       const i = arr.indexOf(item);
@@ -282,9 +298,9 @@ export default {
     },
     filterByInputUbication() {
       this.projects = this.totalProjects.filter((project) => {
-        const direccion = project.direccion.toLowerCase();
-        const distrito = project.distrito.toLowerCase();
-        const search = this.search.toLowerCase();
+        const direccion = this.withoutAccentMark(project.direccion.toLowerCase());
+        const distrito = this.withoutAccentMark(project.distrito.toLowerCase());
+        const search = this.withoutAccentMark(this.search.toLowerCase());
         return direccion.includes(search) || distrito.includes(search);
       });
       if (this.projects.length > 0) {
@@ -400,6 +416,7 @@ export default {
   },
   created() {
     this.$store.commit('SET_LAYOUT', 'public-layout');
+    this.loading = true;
     getAllProjectsTotal().then((projects) => {
       this.totalProjects = projects.map((inmob) => ({
         position: {
@@ -411,6 +428,7 @@ export default {
         ...inmob.properties,
       }));
       this.filterFunction();
+      this.loading = false;
     });
     eventBus.$on('infoProject', (payload) => {
       this.projects = payload;

@@ -13,7 +13,7 @@
           v-if="role==='inmobiliaria'"
           color="#747474"
           text dark
-          @click="$router.replace('/myprojects')"
+          @click="$router.push('/myprojects')"
         ><v-icon class="mr-2" size="30">mdi-bank-plus</v-icon>
           <span class="text-router">Quiero publicar</span>
         </v-btn>

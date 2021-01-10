@@ -6,6 +6,7 @@
         class="mr-auto"
         max-height="60"
         max-width="270"
+        @click="$router.push('/')"
       >
       </v-img>
       <div v-if="isLogin" class="d-flex mx-3">
@@ -24,7 +25,7 @@
           color="green"
           outlined
           class="mx-2"
-          @click="$router.replace('/login')"
+          @click="$router.push('/login')"
         >
           Inicia sesión
         </v-btn>
@@ -32,7 +33,7 @@
           color="green"
           outlined
           class="mx-2"
-          @click="$router.replace('/signupInmb')"
+          @click="$router.push('/signupInmb')"
         >
           Quiero publicar
         </v-btn>
