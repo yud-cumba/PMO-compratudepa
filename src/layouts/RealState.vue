@@ -14,6 +14,7 @@
               max-height="80"
               max-width="180"
               class="mx-0 px-0 my-5"
+              @click="$router.push('/')"
             >
             </v-img>
             <v-btn icon  @click.stop="mini = !mini">
@@ -41,7 +42,7 @@
         </v-list-item-group>
       </v-list>
       <template v-slot:append>
-        <v-btn color="#747474" text dark @click="logout, $router.push('/')" class="my-2">
+        <v-btn color="#747474" text dark @click="logOut" class="my-2">
           <v-icon size="30" class="mx-2"> mdi-power-standby</v-icon>
           <span class="text-router">Cerrar Sesión</span>
         </v-btn>
@@ -71,7 +72,9 @@ export default {
     Title,
   },
   methods: {
-    logout,
+    logOut() {
+      logout().then(this.$router.push('/'));
+    },
   },
 };
 </script>

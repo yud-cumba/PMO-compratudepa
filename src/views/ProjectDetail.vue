@@ -8,9 +8,9 @@
             <v-icon dark>mdi-arrow-left</v-icon>
         </v-btn>
     </v-row>
-    <v-row>
-      <v-col>
-        <v-carousel>
+    <v-row class="d-flex">
+      <v-col sm="7">
+        <v-carousel class="carousel">
           <v-carousel-item
             v-for="(img, i) in project.imagenes"
             :key="i"
@@ -51,16 +51,9 @@
               Conoce la fundación Oli
             </v-btn>
           </v-col>
-          <!-- <v-btn class="light-green accent-4 mb-3 mx-4" dark>
-        SOLICITA UNA COTIZACIÓN
-      </v-btn>
-      <v-btn class="light-green accent-4 mb-3 mx-4" dark>
-        <v-icon class="mr-3" right dark> mdi-domain </v-icon>
-        SEPARA TU DEPA
-      </v-btn> -->
         </v-row>
       </v-col>
-      <v-col>
+      <v-col sm="5">
         <h2 class="px-5 text-capitalize d-flex">
           {{ project.name }} - {{ project.distrito }}
           <div class="pl-2">

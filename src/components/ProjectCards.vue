@@ -25,6 +25,7 @@
         <v-card class="flip-card-back rounded-lg">
           <div class="title d-flex justify-end align-center green px-3">
             <h4 style="width: 75%">{{ item.name }}</h4>
+            <Options :projectID="item.id"/>
           </div>
           <v-card-text class="d-flex flex-column">
             <div class="d-flex">
@@ -59,10 +60,11 @@
 
 <script>
 import Favorite from './Favorite.vue';
+import Options from './Options.vue';
 import Rating from './Rating.vue';
 
 export default {
-  components: { Rating, Favorite },
+  components: { Rating, Favorite, Options },
   props: ['projects'],
   methods: {
     setModal(ok) {

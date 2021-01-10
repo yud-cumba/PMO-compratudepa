@@ -50,7 +50,7 @@
     </v-row>
     <v-row class="text-center">
       Para conocer más de la inoiciatica visita su página web :
-      <a href="http://www.olifundation.com">www.olifundation.com</a></v-row
+      <a href="https://www.instagram.com/fundacionoli/ " target="_blank">https://www.instagram.com/fundacionoli/</a></v-row
     >
   </div>
 </template>

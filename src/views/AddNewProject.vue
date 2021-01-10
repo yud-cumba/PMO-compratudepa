@@ -145,6 +145,16 @@
           label="Ingrese área máxima en m2"
         >
         </v-text-field>
+        <v-text-field
+          v-model="project.properties.area_min"
+          color="green"
+          filled
+          dense
+          rounded
+          type="number"
+          label="Ingrese área mínima en m2"
+        >
+        </v-text-field>
         <v-textarea
           v-model="project.properties.descripcion"
           color="green"
@@ -283,13 +293,13 @@
         </v-carousel>
       </v-col>
     </v-row>
-    <v-row class="d-flex justify-center my-5">
+    <v-row class="d-flex justify-center my-5 mr-10">
       <PreviewView
         :project="project.properties"
         :publish="publishProject"
         :loading="loading"
       />
-      <v-btn color="green" class="ma-3" @click="publishProject">
+      <v-btn color="green" @click="publishProject">
         Publicar proyecto
         <v-progress-circular
           class="ml-2"
