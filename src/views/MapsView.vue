@@ -136,7 +136,6 @@ import GoogleMap from '../components/GoogleMap.vue';
 import ProjectCards from '../components/ProjectCards.vue';
 import FilterPrice from '../components/FilterPrice.vue';
 import { getAllProjectsTotal } from '../utils/projectMethods';
-import { getMinPrice, getMaxPrice } from '../utils/prices';
 // eslint-disable-next-line import/no-cycle
 import { eventBus } from '../main';
 import NoProjects from '../components/NoProjects.vue';
@@ -150,7 +149,7 @@ export default {
   },
   data() {
     return {
-      panels: [],
+      panel: [],
       zoom: 12,
       isMobile: false,
       itemsRooms: [1, 2, 3, 4].map((e) => {
@@ -369,7 +368,6 @@ export default {
     },
     filterFunction() {
       this.filtersSelected = [];
-      this.panel = [];
       this.filterByInputUbication();
       this.filterByRooms();
       this.filterByPhase();
@@ -386,11 +384,14 @@ export default {
 
     window.removeEventListener('resize', this.onResize, { passive: true });
   },
-
   mounted() {
     this.onResize();
-
     window.addEventListener('resize', this.onResize, { passive: true });
+  },
+  watch: {
+    panel() {
+      eventBus.$emit('prices', this.prices);
+    },
   },
   created() {
     this.$store.commit('SET_LAYOUT', 'public-layout');
@@ -406,10 +407,6 @@ export default {
         ...inmob.properties,
       }));
       this.filterFunction();
-      const min = Number(getMinPrice(projects.map((e) => e.properties)));
-      const max = Number(getMaxPrice(projects.map((e) => e.properties)));
-      this.prices = { min, max };
-      eventBus.$emit('prices', { min, max });
     });
     eventBus.$on('infoProject', (payload) => {
       this.projects = payload;

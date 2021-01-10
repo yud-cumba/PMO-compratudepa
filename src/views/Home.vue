@@ -4,8 +4,9 @@
   class="initial-search d-flex justify-center align-center">
     <v-card color="rgb(255, 255, 255, 0.7)" class="py-3 px-6">
       <v-row  class="mx-2">
-        <v-text-field
+        <v-autocomplete
           class="mt-5 mx-2"
+          :items="districts"
           v-model="search"
           append-icon="mdi-magnify"
           label="Buscar por ubicacion"
@@ -14,7 +15,7 @@
           dense
           outlined
           color="green"
-        ></v-text-field>
+        ></v-autocomplete>
         <v-btn v-if="!isMobile"
         @click="searchInMap" class="ma-5 green">
           Buscar
@@ -73,6 +74,14 @@ export default {
   },
   data() {
     return {
+      districts: ['Lince', 'Santiago De Surco', 'San Isidro', 'Surquillo',
+        'Cercado de lima', 'Jesus Maria', 'San Borja', 'Magdalena Del Mar',
+        'San Miguel', 'Breña', 'Miraflores', 'Chorrillos', 'Barranco',
+        'Pueblo Libre', 'La Victoria', 'Ate', 'Piura', 'Carabayllo',
+        'Chiclayo', 'Callao', 'San Martin De Porres', 'La Perla', 'Rimac',
+        'Trujillo', 'Tarapoto', 'Cayma', 'El Tallan', 'Cerro Colorado',
+        'El Agustino', 'Chaclacayo', 'San Bartolo', 'Comas',
+        'Puente Piedra'],
       typePrice: 'S/.',
       inmobiliarias: [],
       search: '',
@@ -103,7 +112,10 @@ export default {
         path: '/maps',
         query: {
           district: this.search,
-          prices: this.prices,
+          prices: {
+            min: this.prices.min,
+            max: this.prices.max,
+          },
           typePrice: this.typePrice,
           rooms: this.rooms,
           phase: this.phase,
