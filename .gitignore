@@ -1,9 +1,11 @@
-node_modules
-dist
+.DS_Store
+node_modules/
+dist/
+public/
+firebase/
 firebase.json
 .firebaserc
 .gitignore
-.firebase
 package-lock.json
 keys
-GoogleKeys.js
+keys/GoogleKeys.js
