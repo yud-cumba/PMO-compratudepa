@@ -164,6 +164,7 @@
 <script>
 import { inmobiliariasById } from '../utils/projectMethods';
 import { getProjectById } from '../firebase/database';
+import { priceStyle } from '../utils/prices';
 import Rating from '../components/Rating.vue';
 import Favorite from '../components/Favorite.vue';
 import bankToImg from '../utils/banksImgs';
@@ -189,15 +190,7 @@ export default {
       const message = yourMessage.split(' ').join('%20');
       window.location.href = `https://api.whatsapp.com/send/?phone=%2B51${celular}&text=%20${message}`;
     },
-    priceStyle(value) {
-      const num2 = value.toString().split('.');
-      const thousands = num2[0].split('').reverse().join('').match(/.{1,3}/g)
-        .join(',');
-      const decimals = (num2[1]) ? `.${num2[1]}` : '';
-
-      const answer = thousands.split('').reverse().join('') + decimals;
-      return answer;
-    },
+    priceStyle,
   },
   created() {
     this.$store.commit('SET_LAYOUT', 'public-layout');

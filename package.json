@@ -10,8 +10,6 @@
     "predeploy": "npm run build"
   },
   "dependencies": {
-    "@iconify/icons-emojione-monotone": "^1.1.0",
-    "@iconify/vue": "^1.0.6",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "firebase": "^7.22.1",
@@ -27,6 +25,9 @@
     "vuex": "^3.6.0"
   },
   "devDependencies": {
+    "@iconify-icons/mdi": "^1.1.4",
+    "@iconify/icons-emojione-monotone": "^1.1.0",
+    "@iconify/vue": "^1.0.6",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "^4.5.8",
     "@vue/cli-service": "~4.5.0",

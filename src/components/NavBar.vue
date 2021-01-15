@@ -26,8 +26,8 @@
           </v-list-item>
         </template>
         <v-card v-if="quantityInmobByDistrict.length>0">
-          <v-row v-for="m in 4" :key="m" no-gutters>
-            <v-col v-for="n in 6" :key="n">
+          <v-row v-for="m in vertical" :key="m" no-gutters>
+            <v-col v-for="n in horizontal" :key="n">
               <v-card
                 class="pa-2 card card-tab elevation-0"
                 @click="
@@ -37,8 +37,10 @@
                 "
                 tile
               >
-                {{ quantityInmobByDistrict[m + (n - 1) * 4 - 1].district }}
-                ({{ quantityInmobByDistrict[m + (n - 1) * 4 - 1].quantity }})
+                {{ quantityInmobByDistrict[m + (n - 1) * 4 - 1]?
+                quantityInmobByDistrict[m + (n - 1) * 4 - 1].district : '' }}
+                {{ quantityInmobByDistrict[m + (n - 1) * 4 - 1]?
+                `(${quantityInmobByDistrict[m + (n - 1) * 4 - 1].quantity})` : ''}}
               </v-card>
             </v-col>
           </v-row>
@@ -83,6 +85,8 @@ export default {
       isLogin: false,
       isMobile: false,
       user: '',
+      vertical: 5,
+      horizontal: 6,
     };
   },
   components: {
@@ -179,6 +183,11 @@ export default {
 
     window.addEventListener('resize', this.onResize, { passive: true });
   },
+  watch: {
+    quantityInmobByDistrict() {
+      this.horizontal = Math.round(this.quantityInmobByDistrict.length / this.vertical);
+    },
+  },
   created() {
     this.verify();
   },
@@ -187,6 +196,6 @@ export default {
 
 <style lang="scss" scoped>
 .text-caption {
-  width: 70vw;
+  width: 85vw;
 }
 </style>

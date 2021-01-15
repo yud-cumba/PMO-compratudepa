@@ -32,10 +32,10 @@
         class="mt-0 pt-0"
         hide-details
         single-line
-        type="number"
         color="green"
-        style="width: 80px"
-        ></v-text-field>
+        style="width: 60px"
+        >
+        </v-text-field>
         </div>
         </div>
     </template>
@@ -64,6 +64,7 @@
 <script>
 // eslint-disable-next-line import/no-cycle
 import { eventBus } from '../main';
+import { priceStyle } from '../utils/prices';
 
 export default {
   props: ['setPrice', 'setType'],
@@ -73,6 +74,9 @@ export default {
       initialRange: [0, 0],
       price: [0, 0],
     };
+  },
+  methods: {
+    priceStyle,
   },
   watch: {
     type() {
@@ -93,6 +97,7 @@ export default {
 
 <style lang="scss" scoped>
 .card{
+    width: 500px;
     height: 110px;
     border:0.5px solid gray;
     border-radius: 5px;

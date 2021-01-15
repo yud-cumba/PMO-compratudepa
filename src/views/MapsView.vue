@@ -413,6 +413,17 @@ export default {
     panel() {
       eventBus.$emit('prices', this.prices);
     },
+    $route() {
+      this.prices = {
+        min: this.$route.query.pricesMin,
+        max: this.$route.query.pricesMax,
+      };
+      this.priceSelected = this.$route.query.typePrice;
+      this.search = this.$route.query.district;
+      this.rooms = this.$route.query.rooms;
+      this.phase = this.$route.query.phase;
+      this.filterFunction();
+    },
   },
   created() {
     this.$store.commit('SET_LAYOUT', 'public-layout');

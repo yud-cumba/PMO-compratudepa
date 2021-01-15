@@ -1,8 +1,8 @@
 <template>
 <div>
   <v-parallax src="../assets/sala.png"
-  class="initial-search d-flex justify-center align-center">
-    <v-card color="rgb(255, 255, 255, 0.9)" class="py-3 px-6">
+  class="d-flex justify-center align-center">
+    <v-card color="rgb(255, 255, 255, 0.9)" class=" card py-3 px-6">
       <v-row  class="mx-2">
         <v-autocomplete
           class="mt-5 mx-2"
@@ -141,4 +141,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.card{
+}
 </style>
