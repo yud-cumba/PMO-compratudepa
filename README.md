@@ -59,7 +59,7 @@ Por implementar
 
 _Notas adicionales sobre como hacer deploy_
 
-* [compratudepa.pe](https://pmo-app-291722.web.app/) - Link de despliegue producción
+* [compratudepa.online](http://compratudepa.online) - Link de despliegue producción
 ## Versionado 📌
 
 
