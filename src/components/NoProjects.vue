@@ -15,7 +15,7 @@
 </template>
 
 <script>
-
+/* eslint-disable import/no-extraneous-dependencies */
 import IconifyIcon from '@iconify/vue';
 import detectiveIcon from '@iconify/icons-emojione-monotone/detective';
 

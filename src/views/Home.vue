@@ -94,6 +94,7 @@ export default {
   methods: {
     onResize() {
       this.isMobile = window.innerWidth < 800;
+      alert(window.innerWidth);
     },
     setPrice(price) {
       this.prices = price;
@@ -127,14 +128,15 @@ export default {
     });
   },
   beforeDestroy() {
+    alert('beforeDestroy()');
     if (typeof window === 'undefined') return;
 
     window.removeEventListener('resize', this.onResize, { passive: true });
   },
 
   mounted() {
+    alert('mounted()');
     this.onResize();
-
     window.addEventListener('resize', this.onResize, { passive: true });
   },
 };

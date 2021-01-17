@@ -38,11 +38,13 @@
       </v-col>
       <v-col class="col text-sm-body-1 px-10 mt-5" >
         <h4 class="py-3">Menú</h4>
-        <router-link to="/home" style="text-decoration: none">
+        <router-link to="/" style="text-decoration: none">
         <p style="color:black">Inicio</p></router-link>
-        <router-link to="/maps" style="text-decoration: none">
+        <router-link
+        to="/maps?district=&pricesMin=59000&pricesMax=1405000&typePrice=S%2F.&rooms=&phase="
+        style="text-decoration: none">
         <p style="color:black">Proyectos</p></router-link>
-        <router-link to="/advice" style="text-decoration: none">
+        <router-link to="/advices" style="text-decoration: none">
         <p style="color:black">Te asesoramos</p></router-link>
       </v-col>
       <v-col class="col text-sm-body-1 px-10 mt-5">
