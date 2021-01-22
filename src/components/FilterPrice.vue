@@ -20,7 +20,7 @@
     hide-details
     track-color="grey"
     color="green"
-    class="align-center"
+    class="align-center ranger"
     >
     <template v-slot:prepend>
         <div>
@@ -29,11 +29,10 @@
         <p class="mt-2">{{type? '$' : 'S/.'}}</p>
         <v-text-field
          v-model="price[0]"
-        class="mt-0 pt-0"
+        class="mt-0 pt-0 field"
         hide-details
         single-line
         color="green"
-        style="width: 60px"
         >
         </v-text-field>
         </div>
@@ -46,11 +45,10 @@
         <p class="mt-2">{{type? '$' : 'S/.'}}</p>
         <v-text-field
         v-model="price[1]"
-        class="mt-0 pt-0"
+        class="mt-0 pt-0 field"
         hide-details
         single-line
         type="number"
-        style="width: 80px"
         color="green"
         ></v-text-field>
         </div>
@@ -102,9 +100,24 @@ export default {
     border:0.5px solid gray;
     border-radius: 5px;
 }
-@media (max-width: 480px){
+.field{
+  width: 70px;
+  @media (max-width: 580px){
+  height: 5px;
+  font-size: 12px;
+}
+}
+
+.ranger{
+  @media (max-width: 580px){
+  width: 300px;
+  }
+}
+
+@media (max-width: 580px){
   .card{
     height: 140px;
+      width:100%;
   }
 }
 </style>

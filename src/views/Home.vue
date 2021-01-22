@@ -2,7 +2,7 @@
 <div>
   <v-parallax src="../assets/sala.png"
   class="d-flex justify-center align-center">
-    <v-card color="rgb(255, 255, 255, 0.9)" class=" card py-3 px-6">
+    <v-card color="rgb(255, 255, 255, 0.9)" class=" card py-3">
       <v-row  class="mx-2">
         <v-autocomplete
           class="mt-5 mx-2"
@@ -94,7 +94,6 @@ export default {
   methods: {
     onResize() {
       this.isMobile = window.innerWidth < 800;
-      alert(window.innerWidth);
     },
     setPrice(price) {
       this.prices = price;
@@ -128,16 +127,13 @@ export default {
     });
   },
   beforeDestroy() {
-    alert('beforeDestroy()');
     if (typeof window === 'undefined') return;
-
-    window.removeEventListener('resize', this.onResize, { passive: true });
+    window.removeEventListener('resize', this.onResize('RES-D'), { passive: true });
   },
 
   mounted() {
-    alert('mounted()');
-    this.onResize();
-    window.addEventListener('resize', this.onResize, { passive: true });
+    this.onResize('MOUNTED');
+    window.addEventListener('resize', this.onResize('RES'), { passive: true });
   },
 };
 </script>
