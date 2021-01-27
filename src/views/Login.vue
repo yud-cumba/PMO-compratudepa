@@ -54,7 +54,7 @@
     </div>
   </v-form>
   </v-col>
-  <v-col  v-if="!isMobile" cols="8">
+  <v-col  v-if="!$vuetify.breakpoint.smAndDown" cols="8">
      <v-parallax src="../assets/login.png">
   </v-parallax>
   </v-col>
@@ -87,13 +87,9 @@ export default {
     description: '',
     checkbox: false,
     error: false,
-    isMobile: false,
   }),
 
   methods: {
-    onResize() {
-      this.isMobile = window.innerWidth < 800;
-    },
     logInByGoogle() {
       logInGoogle().then((user) => {
         const {
@@ -124,17 +120,6 @@ export default {
   },
   created() {
     this.$store.commit('SET_LAYOUT', 'public-layout');
-  },
-  beforeDestroy() {
-    if (typeof window === 'undefined') return;
-
-    window.removeEventListener('resize', this.onResize, { passive: true });
-  },
-
-  mounted() {
-    this.onResize();
-
-    window.addEventListener('resize', this.onResize, { passive: true });
   },
 };
 </script>

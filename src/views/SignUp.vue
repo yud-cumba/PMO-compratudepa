@@ -82,7 +82,7 @@
     </div>
   </v-form>
   </v-col>
-  <v-col  v-if="!isMobile" height="700" class="parallax">
+  <v-col  v-if="!$vuetify.breakpoint.smAndDown" height="700" class="parallax">
   <v-parallax height="700" src="../assets/form-cafe.png">
   </v-parallax>
   </v-col>
@@ -97,7 +97,6 @@ import { userAdd, userFirstTime } from '../firebase/database';
 
 export default {
   data: () => ({
-    isMobile: false,
     valid: true,
     name: '',
     nameRules: [
@@ -126,9 +125,6 @@ export default {
   }),
 
   methods: {
-    onResize() {
-      this.isMobile = window.innerWidth < 800;
-    },
     logInByGoogle() {
       logInGoogle().then((user) => {
         const {
@@ -163,17 +159,6 @@ export default {
   components: {
     PrivacyPolicy,
     ModalOk,
-  },
-  beforeDestroy() {
-    if (typeof window === 'undefined') return;
-
-    window.removeEventListener('resize', this.onResize, { passive: true });
-  },
-
-  mounted() {
-    this.onResize();
-
-    window.addEventListener('resize', this.onResize, { passive: true });
   },
 };
 </script>

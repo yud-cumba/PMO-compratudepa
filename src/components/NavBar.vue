@@ -123,14 +123,6 @@ export default {
         event_label: `NavBar Proyectos ${district} clicked`,
         value: 1,
       });
-      console.log({
-        district,
-        pricesMin: this.prices.min,
-        pricesMax: this.prices.max,
-        typePrice: 'S/.',
-        rooms: '',
-        phase: '',
-      });
       this.$router.push({
         path: '/maps',
         query: {

@@ -11,10 +11,8 @@ import RealStateLayout from './layouts/RealState.vue';
 export default {
   components: { PublicLayout, RealStateLayout },
   computed: mapState(['layout']),
-  // data() {
-  //   return {
-  //     layout: 'evaluations-layout',
-  //   };
-  // },
+  created() {
+    console.log('is mobile', this.$vuetify.breakpoint.smAndDown);
+  },
 };
 </script>
