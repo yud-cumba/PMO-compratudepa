@@ -72,7 +72,8 @@
     >
       Registrarse
     </v-btn>
-    <ModalOk :dialog="registerOK" title="Datos enviados correctamente"/>
+    <ModalOk :dialog="registerOK"
+    title="Cuenta creada con éxito! Ahora podemos ayudarte a encontrar el hogar ideal para tí"/>
     <p class="pa-5">¿Ya tienes cuenta?
       <router-link to="/login" ><span class="green--text"> Inicia Sesión </span></router-link></p>
     <div class="d-flex flex-column align-center">
@@ -146,6 +147,7 @@ export default {
         .then((result) => {
           userAdd(result.user.uid, this.name, this.email, 'inmobiliaria', this.phone);
           this.registerOK = true;
+          this.$router.push('/myprojects');
         })
         .catch(() => {
           // e.code = auth/weak-password

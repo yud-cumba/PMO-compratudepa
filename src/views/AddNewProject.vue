@@ -10,6 +10,7 @@
           rounded
           color="green"
           dense
+          required
           label="Ingrese nombre del proyecto"
         >
         </v-text-field>
@@ -19,6 +20,7 @@
           rounded
           color="green"
           dense
+          required
           label="Ingrese dirección del proyecto"
         >
         </v-text-field>
@@ -30,6 +32,7 @@
           filled
           dense
           rounded
+          required
           label="Elija el distrito"
         >
         </v-autocomplete>
@@ -43,6 +46,7 @@
           transition="scale-transition"
           offset-y
           max-width="290px"
+          required
           min-width="290px"
         >
           <template v-slot:activator="{ on, attrs }">
@@ -57,6 +61,7 @@
               prepend-inner-icon="mdi-calendar"
               v-bind="attrs"
               v-on="on"
+              required
             ></v-text-field>
           </template>
           <v-date-picker
@@ -74,6 +79,7 @@
           filled
           dense
           rounded
+          required
           label="Elija el estado del proyecto"
         >
         </v-select>
@@ -133,6 +139,20 @@
           label="Ingrese número de celular para contacto"
         >
         </v-text-field>
+            <h4>Cotización</h4>
+        <v-row class="pa-4">
+          <v-col>
+            <v-file-input
+              v-model="cotization"
+              color="green"
+              label="Suba la cotización en pdf de su proyecto"
+              filled
+              dense
+              rounded
+            >
+            </v-file-input>
+          </v-col>
+        </v-row>
       </v-col>
       <v-col>
         <v-text-field
@@ -203,19 +223,6 @@
         </v-text-field>
       </v-col>
     </v-row>
-    <!-- <h4>Cotización</h4>
-    <v-row class="pa-4">
-      <v-col>
-        <v-file-input
-          color="green"
-          label="Suba la cotización en pdf de su proyecto"
-          filled
-          dense
-          rounded
-        >
-        </v-file-input>
-      </v-col>
-    </v-row> -->
     <v-row class="pa-4">
       <v-col>
         <h4 class="my-4">Bancos con que trabaja</h4>
@@ -363,6 +370,7 @@ export default {
         areas_comunes: [],
       },
     },
+    cotization: '',
     aditionalPhotos: '',
     mainPhoto: '',
     menu1: false,
@@ -455,6 +463,10 @@ export default {
       vm.project.properties.id = new Date().getTime();
       const photos = [this.mainPhoto].concat(this.aditionalPhotos);
       const promises = addFileToStorage(
+        `${currentUser().uid}/${this.project.properties.name}`,
+        [this.cotization],
+      );
+      addFileToStorage(
         `${currentUser().uid}/${this.project.properties.name}`,
         photos,
       );

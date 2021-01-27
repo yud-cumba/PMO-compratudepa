@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div v-if="isMobile">
+  <div v-if="$vuetify.breakpoint.smAndDown">
     <ToolBar :isLogin="isLogin" :role="user.role"
     :quantityInmobByDistrict='quantityInmobByDistrict' :prices='prices'/>
     </div>
@@ -11,7 +11,7 @@
         class="text-lg-h6 ml-auto d-flex justify-end"
         @click="homeClick"
       >
-        INICIO
+        <h3>INICIO</h3>
       </v-list-item>
       <v-list-item>
       <v-menu offset-y>
@@ -22,7 +22,7 @@
             v-click-outside="onClickOutside"
             v-on="on"
           >
-            PROYECTOS
+           <h3> PROYECTOS</h3>
           </v-list-item>
         </template>
         <v-card v-if="quantityInmobByDistrict.length>0">
@@ -51,20 +51,20 @@
             class="text-lg-h6 d-flex justify-end"
             @click="adviceClick"
           >
-            TE ASESORAMOS
+            <h3>TE ASESORAMOS</h3>
           </v-list-item>
           <v-list-item
             class="text-lg-h6 d-flex justify-end"
             @click="creditsClick"
           >
-            COMPROMISO SOCIAL
+           <h3> COMPROMISO SOCIAL</h3>
           </v-list-item>
           <v-list-item
             v-if="isLogin"
             class="text-lg-h6 d-flex justify-end"
             @click="favoriteClick"
           >
-            MIS FAVORITOS
+           <h3> MIS FAVORITOS</h3>
           </v-list-item>
     </v-list>
   </v-card>
@@ -83,7 +83,6 @@ export default {
     return {
       active: false,
       isLogin: false,
-      isMobile: false,
       user: '',
       vertical: 5,
       horizontal: 6,
@@ -94,9 +93,6 @@ export default {
     ToolBar,
   },
   methods: {
-    onResize() {
-      this.isMobile = window.innerWidth < 800;
-    },
     verify() {
       verifyIsLogin(
         () => {
@@ -126,6 +122,14 @@ export default {
         event_category: 'NavBar',
         event_label: `NavBar Proyectos ${district} clicked`,
         value: 1,
+      });
+      console.log({
+        district,
+        pricesMin: this.prices.min,
+        pricesMax: this.prices.max,
+        typePrice: 'S/.',
+        rooms: '',
+        phase: '',
       });
       this.$router.push({
         path: '/maps',
@@ -171,17 +175,6 @@ export default {
       });
       this.$router.push({ path: '/favorite' });
     },
-  },
-  beforeDestroy() {
-    if (typeof window === 'undefined') return;
-
-    window.removeEventListener('resize', this.onResize, { passive: true });
-  },
-
-  mounted() {
-    this.onResize();
-
-    window.addEventListener('resize', this.onResize, { passive: true });
   },
   watch: {
     quantityInmobByDistrict() {

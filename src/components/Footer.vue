@@ -3,7 +3,8 @@
   <v-footer
     padless
   >
-  <v-toolbar v-if="isMobile">
+  <v-toolbar v-if="$vuetify.breakpoint.smAndDown"
+            color="white">
      <v-img
         src="../assets/logoPMO.png"
         aspect-ratio="1"
@@ -72,24 +73,7 @@ export default {
       'mdi-linkedin',
       'mdi-instagram',
     ],
-    isMobile: false,
   }),
-  methods: {
-    onResize() {
-      this.isMobile = window.innerWidth < 800;
-    },
-  },
-  beforeDestroy() {
-    if (typeof window === 'undefined') return;
-
-    window.removeEventListener('resize', this.onResize, { passive: true });
-  },
-
-  mounted() {
-    this.onResize();
-
-    window.addEventListener('resize', this.onResize, { passive: true });
-  },
 };
 </script>
 <style lang="scss" scoped>

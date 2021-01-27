@@ -3,10 +3,10 @@
     <div class="flip-card mx-auto my-4" v-for="item in projects" :key="item.id">
       <div class="flip-card-inner rounded-lg">
         <v-card class="flip-card-front rounded-lg">
-          <h3 class="title d-flex justify-space-between align-center px-4">
-            {{item.name }}
+          <div class="title d-flex justify-space-between align-center px-4">
+            <h4>{{item.name }}</h4>
             <Favorite :project="item" :setModal="setModal"/>
-          </h3>
+          </div>
           <img :src="item.imagenes[0]" class="img" />
           <div class="pa-3 d-flex">
             <div class="text-caption">

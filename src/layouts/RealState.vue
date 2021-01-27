@@ -64,7 +64,7 @@ export default {
     drawer: true,
     mini: false,
     views: [
-      ['mdi-home', 'Dashboard', '/leads'],
+      ['mdi-home', 'Vista principal', '/'],
       ['mdi-form-select', 'Mis proyectos', '/myprojects'],
     ],
   }),

@@ -149,7 +149,8 @@ export default {
         path: '/maps',
         query: {
           district,
-          prices: this.prices,
+          pricesMin: this.prices.min,
+          pricesMax: this.prices.max,
           typePrice: 'S/.',
           rooms: '',
           phase: '',

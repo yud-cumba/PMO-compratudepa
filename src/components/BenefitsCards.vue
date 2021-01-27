@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-column justify-center align-center pa-5">
+    <div class="d-flex flex-column justify-center align-center pa-4">
         <h2>{{title}}</h2>
         <v-row no-gutters>
             <v-col v-for="reason in reasons" :key="reason.title"

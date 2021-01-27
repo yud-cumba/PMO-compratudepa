@@ -8,6 +8,7 @@ import App from './App.vue';
 import vuetify from './plugins/vuetify';
 import { idAnalytics, apiKeyGoogleMap } from './keys/GoogleKeys';
 import store from './store';
+import './assets/css/main.css';
 
 require('firebase/storage');
 

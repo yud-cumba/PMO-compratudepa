@@ -2,7 +2,7 @@
 <div>
   <v-parallax src="../assets/sala.png"
   class="d-flex justify-center align-center">
-    <v-card color="rgb(255, 255, 255, 0.9)" class=" card py-3">
+    <v-card color="rgb(255, 255, 255, 0.9)" class="py-3">
       <v-row  class="mx-2">
         <v-autocomplete
           class="mt-5 mx-2"
@@ -16,7 +16,7 @@
           outlined
           color="green"
         ></v-autocomplete>
-        <v-btn v-if="!isMobile"
+        <v-btn v-if="!$vuetify.breakpoint.smAndDown"
         @click="searchInMap" class="ma-5 green">
           Buscar
         </v-btn>
@@ -43,14 +43,16 @@
           ></v-select>
         </div>
         <FilterPrice :setPrice="setPrice" :setType="setType"/>
-        <v-btn v-if="isMobile"
+        <v-btn v-if="$vuetify.breakpoint.smAndDown"
         @click="searchInMap" class="ma-5 green white--text">
           Buscar
         </v-btn>
       </v-row>
     </v-card>
   </v-parallax>
+  <div :class="!$vuetify.breakpoint.smAndDown? 'pa-12 mx-12': 'pa-0 my-12'">
   <Benefits/>
+  </div>
   <h2 class="px-6 mb-5">Proyectos más vendidos</h2>
   <ProjectCards :projects="inmobiliarias.slice(0, 5)"/>
 </div>
@@ -88,13 +90,9 @@ export default {
       }),
       rooms: '',
       phase: '',
-      isMobile: false,
     };
   },
   methods: {
-    onResize() {
-      this.isMobile = window.innerWidth < 800;
-    },
     setPrice(price) {
       this.prices = price;
     },
@@ -126,19 +124,8 @@ export default {
       eventBus.$emit('prices', { min, max });
     });
   },
-  beforeDestroy() {
-    if (typeof window === 'undefined') return;
-    window.removeEventListener('resize', this.onResize('RES-D'), { passive: true });
-  },
-
-  mounted() {
-    this.onResize('MOUNTED');
-    window.addEventListener('resize', this.onResize('RES'), { passive: true });
-  },
 };
 </script>
 
 <style lang="scss" scoped>
-.card{
-}
 </style>

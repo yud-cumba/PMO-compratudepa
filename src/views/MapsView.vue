@@ -67,7 +67,8 @@
       </v-col>
       <v-col>
         <div class="d-flex">
-        <v-btn  v-if="!isMobile" class="mb-5 ml-auto mr-5" @click="filterFunction" color="green">
+        <v-btn  v-if="!$vuetify.breakpoint.smAndDown"
+        class="mb-5 ml-auto mr-5" @click="filterFunction" color="green">
           Aplicar Filtro
         </v-btn>
         </div>
@@ -93,7 +94,8 @@
         </v-card>
       </v-col>
       </v-row>
-      <v-btn  v-if="isMobile" class="mx-2" @click="filterFunction" color="green">
+      <v-btn  v-if="$vuetify.breakpoint.smAndDown"
+      class="mx-2" @click="filterFunction" color="green">
           Aplicar Filtro
         </v-btn>
         </v-expansion-panel-content>
@@ -111,7 +113,8 @@
       >
         {{ filter.text }}
       </v-chip>
-      <v-btn :class="!isMobile? 'ml-auto' : 'mx-2 my-2' " @click="removeAllFilter" color="green">
+      <v-btn :class="!$vuetify.breakpoint.smAndDown? 'ml-auto' : 'mx-2 my-2' "
+      @click="removeAllFilter" color="green">
         Limpiar filtros
       </v-btn>
       </div>
@@ -161,7 +164,6 @@ export default {
       districts,
       panel: [],
       zoom: 12,
-      isMobile: false,
       itemsRooms: [1, 2, 3, 4].map((e) => {
         if (e === 1) {
           return { text: `${e} dormitorio`, value: e };
@@ -396,18 +398,6 @@ export default {
       this.filterByAmenities();
       this.filterByPrice();
     },
-    onResize() {
-      this.isMobile = window.innerWidth < 800;
-    },
-  },
-  beforeDestroy() {
-    if (typeof window === 'undefined') return;
-
-    window.removeEventListener('resize', this.onResize, { passive: true });
-  },
-  mounted() {
-    this.onResize();
-    window.addEventListener('resize', this.onResize, { passive: true });
   },
   watch: {
     panel() {
