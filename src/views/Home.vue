@@ -51,7 +51,7 @@
     </v-card>
   </v-parallax>
   <div :class="!$vuetify.breakpoint.smAndDown? 'pa-12 mx-12': 'pa-0 my-12'">
-  <Benefits/>
+  <Benefits :show="show"/>
   </div>
   <h2 class="px-6 mb-5">Proyectos más vendidos</h2>
   <ProjectCards :projects="inmobiliarias.slice(0, 5)"/>
@@ -77,6 +77,7 @@ export default {
   },
   data() {
     return {
+      show: false,
       districts,
       typePrice: 'S/.',
       inmobiliarias: [],
@@ -93,6 +94,9 @@ export default {
     };
   },
   methods: {
+    handleScroll() {
+      this.show = window.scrollY > 150 && window.scrollY < 700;
+    },
     setPrice(price) {
       this.prices = price;
     },
@@ -112,17 +116,24 @@ export default {
         },
       });
     },
+    getProjects() {
+      getAllProjectsTotal().then((projects) => {
+        eventBus.$emit('allProjects', projects);
+        this.inmobiliarias = projects.map((e) => e.properties);
+        const min = Number(getMinPrice(this.inmobiliarias));
+        const max = Number(getMaxPrice(this.inmobiliarias));
+        this.prices = { min, max };
+        eventBus.$emit('prices', { min, max });
+      });
+    },
+  },
+  destroyed() {
+    window.removeEventListener('scroll', this.handleScroll);
   },
   created() {
+    window.addEventListener('scroll', this.handleScroll);
     this.$store.commit('SET_LAYOUT', 'public-layout');
-    getAllProjectsTotal().then((projects) => {
-      eventBus.$emit('allProjects', projects);
-      this.inmobiliarias = projects.map((e) => e.properties);
-      const min = Number(getMinPrice(this.inmobiliarias));
-      const max = Number(getMaxPrice(this.inmobiliarias));
-      this.prices = { min, max };
-      eventBus.$emit('prices', { min, max });
-    });
+    this.getProjects();
   },
 };
 </script>

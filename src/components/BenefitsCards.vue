@@ -4,13 +4,15 @@
         <v-row no-gutters>
             <v-col v-for="reason in reasons" :key="reason.title"
             class="pa-5" >
-            <v-card class="d-flex flex-column justify-center align-center pa-4"
+            <transition name="bounce">
+            <v-card v-if="show" class="d-flex flex-column justify-center align-center pa-4"
             style="height: 300px" @click="$router.push(reason.route)">
               <IconifyIcon :icon="reason.icon"
               :style="{color: '#41f683', fontSize: '69px'}" />
               <h2 class="pa-3">{{reason.title}}</h2>
               <h4 class="mt-">{{reason.text}}</h4>
             </v-card>
+            </transition>
             </v-col>
         </v-row>
     </div>
@@ -27,6 +29,7 @@ import handHeart from '@iconify-icons/mdi/hand-heart-outline';
 import clipboardIcon from '@iconify/icons-emojione-monotone/clipboard';
 
 export default {
+  props: ['show'],
   data: () => ({
     title: '¿Cuáles son tus beneficios de publicar con nosotros?',
     reasons: [

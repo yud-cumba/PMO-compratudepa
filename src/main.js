@@ -26,7 +26,6 @@ Vue.use(VueGoogleMaps, {
     libraries: 'places', // necessary for places input
   },
 });
-
 // eslint-disable-next-line import/prefer-default-export
 export const eventBus = new Vue();
 

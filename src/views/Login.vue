@@ -43,7 +43,10 @@
     >
       Ingresar
     </v-btn>
+    <a class="pt-4" @click="recover">¿Olvidaste tu contraseña? </a>
     <div v-if="error">{{error}}</div>
+     <ModalOk :dialog="forgotPass"
+    title="Se envió un correo de recuperación de contraseña"/>
     <!-- <p class="my-3" @click="rememberPassword">¿Olvidaste tu contraseña?</p> -->
     - o -
     <p class="pt-4">Inicia sesión con</p>
@@ -62,11 +65,16 @@
 </template>
 
 <script>
-import { logIn, logInGoogle, currentUser } from '../firebase/auth';
+import ModalOk from '../components/ModalOk.vue';
+import {
+  logIn, logInGoogle, recoverPassword, currentUser,
+} from '../firebase/auth';
 import { userFirstTime, getUserByUid } from '../firebase/database';
 
 export default {
+  components: { ModalOk },
   data: () => ({
+    forgotPass: false,
     areInmobiliaria: false,
     valid: true,
     name: '',
@@ -90,6 +98,14 @@ export default {
   }),
 
   methods: {
+    recover() {
+      recoverPassword(this.email)
+        .then(() => {
+          this.error = '';
+          this.forgotPass = true;
+        })
+        .catch(() => { this.error = 'Para cambiar contraseña escribe tu correo en la sección "Correo electrónico"'; });
+    },
     logInByGoogle() {
       logInGoogle().then((user) => {
         const {

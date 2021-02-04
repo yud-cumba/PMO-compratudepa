@@ -12,7 +12,7 @@ export default {
   components: { PublicLayout, RealStateLayout },
   computed: mapState(['layout']),
   created() {
-    console.log('is mobile', this.$vuetify.breakpoint.smAndDown);
+    console.log('is mobileç', this.$vuetify.breakpoint.smAndDown);
   },
 };
 </script>

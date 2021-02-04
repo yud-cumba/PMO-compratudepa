@@ -142,10 +142,11 @@ export default {
         .then((result) => {
           userAdd(result.user.uid, this.name, this.email, 'cliente', this.phone);
           this.registerOK = true;
-          setTimeout(() => {
-            this.registerOK = false;
-            this.$router.push('/');
-          }, 2500);
+          result.user.sendEmailVerification()
+            .then(() => {
+              this.registerOK = false;
+              this.$router.push('/');
+            });
         })
         .catch(() => {
           // e.code = auth/weak-password
