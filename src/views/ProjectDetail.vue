@@ -202,8 +202,8 @@ export default {
       // eslint-disable-next-line max-len
       const mediaDistrict = (this.project.val_price1 - this.project.diferencia_distrito * this.project.val_price1).toFixed(2);
       // eslint-disable-next-line max-len
-      const price = (this.project.val_price1 - this.project.diferencia_near * this.project.val_price1).toFixed(2);
-      const mediaNear = (this.project.val_price1).toFixed(2);
+      const mediaNear = (this.project.val_price1 - this.project.diferencia_near * this.project.val_price1).toFixed(2);
+      const price = (this.project.val_price1).toFixed(2);
       return {
         labels: ['Comparación de precios '],
         datasets: [
