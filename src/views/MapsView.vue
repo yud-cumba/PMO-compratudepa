@@ -299,7 +299,9 @@ export default {
       );
     },
     filterByInputUbication() {
-      this.projects = this.totalProjects.filter((project) => {
+      this.projects = this.totalProjects.filter((project, i) => {
+        console.log(project, i);
+        console.log(project.direccion);
         const direccion = this.withoutAccentMark(project.direccion.toLowerCase());
         const distrito = this.withoutAccentMark(project.distrito.toLowerCase());
         const search = this.withoutAccentMark(this.search.toLowerCase());
