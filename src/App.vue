@@ -11,8 +11,5 @@ import RealStateLayout from './layouts/RealState.vue';
 export default {
   components: { PublicLayout, RealStateLayout },
   computed: mapState(['layout']),
-  created() {
-    console.log('is mobileç', this.$vuetify.breakpoint.smAndDown);
-  },
 };
 </script>

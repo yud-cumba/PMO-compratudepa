@@ -49,10 +49,17 @@
         <p style="color:black">Te asesoramos</p></router-link>
       </v-col>
       <v-col class="col text-sm-body-1 px-10 mt-5">
-        <h4 class="py-3">Mi cuenta</h4>
-        <PrivacyPolicy title="Política de privacidad"/>
+        <h4 class="py-3">Incubados por:</h4>
+         <v-img
+        src="../assets/Incubator.png"
+        aspect-ratio="1"
+        class="my-5 mx-0"
+        max-height="60"
+        max-width="180"
+      />
       </v-col>
       <v-col class="col text-sm-body-1 px-10 mt-5" >
+         <PrivacyPolicy title="Política de privacidad"/>
         <h4 class="py-3">Estemos en contacto </h4>
         <v-text-field dense outlined label="Ingresa tu correo"
         append-outer-icon="mdi-map-marker"></v-text-field>
