@@ -53,7 +53,7 @@
   <div :class="!$vuetify.breakpoint.smAndDown? 'pa-12 mx-12': 'pa-0 my-12'">
   <Benefits :show="show"/>
   </div>
-  <h2 class="px-6 mb-5">Proyectos más vendidos</h2>
+  <h2 class="px-6 mb-5">Proyectos destacados</h2>
   <ProjectCards :projects="inmobiliarias.slice(0, 5)"/>
 </div>
 </template>
