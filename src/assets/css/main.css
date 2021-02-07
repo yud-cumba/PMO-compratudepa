@@ -1,6 +1,10 @@
 *{
     font-family: 'Yusei Magic', sans-serif;
 }
+.titulo{
+    font-family: 'Fredoka One', cursive !important; 
+    font-size: 25px !important;
+}
 .bounce-enter-active {
     animation: bounce-in 0.5s;
   }
