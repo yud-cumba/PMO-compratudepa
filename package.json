@@ -9,10 +9,12 @@
     "deploy": "firebase deploy",
     "predeploy": "npm run build"
   },
+  "homepage": "https://github.com/yud-cumba/PMO-compratudepa/",
   "dependencies": {
     "axios": "^0.20.0",
     "chart.js": "^2.9.4",
     "core-js": "^3.6.5",
+    "execa": "^1.0.0",
     "firebase": "^7.22.1",
     "group-by": "0.0.1",
     "moment": "^2.29.1",
