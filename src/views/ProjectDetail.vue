@@ -164,9 +164,12 @@
     <v-row>
       <v-col >
     <transition name="bounce">
-      <v-card  v-if="show2" >
-      <Bar :chartdata="chartData"/>
-       </v-card>
+      <GraphicBar :chartdata="chartData" :show="show2"/>
+    </transition>
+      </v-col>
+      <v-col >
+    <transition name="bounce">
+      <NearPlaces :project= "project" :show="show2"/>
     </transition>
       </v-col>
     </v-row>
@@ -180,7 +183,8 @@ import { priceStyle } from '../utils/prices';
 import Rating from '../components/Rating.vue';
 import Favorite from '../components/Favorite.vue';
 import bankToImg from '../utils/banksImgs';
-import Bar from '../graphics/Bar.vue';
+import NearPlaces from '../components/NearPlaces.vue';
+import GraphicBar from '../assets/GraphicBar.vue';
 
 export default {
   data: () => ({
@@ -195,7 +199,8 @@ export default {
   components: {
     Rating,
     Favorite,
-    Bar,
+    NearPlaces,
+    GraphicBar,
   },
   computed: {
     chartData() {
@@ -215,7 +220,7 @@ export default {
           },
           {
             label: `Precio de ${this.project.name}: ${price}`,
-            backgroundColor: 'red',
+            backgroundColor: 'blue',
             data: [price, 0],
           },
           {
