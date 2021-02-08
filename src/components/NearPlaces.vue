@@ -1,6 +1,6 @@
 <template>
   <v-card v-if="show" class="pa-5">
-      <p class="titulo"> Qué puedo encontrar a solo 15min?</p>
+      <p class="titulo"> ¿Qué puedo encontrar a 15 min. caminando ?</p>
     <v-row>
         <v-col>
     <v-expansion-panels>

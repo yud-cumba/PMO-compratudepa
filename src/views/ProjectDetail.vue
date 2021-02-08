@@ -213,18 +213,18 @@ export default {
         labels: ['Comparación de precios '],
         datasets: [
           {
-            label: `Promedio de precios en ${this.project.distrito}: ${mediaDistrict}`,
+            label: `Promedio de precios en ${this.project.distrito}: ${priceStyle(mediaDistrict)}`,
             backgroundColor: '#ffc107',
             data: [mediaDistrict,
               0],
           },
           {
-            label: `Precio de ${this.project.name}: ${price}`,
+            label: `Precio de ${this.project.name}: ${priceStyle(price)}`,
             backgroundColor: 'blue',
             data: [price, 0],
           },
           {
-            label: `Promedio de precios cercanos a ${this.project.name} en 5km : ${mediaNear}`,
+            label: `Promedio de precios cercanos a ${this.project.name} en 5km : ${priceStyle(mediaNear)}`,
             backgroundColor: '#4CAF50',
             data: [mediaNear, 0],
           },
