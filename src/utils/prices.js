@@ -23,7 +23,8 @@ export const getMaxPrice = (inmobiliarias) => {
   });
   return order[0].min_price;
 };
-export const priceStyle = (value) => {
+export const priceStyle = (number) => {
+  const value = Number(number).toFixed(2);
   const num2 = value.toString().split('.');
   const thousands = num2[0].split('').reverse().join('').match(/.{1,3}/g)
     .join(',');

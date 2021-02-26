@@ -17,22 +17,18 @@
               @click="$router.push('/')"
             >
             </v-img>
-            <v-btn icon  @click.stop="mini = !mini">
+            <v-btn icon @click.stop="mini = !mini">
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
           </v-list-item>
           <v-divider></v-divider>
-          <v-list-item
-            v-for="([icon, view, rout], i) in views"
-            :key="i"
-            link
-          >
+          <v-list-item v-for="([icon, view, rout], i) in views" :key="i" link>
             <v-icon class="mr-2">
               {{ icon }}
             </v-icon>
             <v-list-item-content>
               <v-list-item-title
-                @click="$router.push(rout), mini=true"
+                @click="$router.push(rout), (mini = true)"
                 class="text-router"
               >
                 <strong class="text-md-body-1" color="black">{{ view }}</strong>
@@ -66,6 +62,7 @@ export default {
     views: [
       ['mdi-home', 'Vista principal', '/'],
       ['mdi-form-select', 'Mis proyectos', '/myprojects'],
+      ['mdi-people', 'Leads', '/leads'],
     ],
   }),
   components: {

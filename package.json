@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve --port 5000",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "deploy": "firebase deploy",
+    "deploy": "firebase deploy --except functions",
     "predeploy": "npm run build"
   },
   "homepage": "https://github.com/yud-cumba/PMO-compratudepa/",

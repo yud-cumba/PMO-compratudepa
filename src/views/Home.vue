@@ -51,14 +51,21 @@
     </v-card>
   </v-parallax>
   <div :class="!$vuetify.breakpoint.smAndDown? 'pa-12 mx-12': 'pa-0 my-12'">
-  <Benefits :show="show"/>
+  <Benefits :reasons="reasons"/>
   </div>
-  <h2 class="px-6 mb-5">Proyectos destacados</h2>
+  <LoginCards/>
+  <h2 class="px-6 my-5 mt-10">Proyectos destacados</h2>
   <ProjectCards :projects="inmobiliarias.slice(0, 5)"/>
 </div>
 </template>
 
 <script>
+// eslint-disable-next-line import/no-extraneous-dependencies
+import detectiveIcon from '@iconify/icons-emojione-monotone/detective';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import handHeart from '@iconify-icons/mdi/hand-heart-outline';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import clipboardIcon from '@iconify/icons-emojione-monotone/clipboard';
 import Benefits from '../components/BenefitsCards.vue';
 import ProjectCards from '../components/ProjectCards.vue';
 import FilterPrice from '../components/FilterPrice.vue';
@@ -67,6 +74,7 @@ import { getAllProjectsTotal } from '../utils/projectMethods';
 import districts from '../data/districts.json';
 // eslint-disable-next-line import/no-cycle
 import { eventBus } from '../main';
+import LoginCards from '../components/LoginCards.vue';
 
 export default {
   name: 'Home',
@@ -74,6 +82,7 @@ export default {
     FilterPrice,
     Benefits,
     ProjectCards,
+    LoginCards,
   },
   data() {
     return {
@@ -91,12 +100,38 @@ export default {
       }),
       rooms: '',
       phase: '',
+      reasons: [
+        {
+          img: 'sala.png',
+          icon: detectiveIcon,
+          title: 'BÚSQUEDA A TU MEDIDA',
+          text: 'Te brindamos varias opciones de búsqueda para que puedas elegir de forma rápida y fácil el departamento que te interese.',
+          function: () => {
+            this.$router.push('/maps?district=&pricesMin=59000&pricesMax=1405000&typePrice=S%2F.&rooms=&phase=');
+          },
+        },
+        {
+          icon: handHeart,
+          img: 'oli-1.png',
+          title: 'AYUDA SOCIAL',
+          text: 'Somos una plataforma de ayuda solidaria cuyo objetivo es ayudar a generar oportunidades de mejora en los rubros de salud, educación y cultura.',
+          function: () => {
+            this.$router.push('/oli');
+          },
+        },
+        {
+          icon: clipboardIcon,
+          img: 'salam-1.png',
+          title: 'TE ASESORAMOS EN EL PROCESO',
+          text: 'Te otorgamos infomación útil y necesaria para que puedas encontrar el hogar ideal para tī',
+          function: () => {
+            this.$router.push('/advices');
+          },
+        },
+      ],
     };
   },
   methods: {
-    handleScroll() {
-      this.show = window.scrollY > 150 && window.scrollY < 700;
-    },
     setPrice(price) {
       this.prices = price;
     },
@@ -118,6 +153,7 @@ export default {
     },
     getProjects() {
       getAllProjectsTotal().then((projects) => {
+        console.log(projects);
         eventBus.$emit('allProjects', projects);
         this.inmobiliarias = projects.map((e) => e.properties);
         const min = Number(getMinPrice(this.inmobiliarias));
@@ -127,11 +163,7 @@ export default {
       });
     },
   },
-  destroyed() {
-    window.removeEventListener('scroll', this.handleScroll);
-  },
   created() {
-    window.addEventListener('scroll', this.handleScroll);
     this.$store.commit('SET_LAYOUT', 'public-layout');
     this.getProjects();
   },

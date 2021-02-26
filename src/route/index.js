@@ -10,14 +10,13 @@ import Advice from '../views/Advice.vue';
 import Credits from '../views/Credits.vue';
 import Login from '../views/Login.vue';
 import Oli from '../views/Oli.vue';
-import MyProjects from '../views/MyProjects.vue';
+import MyProjects from '../views/RealState/MyProjects.vue';
 import SignUp from '../views/SignUp.vue';
 import Favorite from '../views/Favorite.vue';
 import SignUpInmb from '../views/SignUpInmb.vue';
-import AddNewProject from '../views/AddNewProject.vue';
+import AddNewProject from '../views/RealState/AddNewProject.vue';
 import Dashboard from '../views/Dashboard.vue';
-import SeparateYourDepa from '../views/SeparateYourDepa.vue';
-import Leads from '../views/Leads.vue';
+import Leads from '../views/RealState/Leads.vue';
 
 Vue.use(VueRouter);
 
@@ -37,7 +36,6 @@ const routes = [
   { path: '/signupInmb', component: SignUpInmb },
   { path: '/addnew', component: AddNewProject },
   { path: '/dashboard', component: Dashboard },
-  { path: '/separate', component: SeparateYourDepa },
   { path: '/leads', component: Leads },
 ];
 

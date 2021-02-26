@@ -108,7 +108,7 @@
               </div>
               <v-divider></v-divider>
               <h1 class="pa-5 green--text">
-                {{ project.coin }} {{ project.min_price }}
+                {{ project.coin }} {{ project.val_price1 }}
               </h1>
               <p class="px-5 h6">
                 <v-icon class="mr-1">mdi-map-marker</v-icon>

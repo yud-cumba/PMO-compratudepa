@@ -58,8 +58,11 @@ export const getAllProjects = () => firebase
   .ref('PROJECTS')
   .once('value')
   .then((value) => new Promise((res) => {
+    console.log(value);
     if (value.val()) {
       res(Object.values(value.val()));
+    } else {
+      res([]);
     }
   }));
 
@@ -115,6 +118,23 @@ export const userRatingUpdate = (userId, rating, ratingID, projectID) => {
 
 export const userAddFavorite = (userid, data) => firebase.database().ref(`USERS/${userid}/favorites`).push({
   ...data,
+});
+
+export const getLeadsMyProjects = (projectId) => firebase.database().ref('LEADS').orderByChild('projectId')
+  .equalTo(projectId)
+  .once()
+  .then((value) => new Promise((res, rej) => {
+    if (value.val()) {
+      res(Object.values(value.val()));
+    } else {
+      rej(new Error('No hay leads'));
+    }
+  }));
+
+export const addLeads = (userData, projectId, date) => firebase.database().ref('LEADS').push({
+  ...userData,
+  projectId,
+  date,
 });
 
 export const userRemoveFavoriteById = (userid, favoriteID) => firebase.database().ref(`USERS/${userid}/favorites/${favoriteID}`).remove();
