@@ -3,7 +3,8 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-const store = new Vuex.Store({
+const layout = {
+  namespaced: true,
   state: {
     layout: 'public-layout',
   },
@@ -11,6 +12,25 @@ const store = new Vuex.Store({
     SET_LAYOUT(state, newLayout) {
       state.layout = newLayout;
     },
+  },
+};
+
+const projects = {
+  namespaced: true,
+  state: {
+    projects: [],
+  },
+  mutations: {
+    SET_PROJECTS(state, newProject) {
+      state.projects = newProject;
+    },
+  },
+};
+
+const store = new Vuex.Store({
+  modules: {
+    layout,
+    projects,
   },
 });
 export default store;

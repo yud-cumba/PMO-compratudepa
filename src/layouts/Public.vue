@@ -1,6 +1,7 @@
 <template>
     <v-app>
-      <NavBar :quantityInmobByDistrict="quantityInmobByDistrict" :prices="prices"/>
+      <NavBar :quantityInmobByDistrict="quantityInmobByDistrict" :prices="prices"
+      :loading="loading"/>
       <router-view></router-view>
       <v-divider></v-divider>
       <Footer/>
@@ -29,10 +30,12 @@ export default {
         min: '',
       },
       quantityInmobByDistrict: [],
+      loading: false,
     };
   },
   created() {
     eventBus.$on('allProjects', (payload) => {
+      this.loading = !payload.length;
       const inmobiliarias = payload.map((inmob) => inmob.properties);
       this.prices.min = getMinPrice(inmobiliarias);
       this.prices.max = getMaxPrice(inmobiliarias);

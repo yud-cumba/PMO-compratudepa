@@ -1,11 +1,12 @@
 import inm from '../data/inmobiliarias.json';
 import { getAllProjects } from '../firebase/database';
 
-export const inmobiliarias = inm.features.map((doc) => (
+export const inmobiliarias = inm.map((doc) => (
   { id: doc.id, ...doc.properties, geometry: doc.geometry }));
 
 export const getAllProjectsTotal = () => getAllProjects().then((projects) => {
-  const inmobiliariasJson = inm.features.map((e) => ({
+  console.log(projects);
+  const inmobiliariasJson = inm.map((e) => ({
     properties: { id: e.id, ...e.properties },
     geometry: e.geometry,
   }));

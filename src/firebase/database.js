@@ -58,9 +58,11 @@ export const getAllProjects = () => firebase
   .ref('PROJECTS')
   .once('value')
   .then((value) => new Promise((res) => {
-    console.log(value);
     if (value.val()) {
-      res(Object.values(value.val()));
+      res(Object.values(value.val()).map((e) => ({
+        properties: { id: e.id, ...e.properties },
+        geometry: e.geometry,
+      })));
     } else {
       res([]);
     }

@@ -25,8 +25,11 @@
            <h3> PROYECTOS</h3>
           </v-list-item>
         </template>
-        <v-card v-if="quantityInmobByDistrict.length>0">
-          <v-row v-for="m in vertical" :key="m" no-gutters>
+        <v-card v-if="!quantityInmobByDistrict.length" class="text-caption">
+          <Loading :loading="loading" :size="15"/>
+        </v-card>
+        <v-card v-else>
+          <v-row  v-for="m in vertical" :key="m" no-gutters>
             <v-col v-for="n in horizontal" :key="n">
               <v-card
                 class="pa-2 card card-tab elevation-0"
@@ -76,11 +79,13 @@ import TitleNavBar from './TitleNavBar.vue';
 import ToolBar from './Toolbar.vue';
 import { verifyIsLogin, currentUser } from '../firebase/auth';
 import { getUserByUid } from '../firebase/database';
+import Loading from './Loading.vue';
 
 export default {
   props: ['quantityInmobByDistrict', 'prices'],
   data() {
     return {
+      Loading: true,
       active: false,
       isLogin: false,
       user: '',
@@ -91,6 +96,7 @@ export default {
   components: {
     TitleNavBar,
     ToolBar,
+    Loading,
   },
   methods: {
     verify() {
@@ -182,5 +188,8 @@ export default {
 <style lang="scss" scoped>
 .text-caption {
   width: 85vw;
+  height: 100px;
+  display: flex;
+  justify-items: center;
 }
 </style>

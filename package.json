@@ -11,6 +11,7 @@
   },
   "homepage": "https://github.com/yud-cumba/PMO-compratudepa/",
   "dependencies": {
+    "@saeris/vue-spinners": "^1.0.8",
     "axios": "^0.20.0",
     "chart.js": "^2.9.4",
     "core-js": "^3.6.5",

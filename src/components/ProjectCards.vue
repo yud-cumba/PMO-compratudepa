@@ -1,6 +1,7 @@
 <template>
   <div class="d-flex pb-10 flex-wrap sellest">
-    <div class="flip-card mx-auto my-4" v-for="item in projects" :key="item.id">
+    <Loading :loading="loading" :size="14"/>
+    <div  class="flip-card mx-auto my-4" v-for="item in projects" :key="item.id">
       <div class="flip-card-inner rounded-lg">
         <v-card class="flip-card-front rounded-lg">
           <div class="title d-flex justify-space-between align-center px-4">
@@ -60,12 +61,15 @@
 
 <script>
 import Favorite from './Favorite.vue';
+import Loading from './Loading.vue';
 import Options from './Options.vue';
 import Rating from './Rating.vue';
 
 export default {
-  components: { Rating, Favorite, Options },
-  props: ['projects'],
+  components: {
+    Rating, Favorite, Options, Loading,
+  },
+  props: ['projects', 'loading'],
   methods: {
     setModal(ok) {
       this.modalOK = ok;

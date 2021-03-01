@@ -50,7 +50,7 @@ export default {
     },
   },
   created() {
-    this.$store.commit('SET_LAYOUT', 'realState-layout');
+    this.$store.commit('layout/SET_LAYOUT', 'realState-layout');
   },
 };
 </script>

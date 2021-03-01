@@ -22,7 +22,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .chart {
-height: 350px !important;
+height: 450px !important;
 width: 350px !important;
 }
 </style>

@@ -43,7 +43,7 @@ export default {
     NoProjects,
   },
   created() {
-    this.$store.commit('SET_LAYOUT', 'public-layout');
+    this.$store.commit('layout/SET_LAYOUT', 'public-layout');
     getFavoritesByUserId(currentUser().uid).then((favorites) => {
       this.myFavorites = favorites;
     }).catch((e) => { this.errorFavorites = e.message; });

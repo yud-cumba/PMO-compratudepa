@@ -138,15 +138,15 @@
     <div v-else class="ma-5 text-red">
       <NoProjects message="No se encontraron proyectos"/>
     </div>
-    <ProjectCards :projects="projects" />
+    <ProjectCards :projects="projects" :loading="loading"/>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import GoogleMap from '../components/GoogleMap.vue';
 import ProjectCards from '../components/ProjectCards.vue';
 import FilterPrice from '../components/FilterPrice.vue';
-import { getAllProjectsTotal } from '../utils/projectMethods';
 import districts from '../data/districts.json';
 // eslint-disable-next-line import/no-cycle
 import { eventBus } from '../main';
@@ -224,7 +224,6 @@ export default {
         'Zona de Lavandería': false,
         'Zona de Parrillas': false,
       },
-      totalProjects: [],
       projects: [],
     };
   },
@@ -417,11 +416,12 @@ export default {
       this.filterFunction();
     },
   },
-  created() {
-    this.$store.commit('SET_LAYOUT', 'public-layout');
-    this.loading = true;
-    getAllProjectsTotal().then((projects) => {
-      this.totalProjects = projects.map((inmob) => ({
+  computed: {
+    ...mapState('projects', {
+      allProjects: 'projects',
+    }),
+    totalProjects() {
+      return this.allProjects.map((inmob) => ({
         position: {
           lat: inmob.geometry.coordinates[1],
           lng: inmob.geometry.coordinates[0],
@@ -430,9 +430,23 @@ export default {
         id: inmob.id,
         ...inmob.properties,
       }));
-      this.filterFunction();
-      this.loading = false;
-    });
+    },
+  },
+  created() {
+    this.$store.commit('layout/SET_LAYOUT', 'public-layout');
+    // getAllProjects().then((projects) => {
+    //   this.totalProjects = projects.map((inmob) => ({
+    //     position: {
+    //       lat: inmob.geometry.coordinates[1],
+    //       lng: inmob.geometry.coordinates[0],
+    //     },
+    //     title: inmob.properties.builder_name,
+    //     id: inmob.id,
+    //     ...inmob.properties,
+    //   }));
+    this.loading = !this.allProjects.length;
+    this.filterFunction();
+    // });
     eventBus.$on('infoProject', (payload) => {
       this.projects = payload;
     });

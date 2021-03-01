@@ -135,7 +135,7 @@ export default {
     },
   },
   created() {
-    this.$store.commit('SET_LAYOUT', 'public-layout');
+    this.$store.commit('layout/SET_LAYOUT', 'public-layout');
   },
 };
 </script>

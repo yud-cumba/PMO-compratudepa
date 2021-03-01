@@ -1,5 +1,7 @@
 <template>
-    <v-card  class="pa-5" >
+    <v-card  class="pa-5 d-flex" >
+      <Bar :chartdata="chartdata"/>
+       <div class="pa-4 d-flex flex-column justify-center align-center">
         <p class="titulo">Aquí comparamos los precios por m2</p>
         <v-list>
             <v-list-item v-for="cdata in chartdata.datasets" :key="cdata.label">
@@ -8,7 +10,7 @@
                 </v-list-item-title>
             </v-list-item>
         </v-list>
-      <Bar :chartdata="chartdata"/>
+        </div>
     </v-card>
 </template>
 

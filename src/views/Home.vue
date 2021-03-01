@@ -55,11 +55,12 @@
   </div>
   <LoginCards/>
   <h2 class="px-6 my-5 mt-10">Proyectos destacados</h2>
-  <ProjectCards :projects="inmobiliarias.slice(0, 5)"/>
+  <ProjectCards :projects="inmobiliarias.slice(0, 5)" :loading="loading"/>
 </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import detectiveIcon from '@iconify/icons-emojione-monotone/detective';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -70,7 +71,7 @@ import Benefits from '../components/BenefitsCards.vue';
 import ProjectCards from '../components/ProjectCards.vue';
 import FilterPrice from '../components/FilterPrice.vue';
 import { getMinPrice, getMaxPrice } from '../utils/prices';
-import { getAllProjectsTotal } from '../utils/projectMethods';
+// import { getAllProjectsTotal } from '../utils/projectMethods';
 import districts from '../data/districts.json';
 // eslint-disable-next-line import/no-cycle
 import { eventBus } from '../main';
@@ -89,7 +90,7 @@ export default {
       show: false,
       districts,
       typePrice: 'S/.',
-      inmobiliarias: [],
+      // inmobiliarias: [],
       search: '',
       prices: { },
       itemsRooms: [1, 2, 3, 4].map((e) => {
@@ -151,21 +152,36 @@ export default {
         },
       });
     },
-    getProjects() {
-      getAllProjectsTotal().then((projects) => {
-        console.log(projects);
-        eventBus.$emit('allProjects', projects);
-        this.inmobiliarias = projects.map((e) => e.properties);
+    getPrice() {
+      if (this.inmobiliarias.length) {
         const min = Number(getMinPrice(this.inmobiliarias));
         const max = Number(getMaxPrice(this.inmobiliarias));
         this.prices = { min, max };
         eventBus.$emit('prices', { min, max });
-      });
+      } else {
+        eventBus.$emit('prices', { min: 0, max: 0 });
+      }
+    },
+  },
+  computed: {
+    ...mapState('projects', {
+      allProjects: 'projects',
+    }),
+    inmobiliarias() {
+      const inmobiliarias = this.allProjects.map((e) => e.properties);
+      return inmobiliarias;
+    },
+    loading() {
+      return !this.allProjects.length;
+    },
+  },
+  watch: {
+    inmobiliarias() {
+      this.getPrice();
     },
   },
   created() {
-    this.$store.commit('SET_LAYOUT', 'public-layout');
-    this.getProjects();
+    this.getPrice();
   },
 };
 </script>
