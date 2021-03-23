@@ -11,6 +11,13 @@ export const userAdd = (id, name, email, role, phone, photo) => {
 };
 
 export const addNewProject = (id, project) => firebase.database().ref(`PROJECTS/${id}`).set(project);
+export const getPlanosById = (id) => firebase
+  .database()
+  .ref('PLANOS')
+  .orderByChild('id')
+  .equalTo(id)
+  .once('value')
+  .then((value) => Object.values(value.val())[0]);
 
 export const getClients = () => firebase
   .database()

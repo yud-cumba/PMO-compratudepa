@@ -2,9 +2,13 @@
   <div>
     <v-row >
       <v-row>
-        <v-carousel>
+        <v-carousel  cycle
+            show-arrows-on-hover>
           <v-carousel-item
-            :src="project.imagenes[0]"
+            v-for="(img, i) in plans"
+            :key="i"
+            :src="img"
+            class="pa-5"
             reverse-transition="fade-transition"
             transition="fade-transition"
           >
@@ -22,9 +26,11 @@
         </v-carousel>
       </v-row>
       <v-row>
-        <v-carousel>
+        <v-carousel
+        cycle
+    show-arrows-on-hover>
           <v-carousel-item
-            v-for="(img, i) in project.imagenes.slice(1)"
+            v-for="(img, i) in project.imagenes"
             :key="i"
             :src="img"
             reverse-transition="fade-transition"
@@ -175,7 +181,7 @@ import detectiveIcon from '@iconify/icons-emojione-monotone/detective';
 import handHeart from '@iconify-icons/mdi/hand-heart-outline';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import clipboardIcon from '@iconify/icons-emojione-monotone/clipboard';
-// import { inmobiliariasById } from '../utils/projectMethods';
+import { getPlanosById } from '../firebase/database';
 // import { getProjectById } from '../firebase/database';
 import { priceStyle } from '../utils/prices';
 import Rating from '../components/Rating.vue';
@@ -194,6 +200,7 @@ export default {
     favoriteID: '',
     scroll: [160, 350],
     dialog: false,
+    plans: [],
   }),
   components: {
     Rating,
@@ -299,6 +306,10 @@ export default {
       const message = yourMessage.split(' ').join('%20');
       window.location.href = `https://api.whatsapp.com/send/?phone=%2B51${celular}&text=%20${message}`;
     },
+    async plansById() {
+      const plans = await getPlanosById(this.$route.params.id);
+      this.plans = plans.planos;
+    },
     priceStyle,
   },
   destroyed() {
@@ -307,6 +318,7 @@ export default {
   created() {
     this.$store.commit('layout/SET_LAYOUT', 'public-layout');
     window.addEventListener('scroll', this.handleScroll);
+    this.plansById();
   },
 };
 </script>
